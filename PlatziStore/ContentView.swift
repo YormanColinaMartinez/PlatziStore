@@ -21,12 +21,12 @@ struct ContentView: View {
         ZStack {
             if showSplashScreen {
                 SplashView()
-                    .transition(.opacity) 
+                    .transition(.opacity)
             } else {
                 HomeView()
             }
         }.onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 withAnimation {
                     showSplashScreen = false
                 }
