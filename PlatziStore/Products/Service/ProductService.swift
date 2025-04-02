@@ -34,6 +34,24 @@ class ProductService: ProductServiceInterface {
     }
     
     func saveProducts(_ products: [ProductModel], context: NSManagedObjectContext) async throws {
-        
+        try await context.perform {
+            for product in products {
+                let productEntity = Product(context: context)
+                productEntity.id = Int64(product.id)
+                productEntity.price = product.price
+                productEntity.productDescription = product.description
+                productEntity.images = product.images as NSArray
+            }
+            try context.save()
+        }
+    }
+    
+    func fetchAndSaveProducts(context: NSManagedObjectContext) async throws {
+        do {
+            let products = try await fetchProducts(url: "https://api.example.com/products")
+            try await saveProducts(products, context: context)
+        } catch {
+            throw error
+        }
     }
 }
