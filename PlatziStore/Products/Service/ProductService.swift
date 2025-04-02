@@ -16,20 +16,22 @@ class ProductService: ProductServiceInterface {
     }
     
     func fetchProducts(url: String) async throws -> [ProductModel] {
-        guard let url: URL = URL(string: url) else { return []}
+        guard let url: URL = URL(string: url) else {
+            throw ServiceError.invalidURL
+        }
         
         let request = URLRequest(url: url)
         let (data, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            return []
+            throw ServiceError.invalidResponse
         }
         
         do  {
             let products = try JSONDecoder().decode([ProductModel].self, from: data)
             return products
-        } catch _ as Swift.DecodingError {
-            return []
+        }  catch let decodingError as Swift.DecodingError {
+            throw ServiceError.decodingError(decodingError)
         }
     }
     
