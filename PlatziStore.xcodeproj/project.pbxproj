@@ -23,6 +23,8 @@
 		04C95B082D9DA2E5002BA816 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B072D9DA2E5002BA816 /* ProfileView.swift */; };
 		04C95B0B2D9DA8AB002BA816 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B0A2D9DA8AB002BA816 /* ProductModel.swift */; };
 		04C95B0F2D9DA8E8002BA816 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B0E2D9DA8E8002BA816 /* CategoryModel.swift */; };
+		04C95B122D9DAA76002BA816 /* ProductServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B112D9DAA76002BA816 /* ProductServiceInterface.swift */; };
+		04C95B152D9DAB05002BA816 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B142D9DAB05002BA816 /* ProductService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		04C95B072D9DA2E5002BA816 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		04C95B0A2D9DA8AB002BA816 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		04C95B0E2D9DA8E8002BA816 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		04C95B112D9DAA76002BA816 /* ProductServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductServiceInterface.swift; sourceTree = "<group>"; };
+		04C95B142D9DAB05002BA816 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +192,8 @@
 		04C95AFD2D9DA1D0002BA816 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B132D9DAAD5002BA816 /* Service */,
+				04C95B102D9DAA55002BA816 /* Interface */,
 				04C95B092D9DA899002BA816 /* Model */,
 				04C95AFE2D9DA1D9002BA816 /* View */,
 			);
@@ -256,6 +262,22 @@
 				04C95B0E2D9DA8E8002BA816 /* CategoryModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04C95B102D9DAA55002BA816 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B112D9DAA76002BA816 /* ProductServiceInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		04C95B132D9DAAD5002BA816 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B142D9DAB05002BA816 /* ProductService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,8 +413,10 @@
 				04C95B002D9DA1EA002BA816 /* ProductsView.swift in Sources */,
 				04C95B082D9DA2E5002BA816 /* ProfileView.swift in Sources */,
 				04C95AD02D9D95D9002BA816 /* Persistence.swift in Sources */,
+				04C95B122D9DAA76002BA816 /* ProductServiceInterface.swift in Sources */,
 				04C95AD32D9D95D9002BA816 /* PlatziStore.xcdatamodeld in Sources */,
 				04C95AF92D9D9709002BA816 /* SplashView.swift in Sources */,
+				04C95B152D9DAB05002BA816 /* ProductService.swift in Sources */,
 				04C95AFC2D9DA1A7002BA816 /* HomeView.swift in Sources */,
 				04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */,
 				04C95B0F2D9DA8E8002BA816 /* CategoryModel.swift in Sources */,
