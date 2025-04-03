@@ -57,7 +57,6 @@ struct ProductsView: View {
                     
                     Spacer()
 
-                    // 🔹 Botón de búsqueda (Lupa)
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             isSearching.toggle()
@@ -101,7 +100,7 @@ struct ProductsView: View {
                             ItemCellView(model: item)
                                 .onTapGesture {
                                     selectedProduct = item
-                                    showDetail = true // 🔹 Abre la vista de detalle
+                                    showDetail = true
                                 }
                         }
                     }
@@ -111,7 +110,7 @@ struct ProductsView: View {
                 }
             }
             .fullScreenCover(item: $selectedProduct) { product in
-                CartView()
+                ProductDetailView(product: product)
             }
             .task {
                 await viewModel.loadProducts()

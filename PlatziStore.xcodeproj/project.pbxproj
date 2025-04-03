@@ -33,6 +33,7 @@
 		04C95B282D9E1079002BA816 /* CategoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B272D9E1079002BA816 /* CategoryInterface.swift */; };
 		04C95B2C2D9E1930002BA816 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B2B2D9E1930002BA816 /* CategoryView.swift */; };
 		04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */; };
+		04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		04C95B272D9E1079002BA816 /* CategoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryInterface.swift; sourceTree = "<group>"; };
 		04C95B2B2D9E1930002BA816 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCellView.swift; sourceTree = "<group>"; };
+		04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +134,7 @@
 		04C95AC52D9D95D6002BA816 /* PlatziStore */ = {
 			isa = PBXGroup;
 			children = (
-				04C95B192D9DC5BB002BA816 /* New Group */,
+				04C95B192D9DC5BB002BA816 /* ProductDetail */,
 				04C95B0C2D9DA8C3002BA816 /* Category */,
 				04C95B052D9DA2C9002BA816 /* Profile */,
 				04C95B012D9DA29C002BA816 /* Cart */,
@@ -313,11 +315,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		04C95B192D9DC5BB002BA816 /* New Group */ = {
+		04C95B192D9DC5BB002BA816 /* ProductDetail */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B2F2D9EEF40002BA816 /* View */,
 			);
-			path = "New Group";
+			path = ProductDetail;
 			sourceTree = "<group>";
 		};
 		04C95B1A2D9DC5CB002BA816 /* Error */ = {
@@ -372,6 +375,14 @@
 			isa = PBXGroup;
 			children = (
 				04C95B2B2D9E1930002BA816 /* CategoryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C95B2F2D9EEF40002BA816 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -526,6 +537,7 @@
 				04C95B1F2D9DD4F7002BA816 /* CategoryViewModel.swift in Sources */,
 				04C95B042D9DA2B3002BA816 /* CartView.swift in Sources */,
 				04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */,
+				04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */,
 				04C95B0B2D9DA8AB002BA816 /* ProductModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
