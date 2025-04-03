@@ -15,11 +15,7 @@ struct HomeView: View {
             ProductsView()
                 .tabItem {
                     Label("Products", systemImage: "cart")
-                } .task {
-                    await viewModel.loadCategories()
-                    await viewModel.loadProducts()
                 }
-            
             CartView()
                 .tabItem {
                     Label("Orders", systemImage: "bag")
