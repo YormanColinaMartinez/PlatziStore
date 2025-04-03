@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var viewModel = HomeViewModel()
+    
     var body: some View {
         TabView {
             ProductsView()
                 .tabItem {
                     Label("Products", systemImage: "cart")
+                } .task {
+                    await viewModel.loadCategories()
+                    await viewModel.loadProducts()
                 }
             
             CartView()

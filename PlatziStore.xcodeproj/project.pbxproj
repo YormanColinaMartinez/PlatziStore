@@ -27,6 +27,8 @@
 		04C95B152D9DAB05002BA816 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B142D9DAB05002BA816 /* ProductService.swift */; };
 		04C95B182D9DB4F0002BA816 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B172D9DB4F0002BA816 /* ProductViewModel.swift */; };
 		04C95B1C2D9DC5E3002BA816 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B1B2D9DC5E3002BA816 /* ServiceError.swift */; };
+		04C95B1F2D9DD4F7002BA816 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B1E2D9DD4F7002BA816 /* CategoryViewModel.swift */; };
+		04C95B222D9DD565002BA816 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B212D9DD565002BA816 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		04C95B142D9DAB05002BA816 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		04C95B172D9DB4F0002BA816 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		04C95B1B2D9DC5E3002BA816 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		04C95B1E2D9DD4F7002BA816 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		04C95B212D9DD565002BA816 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +129,7 @@
 				04C95B052D9DA2C9002BA816 /* Profile */,
 				04C95B012D9DA29C002BA816 /* Cart */,
 				04C95AFD2D9DA1D0002BA816 /* Products */,
-				04C95AFA2D9DA196002BA816 /* HomeView */,
+				04C95AFA2D9DA196002BA816 /* Home */,
 				04C95AF72D9D96F2002BA816 /* Splash */,
 				04C95AF62D9D96E7002BA816 /* Login */,
 				04C95AF52D9D96DC002BA816 /* Resources */,
@@ -187,12 +191,13 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		04C95AFA2D9DA196002BA816 /* HomeView */ = {
+		04C95AFA2D9DA196002BA816 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B202D9DD551002BA816 /* ViewModel */,
 				04C95AFB2D9DA1A7002BA816 /* HomeView.swift */,
 			);
-			path = HomeView;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		04C95AFD2D9DA1D0002BA816 /* Products */ = {
@@ -258,6 +263,7 @@
 		04C95B0C2D9DA8C3002BA816 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B1D2D9DD4D3002BA816 /* ViewModel */,
 				04C95B0D2D9DA8CB002BA816 /* Model */,
 			);
 			path = Category;
@@ -308,6 +314,22 @@
 				04C95B1B2D9DC5E3002BA816 /* ServiceError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		04C95B1D2D9DD4D3002BA816 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B1E2D9DD4F7002BA816 /* CategoryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		04C95B202D9DD551002BA816 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B212D9DD565002BA816 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C95B222D9DD565002BA816 /* HomeViewModel.swift in Sources */,
 				04C95B1C2D9DC5E3002BA816 /* ServiceError.swift in Sources */,
 				04C95B182D9DB4F0002BA816 /* ProductViewModel.swift in Sources */,
 				04C95B002D9DA1EA002BA816 /* ProductsView.swift in Sources */,
@@ -452,6 +475,7 @@
 				04C95AFC2D9DA1A7002BA816 /* HomeView.swift in Sources */,
 				04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */,
 				04C95B0F2D9DA8E8002BA816 /* CategoryModel.swift in Sources */,
+				04C95B1F2D9DD4F7002BA816 /* CategoryViewModel.swift in Sources */,
 				04C95B042D9DA2B3002BA816 /* CartView.swift in Sources */,
 				04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */,
 				04C95B0B2D9DA8AB002BA816 /* ProductModel.swift in Sources */,
