@@ -62,7 +62,6 @@ struct ProductsView: View {
                     .font(.system(size: 16, weight: .bold))
                     .padding(.top)
                 
-
             }
         }
     }
