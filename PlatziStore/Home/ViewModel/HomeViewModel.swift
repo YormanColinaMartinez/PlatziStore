@@ -12,10 +12,10 @@ class HomeViewModel: ObservableObject {
     @Published var categories: [CategoryModel] = []
 
     private let productService: ProductServiceInterface
-    private let categoryService: CategoryViewModel
+    private let categoryService: CategoryInterface
 
     init(productService: ProductServiceInterface = ProductService(),
-         categoryService: CategoryViewModel = CategoryViewModel()) {
+         categoryService: CategoryInterface = CategoryService()) {
         self.productService = productService
         self.categoryService = categoryService
     }
