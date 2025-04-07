@@ -34,6 +34,15 @@
 		04C95B2C2D9E1930002BA816 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B2B2D9E1930002BA816 /* CategoryView.swift */; };
 		04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */; };
 		04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */; };
+		04C95B352DA45CCC002BA816 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B342DA45CCC002BA816 /* LoginViewModel.swift */; };
+		04C95B382DA45CF7002BA816 /* LoginInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B372DA45CF7002BA816 /* LoginInterface.swift */; };
+		04C95B3B2DA45D22002BA816 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B3A2DA45D22002BA816 /* LoginService.swift */; };
+		04C95B3E2DA45D51002BA816 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B3D2DA45D51002BA816 /* LoginView.swift */; };
+		04C95B412DA45E36002BA816 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B402DA45E36002BA816 /* Strings.swift */; };
+		04C95B442DA45E82002BA816 /* UIAplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B432DA45E82002BA816 /* UIAplication.swift */; };
+		04C95B472DA45ED2002BA816 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B462DA45ED2002BA816 /* AuthService.swift */; };
+		04C95B4B2DA45F08002BA816 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B4A2DA45F08002BA816 /* UserModel.swift */; };
+		04C95B4E2DA45F65002BA816 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B4D2DA45F65002BA816 /* AuthResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +93,15 @@
 		04C95B2B2D9E1930002BA816 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCellView.swift; sourceTree = "<group>"; };
 		04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		04C95B342DA45CCC002BA816 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		04C95B372DA45CF7002BA816 /* LoginInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInterface.swift; sourceTree = "<group>"; };
+		04C95B3A2DA45D22002BA816 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		04C95B3D2DA45D51002BA816 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		04C95B402DA45E36002BA816 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		04C95B432DA45E82002BA816 /* UIAplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAplication.swift; sourceTree = "<group>"; };
+		04C95B462DA45ED2002BA816 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		04C95B4A2DA45F08002BA816 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		04C95B4D2DA45F65002BA816 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +152,7 @@
 		04C95AC52D9D95D6002BA816 /* PlatziStore */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B482DA45EF4002BA816 /* User */,
 				04C95B192D9DC5BB002BA816 /* ProductDetail */,
 				04C95B0C2D9DA8C3002BA816 /* Category */,
 				04C95B052D9DA2C9002BA816 /* Profile */,
@@ -181,6 +200,8 @@
 		04C95AF52D9D96DC002BA816 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B422DA45E71002BA816 /* Extensions */,
+				04C95B3F2DA45E2B002BA816 /* Strings */,
 				04C95B1A2D9DC5CB002BA816 /* Error */,
 			);
 			path = Resources;
@@ -189,6 +210,11 @@
 		04C95AF62D9D96E7002BA816 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				04C95B4C2DA45F4F002BA816 /* Model */,
+				04C95B3C2DA45D43002BA816 /* View */,
+				04C95B392DA45D0B002BA816 /* Service */,
+				04C95B362DA45CEA002BA816 /* Interface */,
+				04C95B332DA45CB4002BA816 /* ViewModel */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -387,6 +413,79 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		04C95B332DA45CB4002BA816 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B342DA45CCC002BA816 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		04C95B362DA45CEA002BA816 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B372DA45CF7002BA816 /* LoginInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		04C95B392DA45D0B002BA816 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B3A2DA45D22002BA816 /* LoginService.swift */,
+				04C95B462DA45ED2002BA816 /* AuthService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		04C95B3C2DA45D43002BA816 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B3D2DA45D51002BA816 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C95B3F2DA45E2B002BA816 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B402DA45E36002BA816 /* Strings.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		04C95B422DA45E71002BA816 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B432DA45E82002BA816 /* UIAplication.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		04C95B482DA45EF4002BA816 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B492DA45EFA002BA816 /* Model */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		04C95B492DA45EFA002BA816 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B4A2DA45F08002BA816 /* UserModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04C95B4C2DA45F4F002BA816 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04C95B4D2DA45F65002BA816 /* AuthResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -517,8 +616,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C95B352DA45CCC002BA816 /* LoginViewModel.swift in Sources */,
 				04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */,
 				04C95B222D9DD565002BA816 /* HomeViewModel.swift in Sources */,
+				04C95B4E2DA45F65002BA816 /* AuthResponse.swift in Sources */,
 				04C95B1C2D9DC5E3002BA816 /* ServiceError.swift in Sources */,
 				04C95B182D9DB4F0002BA816 /* ProductViewModel.swift in Sources */,
 				04C95B252D9E104C002BA816 /* CategoryService.swift in Sources */,
@@ -526,18 +627,25 @@
 				04C95B082D9DA2E5002BA816 /* ProfileView.swift in Sources */,
 				04C95AD02D9D95D9002BA816 /* Persistence.swift in Sources */,
 				04C95B122D9DAA76002BA816 /* ProductInterface.swift in Sources */,
+				04C95B412DA45E36002BA816 /* Strings.swift in Sources */,
+				04C95B472DA45ED2002BA816 /* AuthService.swift in Sources */,
+				04C95B3E2DA45D51002BA816 /* LoginView.swift in Sources */,
 				04C95AD32D9D95D9002BA816 /* PlatziStore.xcdatamodeld in Sources */,
 				04C95AF92D9D9709002BA816 /* SplashView.swift in Sources */,
 				04C95B152D9DAB05002BA816 /* ProductService.swift in Sources */,
+				04C95B442DA45E82002BA816 /* UIAplication.swift in Sources */,
 				04C95AFC2D9DA1A7002BA816 /* HomeView.swift in Sources */,
 				04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */,
 				04C95B282D9E1079002BA816 /* CategoryInterface.swift in Sources */,
 				04C95B2C2D9E1930002BA816 /* CategoryView.swift in Sources */,
+				04C95B382DA45CF7002BA816 /* LoginInterface.swift in Sources */,
 				04C95B0F2D9DA8E8002BA816 /* CategoryModel.swift in Sources */,
 				04C95B1F2D9DD4F7002BA816 /* CategoryViewModel.swift in Sources */,
 				04C95B042D9DA2B3002BA816 /* CartView.swift in Sources */,
 				04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */,
+				04C95B3B2DA45D22002BA816 /* LoginService.swift in Sources */,
 				04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */,
+				04C95B4B2DA45F08002BA816 /* UserModel.swift in Sources */,
 				04C95B0B2D9DA8AB002BA816 /* ProductModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,6 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-   
     @State private var showSplashScreen = true
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -23,10 +22,10 @@ struct ContentView: View {
                 SplashView()
                     .transition(.opacity)
             } else {
-                HomeView()
+                LoginView()
             }
         }.onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     showSplashScreen = false
                 }

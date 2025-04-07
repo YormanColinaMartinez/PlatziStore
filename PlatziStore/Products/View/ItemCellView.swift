@@ -29,7 +29,7 @@ struct ItemCellView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(model.title)
                         .font(.headline)
-                        .lineLimit(1)
+                        .lineLimit(3)
                         .truncationMode(.tail)
 
                     Text(model.description)
@@ -42,24 +42,12 @@ struct ItemCellView: View {
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(.green)
-
-                        Spacer()
-                        Button {
-                            print("")
-                        } label: {
-                            Text("Buy")
-                        }
-                        .frame(width: 50, height: 30)
-                        .background(.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8.0)
                     }
                 }
-
                 Spacer()
             }
             .padding()
-            .background(Color.white)
+            .background(Color.white.opacity(0.5))
             .cornerRadius(12)
             .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
     }

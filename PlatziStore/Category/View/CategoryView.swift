@@ -24,6 +24,7 @@ struct CategoryView: View {
                     .frame(width: 90, height: 90)
             }
             Text(model?.name ?? "")
+                .foregroundColor(.white)
         }
     }
 }

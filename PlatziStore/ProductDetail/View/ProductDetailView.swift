@@ -13,18 +13,20 @@ struct ProductDetailView: View {
     @State private var selectedIndex: Int = 0
     @State private var scrollOffSet: CGFloat = 0.0
     private let itemWidth: CGFloat = 230
+    @State private var itemQuantity: Int = 0
     
     var body: some View {
-        Button(action: {dismiss()},
-               label: {
-            Image(systemName: "xmark")
-                .resizable()
-        })
-        .position(x: -150, y: 10)
-        .frame(width: 20, height: 20)
-        .foregroundColor(.black)
-        
         VStack {
+            Button(action: {dismiss()},
+                   label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .foregroundColor(.white)
+            })
+            .position(x: -150, y: 10)
+            .frame(width: 20, height: 20)
+            .foregroundColor(.black)
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(product.images.indices, id: \.self) { index in
@@ -59,6 +61,7 @@ struct ProductDetailView: View {
                 Text(product.title)
                     .font(.title)
                     .fontWeight(.bold)
+                    .foregroundColor(.white)
                     .padding(.leading)
                 
                 Text(product.description)
@@ -76,42 +79,60 @@ struct ProductDetailView: View {
                     Spacer()
                     
                     HStack(spacing: 16) {
-                        Button {} label: {
-                            Image(systemName: "plus")
+                        Button {
+                            if self.itemQuantity > 0 {
+                                self.itemQuantity -= 1
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle")
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.black)
-                                .background(Color.white)
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(.white)
                                 .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.3),radius: 0, x: -1, y: 1)
+                                .shadow(color: .black.opacity(0.3),radius: 2, x: -2, y: 2)
                         }
                         .frame(width: 30, height: 30)
                         .padding(.leading)
                         
-                        Text("\(0)")
+                        Text("\(itemQuantity)")
+                            .foregroundColor(.gray)
+                            .frame(width: .infinity)
                         
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Image(systemName: "minus.circle.fill")
+                        Button(action: { self.itemQuantity += 1 }, label: {
+                            Image(systemName: "plus.circle")
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                                 .foregroundColor(.white)
-                                .background(Color.black)
                                 .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.3),radius: 0, x: -1, y: 1)
+                                .shadow(color: .black.opacity(0.3),radius: 2, x: -2, y: 2)
                         })
                         .frame(width: 40, height: 40)
                         .padding(.trailing)
                     }
-                    .background(.white)
-                    .frame(height: 40)
+                    .background(.clear)
+                    .frame(width: .infinity ,height: 40)
                     .cornerRadius(12)
                     .padding(.trailing)
                 }
             }
             .padding()
+            
+            Button {
+                dismiss()
+            } label: {
+                Text(itemQuantity > 0 ? "Add " : "Add to cart")
+                + (itemQuantity > 0 ? Text("\(itemQuantity)").fontWeight(.heavy) + Text(" to cart") : Text(""))
+            }
+            .frame(width: 150, height: 40)
+            .background(itemQuantity > 0 ? .green : .gray)
+            .foregroundColor(itemQuantity > 0 ? .black : .white)
+            .cornerRadius(14)
+            .padding()
         }
+        .background(Color("mainColorApp", bundle: nil))
+        .frame(height: .infinity)
     }
     
     private func getScale(proxy: GeometryProxy) -> CGFloat {

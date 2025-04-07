@@ -16,83 +16,91 @@ struct ProductsView: View {
     @State private var showDetail = false
 
     var filteredItems: [ProductModel] {
-        if let category = selectedCategory {
-            return viewModel.products.filter { $0.category.name == category }
-        } else if searchText.isEmpty {
-            return viewModel.products
-        } else {
-            return viewModel.products.filter { $0.title.contains(searchText) }
+        viewModel.products.filter { product in
+            let matchesCategory = selectedCategory == nil || product.category.name == selectedCategory
+            let matchesSearch = searchText.isEmpty || product.title.localizedCaseInsensitiveContains(searchText)
+            return matchesCategory && matchesSearch
         }
     }
 
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    if selectedCategory != nil {
-                        Button(action: {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                selectedCategory = nil
+                VStack {
+                    HStack {
+                        if selectedCategory != nil {
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    selectedCategory = nil
+                                }
+                            }) {
+                                Image(systemName: "arrow.left")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 16, height: 16)
+                                    .foregroundColor(.white)
+                                    .padding(10)
                             }
+                            .transition(.opacity)
+                            .animation(.easeInOut(duration: 2.0), value: selectedCategory)
+                        }
+                        
+                        if isSearching {
+                            TextField("Search...", text: $searchText)
+                                .padding(10)
+                                .background(Color(.systemGray6))
+                                .cornerRadius(8)
+                                .transition(.move(edge: .leading))
+                                .animation(.easeInOut(duration: 0.5), value: isSearching)
+                        }
+                        
+                        Spacer()
+
+                        Button(action: {
+                            if searchText.isEmpty {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    isSearching.toggle()
+                                }
+                            } else {
+                                searchText = ""
+                            }
+
                         }) {
-                            Image(systemName: "arrow.left")
+                            Image(systemName: isSearching ? "x.circle" : "magnifyingglass")
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 16, height: 16)
-                                .foregroundColor(.black)
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.white)
                                 .padding(10)
                         }
-                        .transition(.opacity)
-                        .animation(.easeInOut(duration: 2.0), value: selectedCategory)
                     }
+                    .padding(.horizontal)
+
+                    Text(selectedCategory ?? "Explore our collection...")
+                        .foregroundColor(.white)
+                        .font(.system(size: isSearching ? 20 : 30 , weight: .bold))
+                        .frame(width: .infinity, alignment: isSearching ? .leading : .center)
                     
-                    if isSearching {
-                        TextField("Search...", text: $searchText)
-                            .padding(10)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                            .transition(.move(edge: .top))
-                            .animation(.easeInOut(duration: 0.5), value: isSearching)
-                    }
-                    
-                    Spacer()
-
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isSearching.toggle()
-                        }
-                    }) {
-                        Image(systemName: isSearching ? "x.circle" : "magnifyingglass")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.black)
-                            .padding(10)
-                    }
-                }
-                .padding(.horizontal)
-
-                Text(selectedCategory ?? "Categories")
-                    .font(.system(size: 16, weight: .bold))
-                    .padding(.top)
-
-                if selectedCategory == nil {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 16) {
-                            ForEach(viewModel.categories, id: \ .id) { item in
-                                CategoryView(model: item)
-                                    .shadow(color: .black.opacity(0.3), radius: 8, x: 5, y: 5)
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut(duration: 0.5)) {
-                                            selectedCategory = item.name
+                    if selectedCategory == nil && !isSearching {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 16) {
+                                ForEach(viewModel.categories, id: \ .id) { item in
+                                    CategoryView(model: item)
+                                        .shadow(color: .black.opacity(0.3), radius: 8, x: 5, y: 5)
+                                        .onTapGesture {
+                                            withAnimation(.easeInOut(duration: 0.5)) {
+                                                selectedCategory = item.name
+                                            }
                                         }
-                                    }
+                                }
                             }
+                            .padding()
+                            .frame(maxWidth: .infinity, maxHeight: 150)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: 150)
+                        .background(.clear)
                     }
                 }
+                .background(Color("mainColorApp", bundle: nil))
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: 20) {
@@ -115,7 +123,7 @@ struct ProductsView: View {
             .task {
                 await viewModel.loadProducts()
                 await viewModel.loadCategories()
-            }
-        }
+            }.background(Color("mainColorApp", bundle: nil))
+        } .navigationBarHidden(true)
     }
 }
