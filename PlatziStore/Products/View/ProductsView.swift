@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ProductsView: View {
-    @StateObject private var viewModel = ProductsViewModel()
+    let context: NSManagedObjectContext
+    @StateObject private var viewModel: ProductsViewModel
     @State private var searchText: String = ""
     @State private var selectedCategory: String? = nil
     @State private var isSearching: Bool = false
-    @State private var selectedProduct: ProductModel?
+    @State private var selectedProduct: Product?
     @State private var showDetail = false
 
-    var filteredItems: [ProductModel] {
+    var filteredItems: [Product] {
         viewModel.products.filter { product in
-            let matchesCategory = selectedCategory == nil || product.category.name == selectedCategory
-            let matchesSearch = searchText.isEmpty || product.title.localizedCaseInsensitiveContains(searchText)
+            let categoryName = product.categoryRelationship?.name ?? ""
+            let title = product.title ?? ""
+            let matchesCategory = selectedCategory == nil || categoryName == selectedCategory
+            let matchesSearch = searchText.isEmpty || title.localizedCaseInsensitiveContains(searchText)
             return matchesCategory && matchesSearch
         }
     }
@@ -86,7 +90,7 @@ struct ProductsView: View {
                             LazyHStack(spacing: 16) {
                                 ForEach(viewModel.categories, id: \ .id) { item in
                                     CategoryView(model: item)
-                                        .shadow(color: .black.opacity(0.3), radius: 8, x: 5, y: 5)
+                                        .shadow(color: Color.black.opacity(0.3), radius: 8, x: 5, y: 5)
                                         .onTapGesture {
                                             withAnimation(.easeInOut(duration: 0.5)) {
                                                 selectedCategory = item.name
@@ -125,5 +129,10 @@ struct ProductsView: View {
                 await viewModel.loadCategories()
             }.background(Color("mainColorApp", bundle: nil))
         } .navigationBarHidden(true)
+    }
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        _viewModel = StateObject(wrappedValue: ProductsViewModel(context: context))
     }
 }

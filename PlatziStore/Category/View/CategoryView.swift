@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryView: View {
-    let model: CategoryModel?
+    let model: Category?
     
     var body: some View {
         VStack {

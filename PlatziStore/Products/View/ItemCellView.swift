@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ItemCellView: View {
-    var model: ProductModel
+    var model: Product
 
     var body: some View {
         
             HStack(spacing: 16) {
-                AsyncImage(url: URL(string: model.images[0])) { image in
+                AsyncImage(url: URL(string: model.imagesArray.first ?? "")) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -27,7 +27,7 @@ struct ItemCellView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(model.title)
+                    Text(model.title ?? "")
                         .font(.headline)
                         .lineLimit(3)
                         .truncationMode(.tail)

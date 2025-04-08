@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Environment(\.dismiss) private var dismiss
-    var product: ProductModel
+    var product: Product
     @State private var selectedIndex: Int = 0
     @State private var scrollOffSet: CGFloat = 0.0
     private let itemWidth: CGFloat = 230
@@ -29,11 +29,11 @@ struct ProductDetailView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
-                    ForEach(product.images.indices, id: \.self) { index in
+                    ForEach(product.imagesArray.indices, id: \.self) { index in
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
                             
-                            AsyncImage(url: URL(string: product.images[index])) { image in
+                            AsyncImage(url: URL(string: product.imagesArray[index])) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
@@ -58,7 +58,7 @@ struct ProductDetailView: View {
             Spacer()
             
             VStack(alignment: .leading) {
-                Text(product.title)
+                Text(product.title ?? "")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)

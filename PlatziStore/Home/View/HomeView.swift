@@ -8,21 +8,22 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel = HomeViewModel()
     
     init() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor(named: "mainColorApp") // Color azul superior
+        tabBarAppearance.backgroundColor = UIColor(named: "mainColorApp")
         
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6) // Íconos inactivos en gris claro
+        UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
     }
 
     var body: some View {
         TabView {
-            ProductsView()
+            ProductsView(context: context)
                 .tabItem {
                     Label("Products", systemImage: "cart")
                 }

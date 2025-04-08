@@ -6,24 +6,29 @@
 //
 
 import Foundation
+import CoreData
 
 class ProductsViewModel: ObservableObject {
-    @Published var products: [ProductModel] = []
-    @Published var categories: [CategoryModel] = []
+    @Published var products: [Product] = []
+    @Published var categories: [Category] = []
 
-    let productService: ProductServiceInterface
-    let categoryService: CategoryInterface
+    let service: NetworkService
+    private let context: NSManagedObjectContext
 
-    init(productService: ProductServiceInterface = ProductService(), categoryService: CategoryInterface = CategoryService()) {
-        self.productService = productService
-        self.categoryService = categoryService
+    init(service: NetworkService = ApiService(), context: NSManagedObjectContext) {
+        self.service = service
+        self.context = context
     }
 
     @MainActor
     func loadProducts() async {
         do {
-            let fetchedProducts = try await productService.fetchProducts(url: "https://api.escuelajs.co/api/v1/products")
-            self.products = fetchedProducts
+            let products = try await service.fetchEntities(
+                urlString: "https://api.escuelajs.co/api/v1/products",
+                context: context,
+                transform: Product.from
+            )
+            self.products = products
         } catch {
             print("Error al cargar productos:", error)
         }
@@ -32,8 +37,12 @@ class ProductsViewModel: ObservableObject {
     @MainActor
     func loadCategories() async {
         do {
-            let fetchedCategories = try await categoryService.fetchCategories(url: "https://api.escuelajs.co/api/v1/categories")
-            self.categories = fetchedCategories
+            let categories = try await service.fetchEntities(
+                urlString: "https://api.escuelajs.co/api/v1/categories",
+                context: context,
+                transform: Category.from
+            )
+            self.categories = categories
         } catch {
             print("Error al cargar categorías:", error)
         }
