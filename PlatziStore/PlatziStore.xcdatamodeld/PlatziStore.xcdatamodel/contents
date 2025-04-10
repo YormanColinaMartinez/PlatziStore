@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22H313" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22H313" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
-        <attribute name="creationAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product"/>
+        <attribute name="slug" optional="YES" attributeType="String"/>
+        <relationship name="productsRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" inverseName="categoryRelationship" inverseEntity="Product"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="Product" representedClassName="Product" syncable="YES" codeGenerationType="class">
-        <attribute name="category" optional="YES" attributeType="Transformable"/>
-        <attribute name="creationAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="images" optional="YES" attributeType="Transformable" valueTransformerName="StringArrayTransformer"/>
-        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="productDescription" optional="YES" attributeType="String"/>
+        <attribute name="slug" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="categoryRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category"/>
+        <relationship name="categoryRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="productsRelationship" inverseEntity="Category"/>
+        <relationship name="imagesRelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProductImage" inverseName="productRelationship" inverseEntity="ProductImage"/>
+    </entity>
+    <entity name="ProductImage" representedClassName=".ProductImage" syncable="YES" codeGenerationType="class">
+        <attribute name="url" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="productRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" inverseName="imagesRelationship" inverseEntity="Product"/>
     </entity>
 </model>

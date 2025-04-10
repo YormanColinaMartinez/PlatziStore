@@ -10,21 +10,17 @@ import CoreData
 
 struct ContentView: View {
     @State private var showSplashScreen = true
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    
     var body: some View {
         ZStack {
             if showSplashScreen {
                 SplashView()
                     .transition(.opacity)
             } else {
-                LoginView()
+                HomeView()
             }
-        }.onAppear {
+        }
+        .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     showSplashScreen = false
@@ -42,5 +38,6 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

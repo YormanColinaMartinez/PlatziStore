@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ProductsView: View {
-    let context: NSManagedObjectContext
-    @StateObject private var viewModel: ProductsViewModel
+    @Environment(\.managedObjectContext) private var context
+    @StateObject private var viewModel: ProductsViewModel = ProductsViewModel()
     @State private var searchText: String = ""
     @State private var selectedCategory: String? = nil
     @State private var isSearching: Bool = false
@@ -125,14 +125,9 @@ struct ProductsView: View {
                 ProductDetailView(product: product)
             }
             .task {
-                await viewModel.loadProducts()
-                await viewModel.loadCategories()
+                await viewModel.loadProducts(context: context)
+                await viewModel.loadCategories(context: context)
             }.background(Color("mainColorApp", bundle: nil))
         } .navigationBarHidden(true)
-    }
-    
-    init(context: NSManagedObjectContext) {
-        self.context = context
-        _viewModel = StateObject(wrappedValue: ProductsViewModel(context: context))
     }
 }

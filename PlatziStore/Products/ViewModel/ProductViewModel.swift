@@ -5,37 +5,36 @@
 //  Created by mac on 2/04/25.
 //
 
-import Foundation
+import SwiftUI
 import CoreData
 
 class ProductsViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var categories: [Category] = []
+    private let service: NetworkService
 
-    let service: NetworkService
-    private let context: NSManagedObjectContext
-
-    init(service: NetworkService = ApiService(), context: NSManagedObjectContext) {
+    init(service: NetworkService = ApiService()) {
         self.service = service
-        self.context = context
     }
 
     @MainActor
-    func loadProducts() async {
+    func loadProducts(context: NSManagedObjectContext) async {
         do {
             let products = try await service.fetchEntities(
                 urlString: "https://api.escuelajs.co/api/v1/products",
                 context: context,
-                transform: Product.from
+                transform: { response, context in
+                    Product.from(response: response, context: context)
+                }
             )
             self.products = products
         } catch {
-            print("Error al cargar productos:", error)
+            print("Error al cargar productos:", error.localizedDescription)
         }
     }
-
+    
     @MainActor
-    func loadCategories() async {
+    func loadCategories(context: NSManagedObjectContext) async {
         do {
             let categories = try await service.fetchEntities(
                 urlString: "https://api.escuelajs.co/api/v1/categories",

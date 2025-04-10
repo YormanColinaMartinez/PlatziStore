@@ -10,7 +10,7 @@ import CoreData
 
 extension Product {
     var imagesArray: [String] {
-        return images as? [String] ?? []
+        (imagesRelationship?.allObjects as? [ProductImage])?.compactMap { $0.url } ?? []
     }
     
     static func from(response: ProductResponse, context: NSManagedObjectContext) -> Product {
@@ -19,14 +19,20 @@ extension Product {
         product.title = response.title
         product.price = response.price
         product.productDescription = response.productDescription
-        product.images = response.images as NSObject
-        product.creationAt = ISO8601DateFormatter().date(from: response.creationAt) ?? Date()
-        product.updatedAt = ISO8601DateFormatter().date(from: response.updatedAt) ?? Date()
+        product.slug = response.slug
+
+        for url in response.images {
+            let productImage = ProductImage(context: context)
+            if !url.isEmpty {
+                productImage.url = url
+            } else {
+                print("Imagen con URL vacía encontrada")
+            }
+            productImage.productRelationship = product
+        }
+        product.categoryRelationship = Category.from(response: response.category, context: context)
+
         
-        let category = Category(context: context)
-        category.id = response.category.id
-        category.name = response.category.name
-        product.category = category
         return product
     }
 }
@@ -34,10 +40,20 @@ extension Product {
 struct ProductResponse: Decodable {
     let id: Int64
     let title: String
-    let price: Double
+    let price: Int64
     let productDescription: String
     let images: [String]
-    let creationAt: String
-    let updatedAt: String
+    let slug: String
     let category: CategoryResponse
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case price
+        case productDescription = "description"
+        case images
+        case category
+        case slug
+    }
 }
+

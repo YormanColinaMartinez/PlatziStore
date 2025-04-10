@@ -3,4 +3,69 @@
    uuid = "AD0ED5EB-38F8-449F-9985-7A71CCDC9EC3"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "99A1AFE1-056F-4CD8-8B34-F3F4AF0F6CB4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PlatziStore/Products/Model/Product.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "from(response:context:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "99A1AFE1-056F-4CD8-8B34-F3F4AF0F6CB4 - 8a85b1a37353675f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static PlatziStore.Product.from(response: PlatziStore.ProductResponse, context: __C.NSManagedObjectContext) -&gt; PlatziStore.Product"
+                  moduleName = "PlatziStore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Desktop/PlatziStore/PlatziStore/Products/Model/Product.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "1091">
+               </Location>
+               <Location
+                  uuid = "99A1AFE1-056F-4CD8-8B34-F3F4AF0F6CB4 - 8a85b1a373536778"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static PlatziStore.Product.from(response: PlatziStore.ProductResponse, context: __C.NSManagedObjectContext) -&gt; PlatziStore.Product"
+                  moduleName = "PlatziStore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Desktop/PlatziStore/PlatziStore/Products/Model/Product.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1078">
+               </Location>
+               <Location
+                  uuid = "99A1AFE1-056F-4CD8-8B34-F3F4AF0F6CB4 - 8a85b1a373536778"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static PlatziStore.Product.from(response: PlatziStore.ProductResponse, context: __C.NSManagedObjectContext) -&gt; PlatziStore.Product"
+                  moduleName = "PlatziStore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac/Desktop/PlatziStore/PlatziStore/Products/Model/Product.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "1120">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

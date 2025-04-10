@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct LoginView: View {
+    @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel = LoginViewModel()
     @State private var isSignUpMode: Bool = false
     @State private var confirmPassword: String = ""

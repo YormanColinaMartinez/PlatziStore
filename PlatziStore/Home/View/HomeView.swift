@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct HomeView: View {
     @Environment(\.managedObjectContext) private var context
-    @StateObject private var viewModel = HomeViewModel()
     
     init() {
         let tabBarAppearance = UITabBarAppearance()
@@ -23,7 +23,7 @@ struct HomeView: View {
 
     var body: some View {
         TabView {
-            ProductsView(context: context)
+            ProductsView()
                 .tabItem {
                     Label("Products", systemImage: "cart")
                 }

@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0494FA772DA6F78A001AB29D /* PlatziStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0494FA752DA6F78A001AB29D /* PlatziStore.xcdatamodeld */; };
 		04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */; };
 		04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC82D9D95D6002BA816 /* ContentView.swift */; };
 		04C95ACB2D9D95D9002BA816 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C95ACA2D9D95D9002BA816 /* Assets.xcassets */; };
 		04C95ACE2D9D95D9002BA816 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C95ACD2D9D95D9002BA816 /* Preview Assets.xcassets */; };
 		04C95AD02D9D95D9002BA816 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95ACF2D9D95D9002BA816 /* Persistence.swift */; };
-		04C95AD32D9D95D9002BA816 /* PlatziStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AD12D9D95D9002BA816 /* PlatziStore.xcdatamodeld */; };
 		04C95ADD2D9D95D9002BA816 /* PlatziStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95ADC2D9D95D9002BA816 /* PlatziStoreTests.swift */; };
 		04C95AE72D9D95D9002BA816 /* PlatziStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AE62D9D95D9002BA816 /* PlatziStoreUITests.swift */; };
 		04C95AE92D9D95D9002BA816 /* PlatziStoreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AE82D9D95D9002BA816 /* PlatziStoreUITestsLaunchTests.swift */; };
@@ -61,13 +61,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0494FA762DA6F78A001AB29D /* PlatziStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatziStore.xcdatamodel; sourceTree = "<group>"; };
 		04C95AC32D9D95D6002BA816 /* PlatziStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlatziStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatziStoreApp.swift; sourceTree = "<group>"; };
 		04C95AC82D9D95D6002BA816 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		04C95ACA2D9D95D9002BA816 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04C95ACD2D9D95D9002BA816 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		04C95ACF2D9D95D9002BA816 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		04C95AD22D9D95D9002BA816 /* PlatziStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatziStore.xcdatamodel; sourceTree = "<group>"; };
 		04C95AD82D9D95D9002BA816 /* PlatziStoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatziStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C95ADC2D9D95D9002BA816 /* PlatziStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatziStoreTests.swift; sourceTree = "<group>"; };
 		04C95AE22D9D95D9002BA816 /* PlatziStoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatziStoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,8 +162,8 @@
 				04C95AC82D9D95D6002BA816 /* ContentView.swift */,
 				04C95ACA2D9D95D9002BA816 /* Assets.xcassets */,
 				04C95ACF2D9D95D9002BA816 /* Persistence.swift */,
-				04C95AD12D9D95D9002BA816 /* PlatziStore.xcdatamodeld */,
 				04C95ACC2D9D95D9002BA816 /* Preview Content */,
+				0494FA752DA6F78A001AB29D /* PlatziStore.xcdatamodeld */,
 			);
 			path = PlatziStore;
 			sourceTree = "<group>";
@@ -598,6 +598,7 @@
 				04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */,
 				04C95B222D9DD565002BA816 /* HomeViewModel.swift in Sources */,
 				04C95B4E2DA45F65002BA816 /* AuthResponse.swift in Sources */,
+				0494FA772DA6F78A001AB29D /* PlatziStore.xcdatamodeld in Sources */,
 				04C95B1C2D9DC5E3002BA816 /* ServiceError.swift in Sources */,
 				04C95B182D9DB4F0002BA816 /* ProductViewModel.swift in Sources */,
 				04C95B002D9DA1EA002BA816 /* ProductsView.swift in Sources */,
@@ -607,7 +608,6 @@
 				04C95B412DA45E36002BA816 /* Strings.swift in Sources */,
 				04C95B472DA45ED2002BA816 /* AuthService.swift in Sources */,
 				04C95B3E2DA45D51002BA816 /* LoginView.swift in Sources */,
-				04C95AD32D9D95D9002BA816 /* PlatziStore.xcdatamodeld in Sources */,
 				04C95AF92D9D9709002BA816 /* SplashView.swift in Sources */,
 				04C95B152D9DAB05002BA816 /* ApiService.swift in Sources */,
 				04C95B442DA45E82002BA816 /* UIAplication.swift in Sources */,
@@ -954,12 +954,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		04C95AD12D9D95D9002BA816 /* PlatziStore.xcdatamodeld */ = {
+		0494FA752DA6F78A001AB29D /* PlatziStore.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				04C95AD22D9D95D9002BA816 /* PlatziStore.xcdatamodel */,
+				0494FA762DA6F78A001AB29D /* PlatziStore.xcdatamodel */,
 			);
-			currentVersion = 04C95AD22D9D95D9002BA816 /* PlatziStore.xcdatamodel */;
+			currentVersion = 0494FA762DA6F78A001AB29D /* PlatziStore.xcdatamodel */;
 			path = PlatziStore.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
