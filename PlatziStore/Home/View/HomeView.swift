@@ -10,6 +10,7 @@ import CoreData
 
 struct HomeView: View {
     @Environment(\.managedObjectContext) private var context
+    @StateObject private var manager: CartViewModel
     
     init() {
         let tabBarAppearance = UITabBarAppearance()
@@ -19,19 +20,19 @@ struct HomeView: View {
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
+        _manager = StateObject(wrappedValue: CartViewModel(context: PersistenceController.shared.container.viewContext))
     }
 
     var body: some View {
         TabView {
-            ProductsView()
+            ProductsView(manager: manager)
                 .tabItem {
                     Label("Products", systemImage: "cart")
                 }
-            CartView()
+            CartView(manager: manager)
                 .tabItem {
                     Label("Orders", systemImage: "bag")
                 }
-            
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person")

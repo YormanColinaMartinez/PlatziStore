@@ -11,6 +11,7 @@ import CoreData
 struct ProductsView: View {
     @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel: ProductsViewModel = ProductsViewModel()
+    @ObservedObject private var manager: CartViewModel
     @State private var searchText: String = ""
     @State private var selectedCategory: String? = nil
     @State private var isSearching: Bool = false
@@ -27,10 +28,14 @@ struct ProductsView: View {
         }
     }
 
+    init(manager: CartViewModel) {
+        self.manager = manager
+    }
+
     var body: some View {
         NavigationView {
-            VStack {
-                VStack {
+            VStack(spacing: 0) {
+                VStack( spacing: 8) {
                     HStack {
                         if selectedCategory != nil {
                             Button(action: {
@@ -79,12 +84,12 @@ struct ProductsView: View {
                         }
                     }
                     .padding(.horizontal)
-
+                    
                     Text(selectedCategory ?? "Explore our collection...")
                         .foregroundColor(.white)
                         .font(.system(size: isSearching ? 20 : 30 , weight: .bold))
                         .frame(width: .infinity, alignment: isSearching ? .leading : .center)
-                    
+
                     if selectedCategory == nil && !isSearching {
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack(spacing: 16) {
@@ -104,12 +109,13 @@ struct ProductsView: View {
                         .background(.clear)
                     }
                 }
+                .padding(.vertical)
                 .background(Color("mainColorApp", bundle: nil))
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack(spacing: 20) {
-                        ForEach(filteredItems, id: \ .id) { item in
-                            ItemCellView(model: item)
+
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                        ForEach(filteredItems, id: \.id) { item in
+                            ItemCellView(model: item, manager: manager)
                                 .onTapGesture {
                                     selectedProduct = item
                                     showDetail = true
@@ -117,17 +123,18 @@ struct ProductsView: View {
                         }
                     }
                     .padding()
-                    .transition(.move(edge: .bottom))
-                    .animation(.easeInOut(duration: 0.5), value: selectedCategory)
                 }
             }
+            .background(Color("mainColorApp", bundle: nil))
+            .navigationBarHidden(true)
             .fullScreenCover(item: $selectedProduct) { product in
-                ProductDetailView(product: product)
+                ProductDetailView(manager: manager, product: product)
             }
             .task {
                 await viewModel.loadProducts(context: context)
                 await viewModel.loadCategories(context: context)
-            }.background(Color("mainColorApp", bundle: nil))
-        } .navigationBarHidden(true)
+            }
+        }
     }
 }
+

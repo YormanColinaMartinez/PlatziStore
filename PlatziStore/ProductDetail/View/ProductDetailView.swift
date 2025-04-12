@@ -9,16 +9,19 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Environment(\.dismiss) private var dismiss
-    var product: Product
-    @State private var selectedIndex: Int = 0
-    @State private var scrollOffSet: CGFloat = 0.0
-    private let itemWidth: CGFloat = 230
+    @ObservedObject private var manager: CartViewModel
     @State private var itemQuantity: Int = 0
-    
+    private let itemWidth: CGFloat = 230
+    var product: Product
+
+    init(manager: CartViewModel, product: Product) {
+        self.manager = manager
+        self.product = product
+    }
+
     var body: some View {
         VStack {
-            Button(action: {dismiss()},
-                   label: {
+            Button(action: { dismiss() }, label: {
                 Image(systemName: "xmark")
                     .resizable()
                     .foregroundColor(.white)
@@ -26,13 +29,13 @@ struct ProductDetailView: View {
             .position(x: -150, y: 10)
             .frame(width: 20, height: 20)
             .foregroundColor(.black)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(product.imagesArray.indices, id: \.self) { index in
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
-                            
+
                             AsyncImage(url: URL(string: product.imagesArray[index])) { image in
                                 image
                                     .resizable()
@@ -54,30 +57,30 @@ struct ProductDetailView: View {
                 .padding(.horizontal, 40)
             }
             .frame(height: itemWidth * 1.1)
-            
+
             Spacer()
-            
+
             VStack(alignment: .leading) {
                 Text(product.title ?? "")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding(.leading)
-                
+
                 Text(product.description)
                     .font(.body)
                     .foregroundStyle(.gray)
                     .padding()
-                
+
                 HStack {
                     Text("$\(product.price, specifier: "%.2f")")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
                         .padding(.leading)
-                    
+
                     Spacer()
-                    
+
                     HStack(spacing: 16) {
                         Button {
                             if self.itemQuantity > 0 {
@@ -90,15 +93,14 @@ struct ProductDetailView: View {
                                 .frame(width: 25, height: 25)
                                 .foregroundColor(.white)
                                 .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.3),radius: 2, x: -2, y: 2)
+                                .shadow(color: .black.opacity(0.3), radius: 2, x: -2, y: 2)
                         }
                         .frame(width: 30, height: 30)
                         .padding(.leading)
-                        
+
                         Text("\(itemQuantity)")
                             .foregroundColor(.gray)
-                            .frame(width: .infinity)
-                        
+
                         Button(action: { self.itemQuantity += 1 }, label: {
                             Image(systemName: "plus.circle")
                                 .resizable()
@@ -106,20 +108,22 @@ struct ProductDetailView: View {
                                 .frame(width: 25, height: 25)
                                 .foregroundColor(.white)
                                 .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.3),radius: 2, x: -2, y: 2)
+                                .shadow(color: .black.opacity(0.3), radius: 2, x: -2, y: 2)
                         })
                         .frame(width: 40, height: 40)
                         .padding(.trailing)
                     }
-                    .background(.clear)
-                    .frame(width: .infinity ,height: 40)
+                    .frame(height: 40)
                     .cornerRadius(12)
                     .padding(.trailing)
                 }
             }
             .padding()
-            
+
             Button {
+                if itemQuantity > 0 {
+                    manager.add(product: product, quantity: itemQuantity)
+                }
                 dismiss()
             } label: {
                 Text(itemQuantity > 0 ? "Add " : "Add to cart")
@@ -132,9 +136,8 @@ struct ProductDetailView: View {
             .padding()
         }
         .background(Color("mainColorApp", bundle: nil))
-        .frame(height: .infinity)
     }
-    
+
     private func getScale(proxy: GeometryProxy) -> CGFloat {
         let midPoint = UIScreen.main.bounds.width / 2
         let viewMid = proxy.frame(in: .global).midX
@@ -142,4 +145,4 @@ struct ProductDetailView: View {
         let scale = max(1.0 - (distance / midPoint * 0.4), 0.85)
         return scale
     }
-}
+//}

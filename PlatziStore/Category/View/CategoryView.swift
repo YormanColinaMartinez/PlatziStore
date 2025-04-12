@@ -25,6 +25,8 @@ struct CategoryView: View {
             }
             Text(model?.name ?? "")
                 .foregroundColor(.white)
+                .lineLimit(.max)
+                .frame(width: 90)
         }
     }
 }
