@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class LoginViewModel: ObservableObject {
     @Published var navigateToHome = false
     @Published var name = ""
@@ -14,49 +15,58 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var accessToken: String = ""
     
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
     }
     
-    func login() async throws -> Bool {
+    func login() async -> String? {
         guard isFormValid else {
-            errorMessage = "Por favor, ingresa un email y contraseña válidos."
-            return false
+            self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
+            return nil
         }
         
-        isLoading = true
-        errorMessage = nil
-        
+        self.isLoading = true
+        self.errorMessage = nil
+
+        defer {
+            self.isLoading = false
+        }
+
         do {
-            let success = try await AuthService.shared.login(email: email, password: password)
-            if success {
-                
-            } else {
-                errorMessage = "Credenciales inválidas"
+            guard let token = try await AuthService.shared.login(email: email, password: password) else {
+                return nil
             }
+            self.accessToken = token
+            return token
+        } catch let error as ServiceError {
+            self.errorMessage = error.userFriendlyMessage
+            return nil
         } catch {
-            errorMessage = "Error: \(error.localizedDescription)"
+            self.errorMessage = "Ocurrió un error inesperado. Por favor intenta nuevamente."
+            return nil
         }
-        
-        isLoading = false
-        return true
     }
     
-    func createUser() async throws -> Bool {
+    func createUser() async throws -> String? {
         guard isFormValid else {
-            errorMessage = "Por favor, ingresa un email y contraseña válidos."
-            return false
+            self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
+            return nil
         }
         
-        isLoading = true
-        errorMessage = nil
+        self.isLoading = true
+        self.errorMessage = nil
         
         do {
-            let success = try await AuthService.shared.register(name: name, email: email, password: password)
-            return success
+            guard let token = try await AuthService.shared.register(name: name, email: email, password: password) else {
+                return nil
+            }
+            accessToken = token
+            return token
         } catch {
-            return false
+            print(error.localizedDescription)
+            return nil
         }
     }
 }

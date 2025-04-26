@@ -20,35 +20,31 @@ class ApiService: NetworkService {
         context: NSManagedObjectContext,
         transform: @escaping (ResponseType, NSManagedObjectContext) -> EntityType
     ) async throws -> [EntityType] {
-        
+
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
+
+        let (data, _) = try await session.data(from: url)
         let decoder = JSONDecoder()
-        
+
+        let decoded: [ResponseType]
         do {
-            let decoded = try decoder.decode([ResponseType].self, from: data)
-            let entities = decoded.map { transform($0, context) }
-                do {
-                    try context.save()
-                } catch {
-                    throw error
-                }
-            return entities
+            decoded = try decoder.decode([ResponseType].self, from: data)
         } catch {
             throw error
         }
+
+        let entities = decoded.map { transform($0, context) }
+
+        do {
+            try context.save()
+        } catch {
+            throw error
+        }
+
+        return entities
     }
 }
 
-extension NSError {
-    var detailedErrors: [Error]? {
-        if let multipleErrors = userInfo[NSDetailedErrorsKey] as? [Error] {
-            return multipleErrors
-        } else {
-            return [self]
-        }
-    }
-}
+

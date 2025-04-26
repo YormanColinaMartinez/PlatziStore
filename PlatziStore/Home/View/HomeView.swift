@@ -11,8 +11,9 @@ import CoreData
 struct HomeView: View {
     @Environment(\.managedObjectContext) private var context
     @StateObject private var manager: CartViewModel
+    let accessToken: String
     
-    init() {
+    init(accessToken: String) {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
         tabBarAppearance.backgroundColor = UIColor(named: "mainColorApp")
@@ -21,6 +22,7 @@ struct HomeView: View {
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
         _manager = StateObject(wrappedValue: CartViewModel(context: PersistenceController.shared.container.viewContext))
+        self.accessToken = accessToken
     }
 
     var body: some View {
@@ -33,11 +35,13 @@ struct HomeView: View {
                 .tabItem {
                     Label("Orders", systemImage: "bag")
                 }
-            ProfileView()
+            ProfileView(viewModel: ProfileViewModel(accessToken: accessToken))
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }
         }
         .accentColor(.white)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }

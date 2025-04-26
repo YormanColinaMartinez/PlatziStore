@@ -16,7 +16,7 @@ final class AuthService {
     }
     
     // MARK: - Registro
-    func register(name: String, email: String, password: String) async throws -> Bool {
+    func register(name: String, email: String, password: String) async throws -> String? {
         guard let url = URL(string: "\(baseULR)/users/") else {
             throw ServiceError.invalidURL
         }
@@ -53,7 +53,7 @@ final class AuthService {
     }
     
     // MARK: - Inicio de sesión
-    func login(email: String, password: String) async throws -> Bool {
+    func login(email: String, password: String) async throws -> String? {
         guard let url = URL(string: "\(baseULR)/auth/login") else {
             throw ServiceError.invalidURL
         }
@@ -84,11 +84,10 @@ final class AuthService {
             
             let authResponse = try JSONDecoder().decode(AuthResponse.self, from: data)
             self.token = authResponse.access_token
-            return true
+            return token ?? ""
         } catch let error as Swift.DecodingError {
             throw ServiceError.decodingError(error)
         } catch {
-            print(ServiceError.networkError(error))
             throw ServiceError.networkError(error)
         }
     }

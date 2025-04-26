@@ -35,7 +35,8 @@ struct LoginView: View {
                     UIApplication.shared.hideKeyboard()
                 }
                 .navigationDestination(isPresented: $viewModel.navigateToHome) {
-                    HomeView()
+                    HomeView(accessToken: viewModel.accessToken)
+                    
                 }
             }
             .scrollIndicators(.hidden)
@@ -65,22 +66,23 @@ struct LoginView: View {
             if isSignUpMode {
                 CustomTextField(placeholder: "Name", text: $viewModel.name)
                     .transition(.opacity.combined(with: .move(edge: .top)))
-                    .onChange(of: viewModel.name) { newValue in
-                        viewModel.name = newValue.lowercased()
+                    .onChange(of: viewModel.name) {
+                        viewModel.name = viewModel.name.lowercased()
                         viewModel.errorMessage = nil
                     }
+
             }
             
             CustomTextField(placeholder: Strings.email.rawValue, text: $viewModel.email)
                 .keyboardType(.emailAddress)
-                .onChange(of: viewModel.email) { newValue in
-                    viewModel.email = newValue.lowercased()
+                .onChange(of: viewModel.email) {
+                    viewModel.email = viewModel.email.lowercased()
                     viewModel.errorMessage = nil
                 }
             
             CustomTextField(placeholder: Strings.password.rawValue, text: $viewModel.password, isSecure: true)
-                .onChange(of: viewModel.password) { newValue in
-                    viewModel.password = newValue
+                .onChange(of: viewModel.password) {
+                    viewModel.password = viewModel.password
                     viewModel.errorMessage = nil
                 }
             
@@ -108,11 +110,8 @@ struct LoginView: View {
                                 viewModel.errorMessage = error
                                 return
                             }
-                            
-                            if try await viewModel.login() {
-                                viewModel.isLoading = false
-                                viewModel.navigateToHome = true
-                            }
+                            await viewModel.navigateToHome = (viewModel.login() != nil)
+                            viewModel.isLoading = false
                         }
                     }
                     viewModel.errorMessage = nil
@@ -136,7 +135,7 @@ struct LoginView: View {
                                 return
                             }
                             
-                            if try await viewModel.createUser() {
+                            if ((try await viewModel.createUser()) != nil) {
                                 viewModel.isLoading = false
                                 viewModel.navigateToHome = true
                             }

@@ -67,13 +67,13 @@ struct ProductDetailView: View {
                     .foregroundColor(.white)
                     .padding(.leading)
 
-                Text(product.description)
+                Text(product.productDescription ?? "")
                     .font(.body)
                     .foregroundStyle(.gray)
                     .padding()
 
                 HStack {
-                    Text("$\(product.price, specifier: "%.2f")")
+                    Text("$\(product.price)")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
@@ -145,4 +145,4 @@ struct ProductDetailView: View {
         let scale = max(1.0 - (distance / midPoint * 0.4), 0.85)
         return scale
     }
-//}
+}

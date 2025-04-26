@@ -10,19 +10,19 @@ import CoreData
 
 struct CartView: View {
     @StateObject private var cartManager: CartViewModel
-
+    
     init(manager: CartViewModel) {
         _cartManager = StateObject(wrappedValue: manager)
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(alignment: .center) {
                 Text("My Cart")
-                    .font(.largeTitle)
+                    .frame(width: .infinity)
+                    .font(.system(size: 20))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                Spacer()
             }
             .padding()
             
@@ -39,16 +39,16 @@ struct CartView: View {
                             }
                             .frame(width: 80, height: 80)
                             .cornerRadius(10)
-
+                            
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(item.name ?? "")
                                     .font(.headline)
                                     .foregroundColor(.white)
-                                Text("$\(item.price, specifier: "%.2f")")
+                                Text("$\(item.price)")
                                     .foregroundColor(.green)
                             }
                             Spacer()
-
+                            
                             HStack(spacing: 8) {
                                 Button(action: {
                                     cartManager.updateQuantity(for: item, change: -1)
@@ -59,10 +59,10 @@ struct CartView: View {
                                         .background(Color.gray)
                                         .clipShape(Circle())
                                 }
-
+                                
                                 Text("\(item.quantity)")
                                     .foregroundColor(.white)
-
+                                
                                 Button(action: {
                                     cartManager.updateQuantity(for: item, change: 1)
                                 }) {
@@ -82,7 +82,7 @@ struct CartView: View {
                 }
                 .padding(.top)
             }
-
+            
             VStack(spacing: 16) {
                 HStack {
                     Text("Total")
@@ -95,7 +95,7 @@ struct CartView: View {
                         .foregroundColor(.green)
                 }
                 .padding(.horizontal)
-
+                
                 Button(action: {
                 }) {
                     Text("Checkout")
@@ -112,4 +112,5 @@ struct CartView: View {
             .padding(.bottom, 30)
         }
         .background(Color("mainColorApp", bundle: nil))
-    }}
+    }
+}

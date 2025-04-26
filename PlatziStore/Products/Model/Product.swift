@@ -56,4 +56,3 @@ struct ProductResponse: Decodable {
         case slug
     }
 }
-

@@ -17,7 +17,7 @@ struct ContentView: View {
                 SplashView()
                     .transition(.opacity)
             } else {
-                HomeView()
+                LoginView()
             }
         }
         .onAppear {
