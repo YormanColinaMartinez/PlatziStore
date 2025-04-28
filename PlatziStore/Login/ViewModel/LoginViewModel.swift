@@ -16,12 +16,15 @@ class LoginViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var accessToken: String = ""
+    @State var confirmPassword: String = ""
+    @State var isSignUpMode: Bool = false
     
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
     }
     
     func login() async -> String? {
+        isSignUpMode = false
         guard isFormValid else {
             self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
             return nil
@@ -50,6 +53,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func createUser() async throws -> String? {
+        isSignUpMode = true
         guard isFormValid else {
             self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
             return nil
@@ -68,5 +72,18 @@ class LoginViewModel: ObservableObject {
             print(error.localizedDescription)
             return nil
         }
+    }
+    
+    func validateForm(isSignUpMode: Bool, confirmPassword: String) -> String? {
+        if email.isEmpty || !email.contains("@") {
+            return "Por favor, ingresa un email válido."
+        }
+        if password.isEmpty {
+            return "Por favor, ingresa una contraseña válida."
+        }
+        if isSignUpMode && password != confirmPassword {
+            return "Las contraseñas no coinciden."
+        }
+        return nil
     }
 }

@@ -12,7 +12,7 @@ struct ProductDetailView: View {
     @ObservedObject private var manager: CartViewModel
     @State private var itemQuantity: Int = 0
     private let itemWidth: CGFloat = 230
-    var product: Product
+    private var product: Product
 
     init(manager: CartViewModel, product: Product) {
         self.manager = manager

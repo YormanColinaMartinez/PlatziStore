@@ -33,7 +33,7 @@ struct HomeView: View {
                 }
             CartView(manager: manager)
                 .tabItem {
-                    Label("Orders", systemImage: "bag")
+                    Label("Cart", systemImage: "bag")
                 }
             ProfileView(viewModel: ProfileViewModel(accessToken: accessToken))
                 .tabItem {

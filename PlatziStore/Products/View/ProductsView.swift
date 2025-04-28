@@ -114,7 +114,7 @@ struct ProductsView: View {
 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                        ForEach(filteredItems, id: \.id) { item in
+                        ForEach(filteredItems.filter { isValidURL($0.imagesArray.first) }, id: \.id) { item in
                             ItemCellView(model: item, manager: manager)
                                 .onTapGesture {
                                     selectedProduct = item
@@ -136,5 +136,15 @@ struct ProductsView: View {
             }
         }
     }
-}
+    
+    func isValidURL(_ urlString: String?) -> Bool {
+        guard let urlString = urlString,
+              let url = URL(string: urlString),
+              UIApplication.shared.canOpenURL(url),
+              !urlString.contains("imgur.com/removed") else {
+            return false
+        }
+        return true
+    }
 
+}

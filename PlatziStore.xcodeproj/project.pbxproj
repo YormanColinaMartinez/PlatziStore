@@ -18,6 +18,7 @@
 		0499205F2DBC2C7E00F3438A /* NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499205E2DBC2C7E00F3438A /* NSError.swift */; };
 		049920612DBC35B600F3438A /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920602DBC35B600F3438A /* EditProfileView.swift */; };
 		049920642DBC35F800F3438A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920632DBC35F800F3438A /* ImagePicker.swift */; };
+		049920672DC0336400F3438A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920662DC0336400F3438A /* CustomTextField.swift */; };
 		04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */; };
 		04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC82D9D95D6002BA816 /* ContentView.swift */; };
 		04C95ACB2D9D95D9002BA816 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C95ACA2D9D95D9002BA816 /* Assets.xcassets */; };
@@ -43,8 +44,6 @@
 		04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */; };
 		04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */; };
 		04C95B352DA45CCC002BA816 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B342DA45CCC002BA816 /* LoginViewModel.swift */; };
-		04C95B382DA45CF7002BA816 /* LoginInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B372DA45CF7002BA816 /* LoginInterface.swift */; };
-		04C95B3B2DA45D22002BA816 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B3A2DA45D22002BA816 /* LoginService.swift */; };
 		04C95B3E2DA45D51002BA816 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B3D2DA45D51002BA816 /* LoginView.swift */; };
 		04C95B412DA45E36002BA816 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B402DA45E36002BA816 /* Strings.swift */; };
 		04C95B442DA45E82002BA816 /* UIAplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B432DA45E82002BA816 /* UIAplication.swift */; };
@@ -82,6 +81,7 @@
 		0499205E2DBC2C7E00F3438A /* NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSError.swift; sourceTree = "<group>"; };
 		049920602DBC35B600F3438A /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		049920632DBC35F800F3438A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		049920662DC0336400F3438A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		04C95AC32D9D95D6002BA816 /* PlatziStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlatziStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatziStoreApp.swift; sourceTree = "<group>"; };
 		04C95AC82D9D95D6002BA816 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,8 +110,6 @@
 		04C95B2D2D9E19EB002BA816 /* ItemCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCellView.swift; sourceTree = "<group>"; };
 		04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		04C95B342DA45CCC002BA816 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		04C95B372DA45CF7002BA816 /* LoginInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInterface.swift; sourceTree = "<group>"; };
-		04C95B3A2DA45D22002BA816 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		04C95B3D2DA45D51002BA816 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		04C95B402DA45E36002BA816 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		04C95B432DA45E82002BA816 /* UIAplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAplication.swift; sourceTree = "<group>"; };
@@ -201,6 +199,14 @@
 			path = ImagePicker;
 			sourceTree = "<group>";
 		};
+		049920652DC0330800F3438A /* CustomTextField */ = {
+			isa = PBXGroup;
+			children = (
+				049920662DC0336400F3438A /* CustomTextField.swift */,
+			);
+			path = CustomTextField;
+			sourceTree = "<group>";
+		};
 		04C95ABA2D9D95D6002BA816 = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +280,7 @@
 		04C95AF52D9D96DC002BA816 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				049920652DC0330800F3438A /* CustomTextField */,
 				049920622DBC35E700F3438A /* ImagePicker */,
 				04C95B422DA45E71002BA816 /* Extensions */,
 				04C95B3F2DA45E2B002BA816 /* Strings */,
@@ -288,7 +295,6 @@
 				04C95B4C2DA45F4F002BA816 /* Model */,
 				04C95B3C2DA45D43002BA816 /* View */,
 				04C95B392DA45D0B002BA816 /* Service */,
-				04C95B362DA45CEA002BA816 /* Interface */,
 				04C95B332DA45CB4002BA816 /* ViewModel */,
 			);
 			path = Login;
@@ -483,18 +489,9 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		04C95B362DA45CEA002BA816 /* Interface */ = {
-			isa = PBXGroup;
-			children = (
-				04C95B372DA45CF7002BA816 /* LoginInterface.swift */,
-			);
-			path = Interface;
-			sourceTree = "<group>";
-		};
 		04C95B392DA45D0B002BA816 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				04C95B3A2DA45D22002BA816 /* LoginService.swift */,
 				04C95B462DA45ED2002BA816 /* AuthService.swift */,
 			);
 			path = Service;
@@ -688,6 +685,7 @@
 				04C95B1C2D9DC5E3002BA816 /* ServiceError.swift in Sources */,
 				0494FA7C2DA89AF0001AB29D /* CartViewModel.swift in Sources */,
 				04C95B182D9DB4F0002BA816 /* ProductViewModel.swift in Sources */,
+				049920672DC0336400F3438A /* CustomTextField.swift in Sources */,
 				049920642DBC35F800F3438A /* ImagePicker.swift in Sources */,
 				04C95B002D9DA1EA002BA816 /* ProductsView.swift in Sources */,
 				0499205F2DBC2C7E00F3438A /* NSError.swift in Sources */,
@@ -707,12 +705,10 @@
 				0494FA7E2DA89B40001AB29D /* Color.swift in Sources */,
 				04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */,
 				04C95B2C2D9E1930002BA816 /* CategoryView.swift in Sources */,
-				04C95B382DA45CF7002BA816 /* LoginInterface.swift in Sources */,
 				04C95B0F2D9DA8E8002BA816 /* Category.swift in Sources */,
 				04C95B1F2D9DD4F7002BA816 /* CategoryViewModel.swift in Sources */,
 				04C95B042D9DA2B3002BA816 /* CartView.swift in Sources */,
 				04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */,
-				04C95B3B2DA45D22002BA816 /* LoginService.swift in Sources */,
 				04C95B322D9EEF5B002BA816 /* ProductDetailView.swift in Sources */,
 				04C95B4B2DA45F08002BA816 /* UserModel.swift in Sources */,
 				04C95B0B2D9DA8AB002BA816 /* Product.swift in Sources */,

@@ -70,7 +70,6 @@ struct LoginView: View {
                         viewModel.name = viewModel.name.lowercased()
                         viewModel.errorMessage = nil
                     }
-
             }
             
             CustomTextField(placeholder: Strings.email.rawValue, text: $viewModel.email)
@@ -164,41 +163,5 @@ struct LoginView: View {
             .opacity(0.2)
             .background(.clear)
             .padding(.top, 50)
-    }
-}
-
-// MARK: - Reusable Components
-struct CustomTextField: View {
-    var placeholder: String
-    @Binding var text: String
-    var isSecure: Bool = false
-    
-    var body: some View {
-        Group {
-            if isSecure {
-                SecureField(Strings.empty.rawValue, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
-            } else {
-                TextField(Strings.empty.rawValue, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
-            }
-        }
-        .padding()
-        .frame(width: 300, height: 50)
-        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 0.5))
-        .foregroundColor(.white)
-    }
-}
-
-extension LoginViewModel {
-    func validateForm(isSignUpMode: Bool, confirmPassword: String) -> String? {
-        if email.isEmpty || !email.contains("@") {
-            return "Por favor, ingresa un email válido."
-        }
-        if password.isEmpty {
-            return "Por favor, ingresa una contraseña válida."
-        }
-        if isSignUpMode && password != confirmPassword {
-            return "Las contraseñas no coinciden."
-        }
-        return nil
     }
 }

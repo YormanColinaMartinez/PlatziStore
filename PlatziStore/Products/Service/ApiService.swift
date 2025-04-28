@@ -46,5 +46,3 @@ class ApiService: NetworkService {
         return entities
     }
 }
-
-

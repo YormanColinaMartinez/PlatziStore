@@ -15,66 +15,66 @@ final class AuthService {
         set { UserDefaults.standard.set(newValue, forKey: "authToken") }
     }
     
-    // MARK: - Registro
+    // MARK: - Register -
     func register(name: String, email: String, password: String) async throws -> String? {
-        guard let url = URL(string: "\(baseULR)/users/") else {
-            throw ServiceError.invalidURL
-        }
-        
-        let body: [String: String] = [
+        let body = [
             "name": name,
             "email": email,
             "password": password,
             "avatar": "https://i.imgur.com/LDOO4Qs.jpg"
         ]
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONEncoder().encode(body)
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw ServiceError.invalidResponse
-            }
-            
-            guard httpResponse.statusCode == 201 else {
-                throw ServiceError.serverError(statusCode: httpResponse.statusCode)
-            }
-            
-            let user = try JSONDecoder().decode(UserModel.self, from: data)
-            return try await login(email: user.email, password: user.password)
-        } catch let error as Swift.DecodingError {
-            throw ServiceError.decodingError(error)
-        } catch {
-            throw ServiceError.networkError(error)
-        }
+        let user = try await sendRequest(
+            endpoint: "/users/",
+            body: body,
+            expectedStatusCode: 201,
+            responseType: UserModel.self
+        )
+        return try await login(email: user.email, password: user.password)
     }
     
-    // MARK: - Inicio de sesión
+    // MARK: - Login -
     func login(email: String, password: String) async throws -> String? {
-        guard let url = URL(string: "\(baseULR)/auth/login") else {
-            throw ServiceError.invalidURL
-        }
-        
-        let body: [String: String] = [
+        let body = [
             "email": email,
             "password": password
         ]
         
+        let authResponse = try await sendRequest(
+            endpoint: "/auth/login",
+            body: body,
+            expectedStatusCode: 200,
+            responseType: AuthResponse.self
+        )
+        self.token = authResponse.access_token
+        return token ?? ""
+    }
+
+    
+    func sendRequest<T: Decodable>(
+        endpoint: String,
+        method: String = "POST",
+        body: [String: String],
+        expectedStatusCode: Int,
+        responseType: T.Type
+    ) async throws -> T {
+        guard let url = URL(string: "\(baseULR)\(endpoint)") else {
+            throw ServiceError.invalidURL
+        }
+        
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(body)
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
+            
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw ServiceError.invalidResponse
             }
             
-            guard httpResponse.statusCode == 200 || httpResponse.statusCode == 201 else {
+            guard (200...299).contains(httpResponse.statusCode) else {
                 if httpResponse.statusCode == 401 {
                     throw ServiceError.authenticationFailed
                 } else {
@@ -82,16 +82,15 @@ final class AuthService {
                 }
             }
             
-            let authResponse = try JSONDecoder().decode(AuthResponse.self, from: data)
-            self.token = authResponse.access_token
-            return token ?? ""
+            let decodedResponse = try JSONDecoder().decode(responseType, from: data)
+            return decodedResponse
         } catch let error as Swift.DecodingError {
             throw ServiceError.decodingError(error)
         } catch {
             throw ServiceError.networkError(error)
         }
     }
-    
+
     // MARK: - Estado de autenticación
     func isAuthenticated() -> Bool {
         return token != nil

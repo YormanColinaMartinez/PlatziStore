@@ -32,11 +32,9 @@ struct SplashView: View {
                         .fontWeight(.bold)
                         .offset(x: textOffsets.count > index ? textOffsets[index] : UIScreen.main.bounds.width)
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.05) {
-                                withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 1)) {
-                                    if textOffsets.count > index {
-                                        textOffsets[index] = 0
-                                    }
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 1).delay(Double(index) * 0.05)) {
+                                if textOffsets.count > index {
+                                    textOffsets[index] = 0
                                 }
                             }
                         }

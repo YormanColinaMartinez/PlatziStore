@@ -10,6 +10,7 @@ import SwiftUI
 struct ItemCellView: View {
     var model: Product
     @ObservedObject var manager: CartViewModel
+    @State private var imageFailedToLoad = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -26,6 +27,7 @@ struct ItemCellView: View {
                     .frame(height: 120)
                     .cornerRadius(12)
             }
+            .frame(width: 120)
 
             Text(model.title ?? "")
                 .font(.headline)

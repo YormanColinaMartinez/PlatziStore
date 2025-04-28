@@ -14,6 +14,7 @@ struct EditProfileView: View {
     @State private var newEmail: String
     @State private var selectedImage: UIImage? = nil
     @State private var showImagePicker = false
+    @State private var imageURL: String = ""
     @Environment(\.dismiss) var dismiss
     
     init(viewModel: ProfileViewModel) {
@@ -35,16 +36,7 @@ struct EditProfileView: View {
             TextField("Email", text: $newEmail)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
-            
-            // Imagen seleccionada (preview)
-            if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 150)
-                    .clipShape(Circle())
-            }
-
+        
             Button("Select Profile Picture") {
                 showImagePicker = true
             }
@@ -54,7 +46,7 @@ struct EditProfileView: View {
             } else {
                 Button("Guardar cambios") {
                     Task {
-                        await viewModel.updateProfile(name: newName, email: newEmail, image: selectedImage)
+                        await viewModel.updateProfile(name: newName, email: newEmail, avatarUrl: imageURL)
                         dismiss()
                     }
                 }
@@ -68,7 +60,12 @@ struct EditProfileView: View {
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(image: $selectedImage)
         }
+        .onChange(of: selectedImage) { newImage in
+            if let image = newImage {
+                if let imageURL = viewModel.saveImageToTemporaryDirectory(image: image) {
+//                    self.imageURL = image
+                }
+            }
+        }
     }
 }
-
-
