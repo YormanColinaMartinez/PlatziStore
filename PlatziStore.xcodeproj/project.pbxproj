@@ -19,6 +19,7 @@
 		049920612DBC35B600F3438A /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920602DBC35B600F3438A /* EditProfileView.swift */; };
 		049920642DBC35F800F3438A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920632DBC35F800F3438A /* ImagePicker.swift */; };
 		049920672DC0336400F3438A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920662DC0336400F3438A /* CustomTextField.swift */; };
+		049920692DC53CCE00F3438A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049920682DC53CCE00F3438A /* String.swift */; };
 		04C95AC72D9D95D6002BA816 /* PlatziStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */; };
 		04C95AC92D9D95D6002BA816 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95AC82D9D95D6002BA816 /* ContentView.swift */; };
 		04C95ACB2D9D95D9002BA816 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C95ACA2D9D95D9002BA816 /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		049920602DBC35B600F3438A /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		049920632DBC35F800F3438A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		049920662DC0336400F3438A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		049920682DC53CCE00F3438A /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		04C95AC32D9D95D6002BA816 /* PlatziStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlatziStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatziStoreApp.swift; sourceTree = "<group>"; };
 		04C95AC82D9D95D6002BA816 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 				04C95B432DA45E82002BA816 /* UIAplication.swift */,
 				0494FA7D2DA89B40001AB29D /* Color.swift */,
 				0499205E2DBC2C7E00F3438A /* NSError.swift */,
+				049920682DC53CCE00F3438A /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049920692DC53CCE00F3438A /* String.swift in Sources */,
 				04C95B352DA45CCC002BA816 /* LoginViewModel.swift in Sources */,
 				04C95B2E2D9E19EB002BA816 /* ItemCellView.swift in Sources */,
 				04C95B222D9DD565002BA816 /* HomeViewModel.swift in Sources */,

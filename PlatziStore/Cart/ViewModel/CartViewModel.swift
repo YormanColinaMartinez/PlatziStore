@@ -36,10 +36,10 @@ class CartViewModel: ObservableObject {
             let newItem = CartItem(context: context)
             newItem.id = product.id
             newItem.productId = product.id
-            newItem.name = product.title ?? ""
+            newItem.name = product.title ?? .empty
             newItem.price = product.price
             newItem.quantity = Int64(quantity)
-            newItem.imageUrl = product.imagesArray.first ?? ""
+            newItem.imageUrl = product.imagesArray.first ?? .empty
             items.append(newItem)
         }
 
@@ -56,7 +56,7 @@ class CartViewModel: ObservableObject {
             newItem.name = product.title
             newItem.price = product.price
             newItem.quantity = 1
-            newItem.imageUrl = product.imagesArray.first ?? ""
+            newItem.imageUrl = product.imagesArray.first ?? .empty
             items.append(newItem)
         }
         saveContext()

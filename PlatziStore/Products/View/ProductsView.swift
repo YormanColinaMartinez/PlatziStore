@@ -12,7 +12,7 @@ struct ProductsView: View {
     @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel: ProductsViewModel = ProductsViewModel()
     @ObservedObject private var manager: CartViewModel
-    @State private var searchText: String = ""
+    @State private var searchText: String = .empty
     @State private var selectedCategory: String? = nil
     @State private var isSearching: Bool = false
     @State private var selectedProduct: Product?
@@ -20,8 +20,8 @@ struct ProductsView: View {
 
     var filteredItems: [Product] {
         viewModel.products.filter { product in
-            let categoryName = product.categoryRelationship?.name ?? ""
-            let title = product.title ?? ""
+            let categoryName = product.categoryRelationship?.name ?? .empty
+            let title = product.title ?? .empty
             let matchesCategory = selectedCategory == nil || categoryName == selectedCategory
             let matchesSearch = searchText.isEmpty || title.localizedCaseInsensitiveContains(searchText)
             return matchesCategory && matchesSearch
@@ -71,7 +71,7 @@ struct ProductsView: View {
                                     isSearching.toggle()
                                 }
                             } else {
-                                searchText = ""
+                                searchText = .empty
                             }
 
                         }) {
@@ -110,7 +110,7 @@ struct ProductsView: View {
                     }
                 }
                 .padding(.vertical)
-                .background(Color("mainColorApp", bundle: nil))
+                .background(Color(Strings.Colors.mainColorApp.description, bundle: nil))
 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
@@ -125,7 +125,7 @@ struct ProductsView: View {
                     .padding()
                 }
             }
-            .background(Color("mainColorApp", bundle: nil))
+            .background(Color(Strings.Colors.mainColorApp.description, bundle: nil))
             .navigationBarHidden(true)
             .fullScreenCover(item: $selectedProduct) { product in
                 ProductDetailView(manager: manager, product: product)

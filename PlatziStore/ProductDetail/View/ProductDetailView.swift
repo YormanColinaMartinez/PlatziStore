@@ -11,8 +11,8 @@ struct ProductDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var manager: CartViewModel
     @State private var itemQuantity: Int = 0
-    private let itemWidth: CGFloat = 230
     private var product: Product
+    private let itemWidth: CGFloat = 230
 
     init(manager: CartViewModel, product: Product) {
         self.manager = manager
@@ -30,44 +30,18 @@ struct ProductDetailView: View {
             .frame(width: 20, height: 20)
             .foregroundColor(.black)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(product.imagesArray.indices, id: \.self) { index in
-                        GeometryReader { proxy in
-                            let scale = getScale(proxy: proxy)
-
-                            AsyncImage(url: URL(string: product.imagesArray[index])) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: itemWidth * scale, height: itemWidth * scale)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .shadow(radius: 5)
-                            } placeholder: {
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(width: itemWidth * scale, height: itemWidth * scale)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                            }
-                            .animation(.easeInOut(duration: 0.3), value: scale)
-                        }
-                        .frame(width: itemWidth, height: itemWidth)
-                    }
-                }
-                .padding(.horizontal, 40)
-            }
-            .frame(height: itemWidth * 1.1)
+            imageCarrousel.frame(height: itemWidth * 1.1)
 
             Spacer()
 
             VStack(alignment: .leading) {
-                Text(product.title ?? "")
+                Text(product.title ?? .empty)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding(.leading)
 
-                Text(product.productDescription ?? "")
+                Text(product.productDescription ?? .empty)
                     .font(.body)
                     .foregroundStyle(.gray)
                     .padding()
@@ -87,7 +61,7 @@ struct ProductDetailView: View {
                                 self.itemQuantity -= 1
                             }
                         } label: {
-                            Image(systemName: "minus.circle")
+                            Image(systemName: .empty)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
@@ -102,7 +76,7 @@ struct ProductDetailView: View {
                             .foregroundColor(.gray)
 
                         Button(action: { self.itemQuantity += 1 }, label: {
-                            Image(systemName: "plus.circle")
+                            Image(systemName: .empty)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
@@ -125,9 +99,8 @@ struct ProductDetailView: View {
                     manager.add(product: product, quantity: itemQuantity)
                 }
                 dismiss()
-            } label: {
-                Text(itemQuantity > 0 ? "Add " : "Add to cart")
-                + (itemQuantity > 0 ? Text("\(itemQuantity)").fontWeight(.heavy) + Text(" to cart") : Text(""))
+            } label: { Text(itemQuantity > 0 ? Strings.Detail.add.description : Strings.Detail.addToCart.description)
+                + (itemQuantity > 0 ? Text("\(itemQuantity)").fontWeight(.heavy) + Text(Strings.Detail.toCart.description) : Text(verbatim: .empty))
             }
             .frame(width: 150, height: 40)
             .background(itemQuantity > 0 ? .green : .gray)
@@ -135,7 +108,36 @@ struct ProductDetailView: View {
             .cornerRadius(14)
             .padding()
         }
-        .background(Color("mainColorApp", bundle: nil))
+        .background(Color(Strings.Colors.mainColorApp.rawValue, bundle: nil))
+    }
+    
+    private var imageCarrousel: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(product.imagesArray.indices, id: \.self) { index in
+                    GeometryReader { proxy in
+                        let scale = getScale(proxy: proxy)
+
+                        AsyncImage(url: URL(string: product.imagesArray[index])) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: itemWidth * scale, height: itemWidth * scale)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 5)
+                        } placeholder: {
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: itemWidth * scale, height: itemWidth * scale)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                        .animation(.easeInOut(duration: 0.3), value: scale)
+                    }
+                    .frame(width: itemWidth, height: itemWidth)
+                }
+            }
+            .padding(.horizontal, 40)
+        }
     }
 
     private func getScale(proxy: GeometryProxy) -> CGFloat {

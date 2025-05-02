@@ -27,7 +27,7 @@ class ProfileViewModel: ObservableObject {
                 self.isLoading = false
             }
         } catch {
-            print("Error al obtener perfil:", error)
+            print("Error getting profile:", error)
             await MainActor.run {
                 self.user = nil
                 self.isLoading = false
@@ -40,7 +40,7 @@ class ProfileViewModel: ObservableObject {
         defer { isLoading = false }
         
         guard let userId = user?.id else {
-            print("Error: No se encontró el ID del usuario")
+            print("Error: User ID not found")
             return
         }
         

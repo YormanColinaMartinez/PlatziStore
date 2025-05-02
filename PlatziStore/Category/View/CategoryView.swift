@@ -12,7 +12,7 @@ struct CategoryView: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: model?.image ?? "")) { image in
+            AsyncImage(url: URL(string: model?.image ?? .empty)) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -23,7 +23,7 @@ struct CategoryView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: 90, height: 90)
             }
-            Text(model?.name ?? "")
+            Text(model?.name ?? .empty)
                 .foregroundColor(.white)
                 .lineLimit(.max)
                 .frame(width: 90)

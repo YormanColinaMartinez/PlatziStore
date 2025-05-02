@@ -23,30 +23,30 @@ enum ServiceError: Error, Equatable, LocalizedError {
     var userFriendlyMessage: String {
         switch self {
         case .invalidURL:
-            return "Error interno de la aplicación. Por favor contacta al soporte."
+            return "Internal application error. Please contact support."
         case .networkError(let error):
             if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-                return "No hay conexión a internet. Por favor verifica tu conexión."
+                return "There's no internet connection. Please check your connection."
             }
-            return "Problema de conexión. Por favor intenta nuevamente."
+            return "Connection problem. Please try again."
         case .noData:
-            return "El servidor no respondió con datos válidos."
+            return "The server did not respond with valid data."
         case .decodingError:
-            return "Error procesando la respuesta del servidor."
+            return "Error processing server response."
         case .invalidResponse:
-            return "Respuesta inválida del servidor."
+            return "Invalid response from the server."
         case .userNotFound:
-            return "Usuario no encontrado. Verifica tu email."
+            return "User not found. Please check your email."
         case .authenticationFailed:
-            return "Email o contraseña incorrectos. Por favor verifica tus credenciales."
+            return "Email or password incorrect. Please verify your credentials."
         case .serverError(let statusCode):
-            return "Error del servidor (código \(statusCode)). Por favor intenta más tarde."
+            return "Server Error (código \(statusCode)). Please try later."
         case .timeout:
-            return "El servidor está tardando demasiado en responder. Por favor intenta nuevamente."
+            return "The server is taking too long to respond. Please try again."
         case .unknownError:
-            return "Error desconocido. Por favor contacta al soporte."
+            return "Unknow error. Please contact support."
         case . unauthorized:
-            return "Ha fallado la autorización"
+            return "The authorizarion has failed"
         }
     }
 

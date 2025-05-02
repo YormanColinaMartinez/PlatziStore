@@ -10,14 +10,14 @@ import SwiftUI
 @MainActor
 class LoginViewModel: ObservableObject {
     @Published var navigateToHome = false
-    @Published var name = ""
-    @Published var email = ""
-    @Published var password = ""
+    @Published var name: String = .empty
+    @Published var email: String = .empty
+    @Published var password: String = .empty
     @Published var isLoading = false
     @Published var errorMessage: String?
-    @Published var accessToken: String = ""
-    @State var confirmPassword: String = ""
-    @State var isSignUpMode: Bool = false
+    @Published var accessToken: String = .empty
+    @Published var confirmPassword: String = .empty
+    @Published var isSignUpMode: Bool = false
     
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
@@ -26,7 +26,7 @@ class LoginViewModel: ObservableObject {
     func login() async -> String? {
         isSignUpMode = false
         guard isFormValid else {
-            self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
+            self.errorMessage = Strings.ErrorMessage.enterValidData.description
             return nil
         }
         
@@ -38,7 +38,7 @@ class LoginViewModel: ObservableObject {
         }
 
         do {
-            guard let token = try await AuthService.shared.login(email: email, password: password) else {
+            guard let token = try await AuthService().login(email: email, password: password) else {
                 return nil
             }
             self.accessToken = token
@@ -47,7 +47,7 @@ class LoginViewModel: ObservableObject {
             self.errorMessage = error.userFriendlyMessage
             return nil
         } catch {
-            self.errorMessage = "Ocurrió un error inesperado. Por favor intenta nuevamente."
+            self.errorMessage = Strings.ErrorMessage.unknowError.description
             return nil
         }
     }
@@ -55,7 +55,7 @@ class LoginViewModel: ObservableObject {
     func createUser() async throws -> String? {
         isSignUpMode = true
         guard isFormValid else {
-            self.errorMessage = "Por favor, ingresa un email y contraseña válidos."
+            self.errorMessage = Strings.ErrorMessage.enterValidData.description
             return nil
         }
         
@@ -63,7 +63,7 @@ class LoginViewModel: ObservableObject {
         self.errorMessage = nil
         
         do {
-            guard let token = try await AuthService.shared.register(name: name, email: email, password: password) else {
+            guard let token = try await AuthService().register(name: name, email: email, password: password) else {
                 return nil
             }
             accessToken = token
@@ -76,7 +76,7 @@ class LoginViewModel: ObservableObject {
     
     func validateForm(isSignUpMode: Bool, confirmPassword: String) -> String? {
         if email.isEmpty || !email.contains("@") {
-            return "Por favor, ingresa un email válido."
+            return "Please enter a valid email address."
         }
         if password.isEmpty {
             return "Por favor, ingresa una contraseña válida."

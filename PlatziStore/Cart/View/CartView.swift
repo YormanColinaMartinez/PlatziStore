@@ -30,7 +30,7 @@ struct CartView: View {
                 VStack(spacing: 16) {
                     ForEach(cartManager.items, id: \.id) { item in
                         HStack(spacing: 16) {
-                            AsyncImage(url: URL(string: item.imageUrl ?? "")) { image in
+                            AsyncImage(url: URL(string: item.imageUrl ?? .empty)) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
@@ -41,7 +41,7 @@ struct CartView: View {
                             .cornerRadius(10)
                             
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(item.name ?? "")
+                                Text(item.name ?? .empty)
                                     .font(.headline)
                                     .foregroundColor(.white)
                                 Text("$\(item.price)")

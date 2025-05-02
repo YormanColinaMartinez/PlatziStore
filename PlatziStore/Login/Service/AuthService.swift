@@ -8,7 +8,6 @@
 import Foundation
 
 final class AuthService {
-    static let shared = AuthService()
     private let baseULR: String = "https://api.escuelajs.co/api/v1"
     private var token: String? {
         get { UserDefaults.standard.string(forKey: "authToken") }
@@ -18,16 +17,15 @@ final class AuthService {
     // MARK: - Register -
     func register(name: String, email: String, password: String) async throws -> String? {
         let body = [
-            "name": name,
-            "email": email,
-            "password": password,
-            "avatar": "https://i.imgur.com/LDOO4Qs.jpg"
+            Strings.Request.name.description: name,
+            Strings.Request.email.description: email,
+            Strings.Request.password.description: password,
+            Strings.Request.avatar.description: "https://i.imgur.com/LDOO4Qs.jpg" // Must be changed for add avatar implementation
         ]
         
         let user = try await sendRequest(
             endpoint: "/users/",
             body: body,
-            expectedStatusCode: 201,
             responseType: UserModel.self
         )
         return try await login(email: user.email, password: user.password)
@@ -36,18 +34,17 @@ final class AuthService {
     // MARK: - Login -
     func login(email: String, password: String) async throws -> String? {
         let body = [
-            "email": email,
-            "password": password
+            Strings.Request.email.description: email,
+            Strings.Request.password.description: password
         ]
         
         let authResponse = try await sendRequest(
             endpoint: "/auth/login",
             body: body,
-            expectedStatusCode: 200,
             responseType: AuthResponse.self
         )
         self.token = authResponse.access_token
-        return token ?? ""
+        return token ?? .empty
     }
 
     
@@ -55,7 +52,6 @@ final class AuthService {
         endpoint: String,
         method: String = "POST",
         body: [String: String],
-        expectedStatusCode: Int,
         responseType: T.Type
     ) async throws -> T {
         guard let url = URL(string: "\(baseULR)\(endpoint)") else {

@@ -8,43 +8,42 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: ProfileViewModel
-    
     @State private var newName: String
     @State private var newEmail: String
     @State private var selectedImage: UIImage? = nil
     @State private var showImagePicker = false
-    @State private var imageURL: String = ""
-    @Environment(\.dismiss) var dismiss
+    @State private var imageURL: String = .empty
     
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
-        _newName = State(initialValue: viewModel.user?.name ?? "")
-        _newEmail = State(initialValue: viewModel.user?.email ?? "")
+        _newName = State(initialValue: viewModel.user?.name ?? .empty)
+        _newEmail = State(initialValue: viewModel.user?.email ?? .empty)
     }
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Edit Profile")
+            Text(Strings.EditProfile.editProfile.description)
                 .font(.title)
                 .fontWeight(.bold)
             
-            TextField("Name", text: $newName)
+            TextField(Strings.Login.name.description, text: $newName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
             
-            TextField("Email", text: $newEmail)
+            TextField(Strings.Login.email.description, text: $newEmail)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
         
-            Button("Select Profile Picture") {
+            Button(Strings.EditProfile.selectPicture.description) {
                 showImagePicker = true
             }
             
             if viewModel.isLoading {
-                ProgressView("Actualizando...")
+                ProgressView(Strings.EditProfile.updating.description)
             } else {
-                Button("Guardar cambios") {
+                Button(Strings.EditProfile.saveChanges.description) {
                     Task {
                         await viewModel.updateProfile(name: newName, email: newEmail, avatarUrl: imageURL)
                         dismiss()

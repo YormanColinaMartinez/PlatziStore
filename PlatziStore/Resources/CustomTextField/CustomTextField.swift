@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    var placeholder: String
     @Binding var text: String
+    var placeholder: String
     var isSecure: Bool = false
     
     var body: some View {
         Group {
             if isSecure {
-                SecureField(Strings.empty.rawValue, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
+                SecureField(.empty, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
             } else {
-                TextField(Strings.empty.rawValue, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
+                TextField(.empty, text: $text, prompt: Text(placeholder).foregroundColor(.gray))
             }
         }
         .padding()

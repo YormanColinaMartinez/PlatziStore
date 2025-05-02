@@ -14,7 +14,7 @@ struct ItemCellView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            AsyncImage(url: URL(string: model.imagesArray.first ?? "")) { image in
+            AsyncImage(url: URL(string: model.imagesArray.first ?? .empty)) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -29,12 +29,12 @@ struct ItemCellView: View {
             }
             .frame(width: 120)
 
-            Text(model.title ?? "")
+            Text(model.title ?? .empty)
                 .font(.headline)
                 .foregroundColor(.white)
                 .lineLimit(2)
 
-            Text(model.productDescription ?? "")
+            Text(model.productDescription ?? .empty)
                 .font(.caption)
                 .foregroundColor(.gray)
                 .lineLimit(2)
