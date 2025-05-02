@@ -18,9 +18,14 @@ class LoginViewModel: ObservableObject {
     @Published var accessToken: String = .empty
     @Published var confirmPassword: String = .empty
     @Published var isSignUpMode: Bool = false
+    private let authService: AuthServiceProtocol
     
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
+    }
+    
+    init(authService: AuthServiceProtocol = AuthService()) {
+        self.authService = authService
     }
     
     func login() async -> String? {
@@ -38,7 +43,7 @@ class LoginViewModel: ObservableObject {
         }
 
         do {
-            guard let token = try await AuthService().login(email: email, password: password) else {
+            guard let token = try await authService.login(email: email, password: password) else {
                 return nil
             }
             self.accessToken = token
@@ -63,26 +68,26 @@ class LoginViewModel: ObservableObject {
         self.errorMessage = nil
         
         do {
-            guard let token = try await AuthService().register(name: name, email: email, password: password) else {
+            guard let token = try await authService.register(name: name, email: email, password: password) else {
                 return nil
             }
             accessToken = token
             return token
         } catch {
-            print(error.localizedDescription)
-            return nil
+            self.errorMessage = Strings.ErrorMessage.unknowError.description
+            throw error
         }
     }
     
     func validateForm(isSignUpMode: Bool, confirmPassword: String) -> String? {
         if email.isEmpty || !email.contains("@") {
-            return "Please enter a valid email address."
+            return Strings.ErrorMessage.enterValidEmail.description
         }
         if password.isEmpty {
-            return "Por favor, ingresa una contraseña válida."
+            return Strings.ErrorMessage.enterValidPassword.description
         }
         if isSignUpMode && password != confirmPassword {
-            return "Las contraseñas no coinciden."
+            return Strings.ErrorMessage.passwordsDoNotMatch.description
         }
         return nil
     }

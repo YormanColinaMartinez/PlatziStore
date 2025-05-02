@@ -7,14 +7,16 @@
 
 import Foundation
 
-final class AuthService {
+final class AuthService: AuthServiceProtocol {
+    
+    // MARK: - Private Properties -
     private let baseULR: String = "https://api.escuelajs.co/api/v1"
     private var token: String? {
         get { UserDefaults.standard.string(forKey: "authToken") }
         set { UserDefaults.standard.set(newValue, forKey: "authToken") }
     }
     
-    // MARK: - Register -
+    // MARK: - Internal Methods -
     func register(name: String, email: String, password: String) async throws -> String? {
         let body = [
             Strings.Request.name.description: name,
@@ -31,7 +33,6 @@ final class AuthService {
         return try await login(email: user.email, password: user.password)
     }
     
-    // MARK: - Login -
     func login(email: String, password: String) async throws -> String? {
         let body = [
             Strings.Request.email.description: email,
@@ -47,7 +48,6 @@ final class AuthService {
         return token ?? .empty
     }
 
-    
     func sendRequest<T: Decodable>(
         endpoint: String,
         method: String = "POST",
@@ -87,7 +87,6 @@ final class AuthService {
         }
     }
 
-    // MARK: - Estado de autenticación
     func isAuthenticated() -> Bool {
         return token != nil
     }

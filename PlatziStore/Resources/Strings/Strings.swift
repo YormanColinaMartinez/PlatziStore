@@ -25,6 +25,8 @@ enum Strings {
         case enterValidData = "Please enter a valid email and password."
         case unknowError = "An unexpected error occurred. Please try again."
         case enterValidEmail = "Please enter a valid email address."
+        case enterValidPassword = "Please enter a valid password."
+        case passwordsDoNotMatch =  "The passwords do not match."
         
         var description: String { rawValue }
     }

@@ -28,7 +28,7 @@ final class ApiServiceTests: XCTestCase {
         var id: Int = 0
     }
 
-    var sut: ApiService!
+    var sut: NetworkService!
     var context: NSManagedObjectContext!
 
     override func setUp() {
