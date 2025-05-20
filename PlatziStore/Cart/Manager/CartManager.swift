@@ -9,8 +9,12 @@ import SwiftUI
 import CoreData
 
 class CartManager: ObservableObject {
-    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    let context: NSManagedObjectContext
     @Published var items: [CartItem] = []
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+    }
     
     private func saveContext() {
         do {
@@ -20,10 +24,6 @@ class CartManager: ObservableObject {
             print("❌ Error al guardar cambios del carrito: \(error)")
         }
     }
-    
-//    init(context: NSManagedObjectContext) {
-//        self.context = context
-//    }
     
     func add(product: Product, quantity: Int) {
         guard quantity > 0 else { return }

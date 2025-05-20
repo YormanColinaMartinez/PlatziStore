@@ -43,7 +43,7 @@ struct ItemCellView: View {
                 Text("$\(model.price)")
                     .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.green)
+                    .foregroundColor(.white)
 
                 Spacer()
 
@@ -51,9 +51,9 @@ struct ItemCellView: View {
                     manager.addToCart(product: model)
                 }) {
                     Image(systemName: "cart.badge.plus")
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding(8)
-                        .background(Color.green)
+                        .background(Color.white)
                         .clipShape(Circle())
                 }
             }

@@ -10,6 +10,10 @@ import CoreData
 
 struct CartView: View {
     @StateObject var viewModel: CartViewModel
+    
+    init(viewModel: CartViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
         
     var body: some View {
         VStack(spacing: 0) {

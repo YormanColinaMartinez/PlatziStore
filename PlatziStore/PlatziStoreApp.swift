@@ -11,8 +11,13 @@ import CoreData
 @main
 struct PlatziStoreApp: App {
     let persistenceController = PersistenceController.shared
-    @StateObject var cartManager: CartManager = CartManager()
-    
+    @StateObject var cartManager: CartManager
+
+    init() {
+        let context = persistenceController.container.viewContext
+        _cartManager = StateObject(wrappedValue: CartManager(context: context))
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -21,3 +26,4 @@ struct PlatziStoreApp: App {
         }
     }
 }
+

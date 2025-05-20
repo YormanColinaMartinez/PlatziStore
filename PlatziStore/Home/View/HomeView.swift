@@ -30,11 +30,11 @@ struct HomeView: View {
         TabView {
             ProductsView(viewModel: ProductsViewModel(cartManager: cartManager))
                 .tabItem {
-                    Label("Products", systemImage: "cart")
+                    Label("Products", systemImage: "house.fill")
                 }
             CartView(viewModel: CartViewModel(cartManager: cartManager))
                 .tabItem {
-                    Label("Cart", systemImage: "bag")
+                    Label("Cart", systemImage: "cart")
                 }
             ProfileView(viewModel: ProfileViewModel(accessToken: viewModel.accessToken))
                 .tabItem {

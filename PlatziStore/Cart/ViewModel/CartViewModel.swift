@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 class CartViewModel: ObservableObject {
-    var cartManager: CartManager
+    @ObservedObject var cartManager: CartManager
     
     var items: [CartItem] {
         return cartManager.items
