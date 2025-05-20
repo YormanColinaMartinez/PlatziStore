@@ -25,19 +25,8 @@ struct ProductsView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                VStack( spacing: 8) {
+                VStack(spacing: 16) {
                     searchSection
-                    
-                    if viewModel.isSearching {
-                        categorySection
-                    } else {
-                        titleView
-                    }
-                    
-                    if viewModel.selectedCategory != nil {
-                        
-                    }
-
                     categorySection
                 }.padding(.vertical)
                  .background(Color(Strings.Colors.mainColorApp.description, bundle: nil))
@@ -96,7 +85,11 @@ struct ProductsView: View {
             }
             
             Spacer()
-
+            
+            if !viewModel.isSearching {
+                titleView
+            }
+            
             Button(action: {
                 if viewModel.searchText.isEmpty {
                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -156,8 +149,6 @@ struct ProductsView: View {
     }
     
     var titleView: some View {
-        
-        
         Group {
             Text(viewModel.selectedCategory != nil ? viewModel.selectedCategory ?? "" : "Explore our\n")
                 .font(.system(size: 24))

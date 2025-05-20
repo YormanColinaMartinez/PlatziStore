@@ -7,9 +7,11 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 class CartManager: ObservableObject {
     let context: NSManagedObjectContext
+    
     @Published var items: [CartItem] = []
     
     init(context: NSManagedObjectContext) {

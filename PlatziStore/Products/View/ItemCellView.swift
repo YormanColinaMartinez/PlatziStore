@@ -38,7 +38,9 @@ struct ItemCellView: View {
                 .font(.caption)
                 .foregroundColor(.gray)
                 .lineLimit(2)
-
+            
+            Spacer()
+            
             HStack {
                 Text("$\(model.price)")
                     .font(.subheadline)
@@ -50,7 +52,7 @@ struct ItemCellView: View {
                 Button(action: {
                     manager.addToCart(product: model)
                 }) {
-                    Image(systemName: "cart.badge.plus")
+                    Image(systemName: "plus")
                         .foregroundColor(.black)
                         .padding(8)
                         .background(Color.white)

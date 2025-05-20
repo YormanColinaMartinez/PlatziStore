@@ -49,7 +49,7 @@ struct ProductDetailView: View {
                     Text("$\(product.price)")
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(.green)
+                        .foregroundColor(.white)
                         .padding(.leading)
 
                     Spacer()
@@ -60,7 +60,7 @@ struct ProductDetailView: View {
                                 self.itemQuantity -= 1
                             }
                         } label: {
-                            Image(systemName: .empty)
+                            Image(systemName: "minus.circle")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
@@ -72,10 +72,10 @@ struct ProductDetailView: View {
                         .padding(.leading)
 
                         Text("\(itemQuantity)")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
 
                         Button(action: { self.itemQuantity += 1 }, label: {
-                            Image(systemName: .empty)
+                            Image(systemName: "plus.circle")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
