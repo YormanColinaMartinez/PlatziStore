@@ -2,10 +2,17 @@
 //  HomeViewModel.swift
 //  PlatziStore
 //
-//  Created by mac on 2/04/25.
+//  Created by mac on 20/05/25.
 //
 
-import Foundation
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
+    @EnvironmentObject private var cartManager: CartManager
+    
+    let accessToken: String
+    
+    init(accessToken: String) {
+        self.accessToken = accessToken
+    }
 }

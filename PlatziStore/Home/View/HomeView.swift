@@ -7,12 +7,12 @@
 
 import SwiftUI
 import CoreData
+import UIKit
 
 struct HomeView: View {
-    @Environment(\.managedObjectContext) private var context
-    @StateObject private var manager: CartViewModel
-    let accessToken: String
-    
+    @EnvironmentObject var cartManager: CartManager
+    @StateObject private var viewModel: HomeViewModel
+
     init(accessToken: String) {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
@@ -21,21 +21,22 @@ struct HomeView: View {
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
-        _manager = StateObject(wrappedValue: CartViewModel(context: PersistenceController.shared.container.viewContext))
-        self.accessToken = accessToken
+        
+        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 100)
+        _viewModel = StateObject(wrappedValue: HomeViewModel(accessToken: accessToken))
     }
 
     var body: some View {
         TabView {
-            ProductsView(manager: manager)
+            ProductsView(viewModel: ProductsViewModel(cartManager: cartManager))
                 .tabItem {
                     Label("Products", systemImage: "cart")
                 }
-            CartView(manager: manager)
+            CartView(viewModel: CartViewModel(cartManager: cartManager))
                 .tabItem {
                     Label("Cart", systemImage: "bag")
                 }
-            ProfileView(viewModel: ProfileViewModel(accessToken: accessToken))
+            ProfileView(viewModel: ProfileViewModel(accessToken: viewModel.accessToken))
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }

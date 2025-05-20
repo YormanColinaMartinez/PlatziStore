@@ -19,6 +19,7 @@ class LoginViewModel: ObservableObject {
     @Published var confirmPassword: String = .empty
     @Published var isSignUpMode: Bool = false
     private let authService: AuthServiceProtocol
+    let logger = LoginLogger()
     
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
@@ -37,21 +38,33 @@ class LoginViewModel: ObservableObject {
         
         self.isLoading = true
         self.errorMessage = nil
-
+        
         defer {
             self.isLoading = false
         }
-
+        
         do {
             guard let token = try await authService.login(email: email, password: password) else {
+                Task {
+                    await logger.logAttempt(email: email, success: false)
+                }
                 return nil
             }
             self.accessToken = token
+            Task {
+                await logger.logAttempt(email: email, success:true)
+            }
             return token
         } catch let error as ServiceError {
+            Task {
+                await logger.logAttempt(email: email, success: false)
+            }
             self.errorMessage = error.userFriendlyMessage
             return nil
         } catch {
+            Task {
+                await logger.logAttempt(email: email, success: false)
+            }
             self.errorMessage = Strings.ErrorMessage.unknowError.description
             return nil
         }

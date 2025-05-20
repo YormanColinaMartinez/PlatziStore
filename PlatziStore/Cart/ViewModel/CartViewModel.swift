@@ -5,87 +5,41 @@
 //  Created by mac on 10/04/25.
 //
 
-import Foundation
+import SwiftUI
 import CoreData
 
 class CartViewModel: ObservableObject {
-    private let context: NSManagedObjectContext
-    @Published var items: [CartItem] = []
-
-    init(context: NSManagedObjectContext) {
-        self.context = context
-        fetchItems()
-    }
-
-    func fetchItems() {
-        let request: NSFetchRequest<CartItem> = CartItem.fetchRequest()
-        do {
-            items = try context.fetch(request)
-        } catch {
-            print("❌ Error al cargar el carrito: \(error)")
-        }
+    var cartManager: CartManager
+    
+    var items: [CartItem] {
+        return cartManager.items
     }
     
+    init(cartManager: CartManager) {
+        self.cartManager = cartManager
+    }
+        
+    func fetchOnManager() {
+        cartManager.fetchItems()
+    }
     
     func add(product: Product, quantity: Int) {
-        guard quantity > 0 else { return }
-
-        if let existingItem = items.first(where: { $0.productId == product.id }) {
-            existingItem.quantity += Int64(quantity)
-        } else {
-            let newItem = CartItem(context: context)
-            newItem.id = product.id
-            newItem.productId = product.id
-            newItem.name = product.title ?? .empty
-            newItem.price = product.price
-            newItem.quantity = Int64(quantity)
-            newItem.imageUrl = product.imagesArray.first ?? .empty
-            items.append(newItem)
-        }
-
-        saveContext()
+        cartManager.add(product: product, quantity: quantity)
     }
 
     func addToCart(product: Product) {
-        if let existingItem = items.first(where: { $0.productId == product.id }) {
-            existingItem.quantity += 1
-        } else {
-            let newItem = CartItem(context: context)
-            newItem.id = product.id
-            newItem.productId = product.id
-            newItem.name = product.title
-            newItem.price = product.price
-            newItem.quantity = 1
-            newItem.imageUrl = product.imagesArray.first ?? .empty
-            items.append(newItem)
-        }
-        saveContext()
+        cartManager.addToCart(product: product)
     }
 
     func removeItem(_ item: CartItem) {
-        context.delete(item)
-        saveContext()
+        cartManager.removeItem(item)
     }
 
     func updateQuantity(for item: CartItem, change: Int64) {
-        item.quantity += Int64(change)
-        if item.quantity <= 0 {
-            removeItem(item)
-        } else {
-            saveContext()
-        }
+        cartManager.updateQuantity(for: item, change: change)
     }
 
     func totalAmount() -> Double {
-        items.reduce(0) { $0 + (Double($1.quantity) * Double($1.price)) }
-    }
-
-    private func saveContext() {
-        do {
-            try context.save()
-            fetchItems()
-        } catch {
-            print("❌ Error al guardar cambios del carrito: \(error)")
-        }
+        cartManager.totalAmount()
     }
 }

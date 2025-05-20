@@ -9,13 +9,12 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject private var manager: CartViewModel
+    @EnvironmentObject private var manager: CartManager
     @State private var itemQuantity: Int = 0
     private var product: Product
     private let itemWidth: CGFloat = 230
 
-    init(manager: CartViewModel, product: Product) {
-        self.manager = manager
+    init(product: Product) {
         self.product = product
     }
 

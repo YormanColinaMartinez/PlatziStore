@@ -82,8 +82,4 @@ struct ProfileView: View {
             await viewModel.getUserInfo()
         }
     }
-
-    init(viewModel: ProfileViewModel) {
-        self.viewModel = viewModel
-    }
 }

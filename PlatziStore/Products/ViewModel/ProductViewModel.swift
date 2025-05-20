@@ -8,16 +8,23 @@
 import SwiftUI
 import CoreData
 
+@MainActor
 class ProductsViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var categories: [Category] = []
+    @Published var searchText: String = .empty
+    @Published var selectedCategory: String?
+    @Published var isSearching: Bool = false
+    @Published var selectedProduct: Product?
+    @Published var showDetail = false
+    var cartManager: CartManager
     private let service: NetworkService
 
-    init(service: NetworkService = ApiService()) {
+    init(cartManager: CartManager, service: NetworkService = ApiService()) {
         self.service = service
+        self.cartManager = cartManager
     }
 
-    @MainActor
     func loadProducts(context: NSManagedObjectContext) async {
         do {
             let products = try await service.fetchEntities(
@@ -33,7 +40,6 @@ class ProductsViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func loadCategories(context: NSManagedObjectContext) async {
         do {
             let categories = try await service.fetchEntities(

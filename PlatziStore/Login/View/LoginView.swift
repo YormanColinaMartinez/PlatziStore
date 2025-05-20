@@ -64,7 +64,7 @@ struct LoginView: View {
                 CustomTextField(text: $viewModel.name, placeholder: Strings.Login.name.description)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .onChange(of: viewModel.name) {
-                        viewModel.name = viewModel.name.lowercased()
+                        viewModel.name = viewModel.name
                         viewModel.errorMessage = nil
                     }
             }
