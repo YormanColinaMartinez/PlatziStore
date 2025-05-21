@@ -9,6 +9,8 @@ import SwiftUI
 
 @MainActor
 class LoginViewModel: ObservableObject {
+    
+    //MARK: - Properties -
     @Published var navigateToHome = false
     @Published var name: String = .empty
     @Published var email: String = .empty
@@ -18,21 +20,22 @@ class LoginViewModel: ObservableObject {
     @Published var accessToken: String = .empty
     @Published var confirmPassword: String = .empty
     @Published var isSignUpMode: Bool = false
-    private let authService: AuthServiceProtocol
-    let logger = LoginLogger()
-    
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
     }
+    let logger = LoginLogger()
+    private let authService: AuthServiceProtocol
     
+    //MARK: - Initializers -
     init(authService: AuthServiceProtocol = AuthService()) {
         self.authService = authService
     }
     
+    //MARK: - Internal Methods -
     func login() async -> String? {
         isSignUpMode = false
         guard isFormValid else {
-            self.errorMessage = Strings.ErrorMessage.enterValidData.description
+            self.errorMessage = ErrorMessage.enterValidData.description
             return nil
         }
         
@@ -43,37 +46,31 @@ class LoginViewModel: ObservableObject {
             self.isLoading = false
         }
         
+        var success = false
+        var tokenResult: String? = nil
+        
         do {
-            guard let token = try await authService.login(email: email, password: password) else {
-                Task {
-                    await logger.logAttempt(email: email, success: false)
-                }
-                return nil
+            if let token = try await authService.login(email: email, password: password) {
+                self.accessToken = token
+                tokenResult = token
+                success = true
             }
-            self.accessToken = token
-            Task {
-                await logger.logAttempt(email: email, success:true)
-            }
-            return token
         } catch let error as ServiceError {
-            Task {
-                await logger.logAttempt(email: email, success: false)
-            }
             self.errorMessage = error.userFriendlyMessage
-            return nil
         } catch {
-            Task {
-                await logger.logAttempt(email: email, success: false)
-            }
-            self.errorMessage = Strings.ErrorMessage.unknowError.description
-            return nil
+            self.errorMessage = ErrorMessage.unknowError.description
         }
+        
+        await logger.logAttempt(email: email, success: success)
+        
+        return tokenResult
     }
+
     
     func createUser() async throws -> String? {
         isSignUpMode = true
         guard isFormValid else {
-            self.errorMessage = Strings.ErrorMessage.enterValidData.description
+            self.errorMessage = ErrorMessage.enterValidData.description
             return nil
         }
         
@@ -87,20 +84,20 @@ class LoginViewModel: ObservableObject {
             accessToken = token
             return token
         } catch {
-            self.errorMessage = Strings.ErrorMessage.unknowError.description
+            self.errorMessage = ErrorMessage.unknowError.description
             throw error
         }
     }
     
     func validateForm(isSignUpMode: Bool, confirmPassword: String) -> String? {
         if email.isEmpty || !email.contains("@") {
-            return Strings.ErrorMessage.enterValidEmail.description
+            return ErrorMessage.enterValidEmail.description
         }
         if password.isEmpty {
-            return Strings.ErrorMessage.enterValidPassword.description
+            return ErrorMessage.enterValidPassword.description
         }
         if isSignUpMode && password != confirmPassword {
-            return Strings.ErrorMessage.passwordsDoNotMatch.description
+            return ErrorMessage.passwordsDoNotMatch.description
         }
         return nil
     }

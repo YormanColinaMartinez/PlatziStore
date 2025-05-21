@@ -20,7 +20,7 @@ actor LoginLogger {
         let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
         let entry = "[\(timestamp)] Login de \(email): \(status)"
         attempts.append(entry)
-        print(entry) // También lo mostramos en consola
+        print(entry)
     }
 
     func getAttempts() -> [String] {

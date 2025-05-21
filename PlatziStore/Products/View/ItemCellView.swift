@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ItemCellView: View {
-    @EnvironmentObject private var manager: CartManager
+    
+    //MARK: - Properties -
     @State private var imageFailedToLoad = false
     var model: Product
+    var manager: CartManager
 
+    //MARK: - Body -
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             AsyncImage(url: URL(string: model.imagesArray.first ?? .empty)) { image in
@@ -50,7 +53,7 @@ struct ItemCellView: View {
                 Spacer()
 
                 Button(action: {
-                    manager.addToCart(product: model)
+                    manager.addToCart(product: model, quantity: 1)
                 }) {
                     Image(systemName: "plus")
                         .foregroundColor(.black)

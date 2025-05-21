@@ -19,24 +19,24 @@ final class AuthService: AuthServiceProtocol {
     // MARK: - Internal Methods -
     func register(name: String, email: String, password: String) async throws -> String? {
         let body = [
-            Strings.Request.name.description: name,
-            Strings.Request.email.description: email,
-            Strings.Request.password.description: password,
-            Strings.Request.avatar.description: "https://i.imgur.com/LDOO4Qs.jpg" // Must be changed for add avatar implementation
+            Request.name.description: name,
+            Request.email.description: email,
+            Request.password.description: password,
+            Request.avatar.description: "https://i.imgur.com/LDOO4Qs.jpg" // Must be changed for add avatar implementation
         ]
         
         let user = try await sendRequest(
             endpoint: "/users/",
             body: body,
-            responseType: UserModel.self
+            responseType: User.self
         )
         return try await login(email: user.email, password: user.password)
     }
     
     func login(email: String, password: String) async throws -> String? {
         let body = [
-            Strings.Request.email.description: email,
-            Strings.Request.password.description: password
+            Request.email.description: email,
+            Request.password.description: password
         ]
         
         let authResponse = try await sendRequest(

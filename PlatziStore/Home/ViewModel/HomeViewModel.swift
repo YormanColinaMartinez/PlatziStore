@@ -8,7 +8,6 @@
 import SwiftUI
 
 class HomeViewModel: ObservableObject {
-    @EnvironmentObject private var cartManager: CartManager
     
     let accessToken: String
     

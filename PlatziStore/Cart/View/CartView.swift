@@ -14,7 +14,7 @@ struct CartView: View {
     init(viewModel: CartViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-        
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
@@ -34,7 +34,7 @@ struct CartView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                     Spacer()
-                    Text("$\(viewModel.totalAmount(), specifier: "%.2f")")
+                    Text("$\(viewModel.cartManager.totalAmount(), specifier: "%.2f")")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
@@ -59,12 +59,12 @@ struct CartView: View {
         .background(Color("mainColorApp", bundle: nil))
     }
     
-    @ViewBuilder var contentView: some View {
+    var contentView: some View {
         ScrollView {
             VStack(spacing: 16) {
-                ForEach(viewModel.items, id: \.id) { item in
+                ForEach(viewModel.cartManager.items, id: \.id) { item in
                     HStack(spacing: 16) {
-                        AsyncImage(url: URL(string: item.imageUrl ?? .empty)) { image in
+                        AsyncImage(url: URL(string: item.imageUrl ?? "")) { image in
                             image
                                 .resizable()
                                 .scaledToFill()
@@ -85,7 +85,7 @@ struct CartView: View {
                         
                         HStack(spacing: 8) {
                             Button(action: {
-                                viewModel.updateQuantity(for: item, change: -1)
+                                viewModel.cartManager.updateQuantity(for: item, change: -1)
                             }) {
                                 Image(systemName: "minus")
                                     .foregroundColor(.white)
@@ -98,7 +98,7 @@ struct CartView: View {
                                 .foregroundColor(.white)
                             
                             Button(action: {
-                                viewModel.updateQuantity(for: item, change: 1)
+                                viewModel.cartManager.updateQuantity(for: item, change: 1)
                             }) {
                                 Image(systemName: "plus")
                                     .foregroundColor(.white)
@@ -109,12 +109,13 @@ struct CartView: View {
                         }
                     }
                     .padding()
-                    .background(Color("mainColorApp", bundle: nil).opacity(0.2))
-                    .cornerRadius(16)
+                    .background(Color.green)
+                    .cornerRadius(12)
                     .padding(.horizontal)
                 }
             }
             .padding(.top)
+            .padding(.bottom, 30)
         }
     }
 }

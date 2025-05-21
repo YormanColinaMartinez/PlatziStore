@@ -24,26 +24,26 @@ struct EditProfileView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(Strings.EditProfile.editProfile.description)
+            Text(EditProfile.editProfile.description)
                 .font(.title)
                 .fontWeight(.bold)
             
-            TextField(Strings.Login.name.description, text: $newName)
+            TextField(Login.name.description, text: $newName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
             
-            TextField(Strings.Login.email.description, text: $newEmail)
+            TextField(Login.email.description, text: $newEmail)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
         
-            Button(Strings.EditProfile.selectPicture.description) {
+            Button(EditProfile.selectPicture.description) {
                 showImagePicker = true
             }
             
             if viewModel.isLoading {
-                ProgressView(Strings.EditProfile.updating.description)
+                ProgressView(EditProfile.updating.description)
             } else {
-                Button(Strings.EditProfile.saveChanges.description) {
+                Button(EditProfile.saveChanges.description) {
                     Task {
                         await viewModel.updateProfile(name: newName, email: newEmail, avatarUrl: imageURL)
                         dismiss()
@@ -62,7 +62,6 @@ struct EditProfileView: View {
         .onChange(of: selectedImage) { newImage in
             if let image = newImage {
                 if let imageURL = viewModel.saveImageToTemporaryDirectory(image: image) {
-//                    self.imageURL = image
                 }
             }
         }

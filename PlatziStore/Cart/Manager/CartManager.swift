@@ -10,12 +10,12 @@ import CoreData
 import Combine
 
 class CartManager: ObservableObject {
-    let context: NSManagedObjectContext
-    
     @Published var items: [CartItem] = []
+    let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.context = context
+        fetchItems()
     }
     
     private func saveContext() {
@@ -33,32 +33,30 @@ class CartManager: ObservableObject {
         if let existingItem = items.first(where: { $0.productId == product.id }) {
             existingItem.quantity += Int64(quantity)
         } else {
-            let newItem = CartItem(context: context)
-            newItem.id = product.id
-            newItem.productId = product.id
-            newItem.name = product.title ?? .empty
-            newItem.price = product.price
-            newItem.quantity = Int64(quantity)
-            newItem.imageUrl = product.imagesArray.first ?? .empty
-            items.append(newItem)
+            items.append(createNewItem(product: product, quantity: quantity))
         }
         saveContext()
     }
     
-    func addToCart(product: Product) {
+    func addToCart(product: Product, quantity: Int) {
         if let existingItem = items.first(where: { $0.productId == product.id }) {
             existingItem.quantity += 1
         } else {
-            let newItem = CartItem(context: context)
-            newItem.id = product.id
-            newItem.productId = product.id
-            newItem.name = product.title
-            newItem.price = product.price
-            newItem.quantity = 1
-            newItem.imageUrl = product.imagesArray.first ?? .empty
-            items.append(newItem)
+            items.append(createNewItem(product: product, quantity: quantity))
         }
         saveContext()
+    }
+    
+    func createNewItem(product: Product, quantity: Int) -> CartItem {
+        let newItem = CartItem(context: context)
+        newItem.id = product.id
+        newItem.productId = product.id
+        newItem.name = product.title
+        newItem.price = product.price
+        newItem.quantity = Int64(quantity)
+        newItem.imageUrl = product.imagesArray.first ?? .empty
+        
+        return newItem
     }
     
     func fetchItems() {

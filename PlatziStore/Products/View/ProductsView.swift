@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ProductsView: View {
+    
+    //MARK: - Properties -
     @Environment(\.managedObjectContext) private var context
     @StateObject var viewModel: ProductsViewModel
 
@@ -21,7 +23,8 @@ struct ProductsView: View {
             return matchesCategory && matchesSearch
         }
     }
-
+    
+    //MARK: - Body -
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -29,15 +32,15 @@ struct ProductsView: View {
                     searchSection
                     categorySection
                 }.padding(.vertical)
-                 .background(Color(Strings.Colors.mainColorApp.description, bundle: nil))
+                 .background(Color(Colors.mainColorApp.description, bundle: nil))
                 
                 productsSection
             }
         
-            .background(Color(Strings.Colors.mainColorApp.description, bundle: nil))
+            .background(Color(Colors.mainColorApp.description, bundle: nil))
             .navigationBarHidden(true)
             .fullScreenCover(item: $viewModel.selectedProduct) { product in
-                ProductDetailView(product: product)
+                ProductDetailView(viewModel: ProductDetailViewModel(cartManager: viewModel.cartManager, product: product))
             }
             .task {
                 await viewModel.loadProducts(context: context)
@@ -46,16 +49,8 @@ struct ProductsView: View {
         }
     }
     
-    func isValidURL(_ urlString: String?) -> Bool {
-        guard let urlString = urlString,
-              let url = URL(string: urlString),
-              UIApplication.shared.canOpenURL(url),
-              !urlString.contains("imgur.com/removed") else {
-            return false
-        }
-        return true
-    }
     
+    //MARK: - Subviews -
     @ViewBuilder var searchSection: some View {
         HStack {
             if viewModel.selectedCategory != nil {
@@ -84,8 +79,6 @@ struct ProductsView: View {
                     .animation(.easeInOut(duration: 0.5), value: viewModel.isSearching)
             }
             
-            Spacer()
-            
             if !viewModel.isSearching {
                 titleView
             }
@@ -98,7 +91,6 @@ struct ProductsView: View {
                 } else {
                     viewModel.searchText = .empty
                 }
-
             }) {
                 Image(systemName: viewModel.isSearching ? "x.circle" : "magnifyingglass")
                     .resizable()
@@ -108,8 +100,6 @@ struct ProductsView: View {
                     .padding(10)
             }
         }
-        .padding(.horizontal)
-        
     }
 
     @ViewBuilder var categorySection: some View {
@@ -137,7 +127,7 @@ struct ProductsView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                 ForEach(filteredItems.filter { isValidURL($0.imagesArray.first) }, id: \.id) { item in
-                    ItemCellView(model: item)
+                    ItemCellView(model: item, manager: viewModel.cartManager)
                         .onTapGesture {
                             viewModel.selectedProduct = item
                             viewModel.showDetail = true
@@ -159,5 +149,16 @@ struct ProductsView: View {
         }
         .frame(maxWidth: .infinity, alignment: viewModel.selectedCategory != nil ? .center : .leading)
         .padding()
+    }
+    
+    //MARK: - Internal Methods -
+    func isValidURL(_ urlString: String?) -> Bool {
+        guard let urlString = urlString,
+              let url = URL(string: urlString),
+              UIApplication.shared.canOpenURL(url),
+              !urlString.contains("imgur.com/removed") else {
+            return false
+        }
+        return true
     }
 }

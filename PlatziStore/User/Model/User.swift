@@ -1,5 +1,5 @@
 //
-//  UserModel.swift
+//  User.swift
 //  PlatziStore
 //
 //  Created by mac on 7/04/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserModel: Decodable {
+struct User: Decodable {
     let id: Int
     let email: String
     let password: String

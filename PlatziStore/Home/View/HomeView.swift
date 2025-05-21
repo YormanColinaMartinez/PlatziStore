@@ -29,16 +29,37 @@ struct HomeView: View {
     var body: some View {
         TabView {
             ProductsView(viewModel: ProductsViewModel(cartManager: cartManager))
-                .tabItem {
-                    Label("Products", systemImage: "house.fill")
-                }
+                            .tabItem {
+                                VStack {
+                                    Image("filled_home")
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .frame(width: 24, height: 24)
+                                    Text("Products")
+                                        .font(.system(size: 12))
+                                }
+                            }
             CartView(viewModel: CartViewModel(cartManager: cartManager))
                 .tabItem {
-                    Label("Cart", systemImage: "cart")
+                    VStack {
+                        Image("filled_basket")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                        Text("Products")
+                            .font(.system(size: 12))
+                    }
                 }
             ProfileView(viewModel: ProfileViewModel(accessToken: viewModel.accessToken))
                 .tabItem {
-                    Label("Profile", systemImage: "person")
+                    VStack {
+                        Image("filled_people_profile")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                        Text("Products")
+                            .font(.system(size: 12))
+                    }
                 }
         }
         .accentColor(.white)

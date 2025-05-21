@@ -9,9 +9,12 @@ import SwiftUI
 import CoreData
 
 struct LoginView: View {
+    
+    //MARK: - Properties -
     @Environment(\.managedObjectContext) private var context
     @StateObject private var viewModel = LoginViewModel()
     
+    // MARK: - Body -
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -28,7 +31,7 @@ struct LoginView: View {
                 }
                 .padding(.top, 100)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(UIColor(named: Strings.Colors.mainColorApp.description) ?? .white))
+                .background(Color(UIColor(named: Colors.mainColorApp.description) ?? .white))
                 .onTapGesture {
                     UIApplication.shared.hideKeyboard()
                 }
@@ -37,19 +40,19 @@ struct LoginView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            .background(Color(UIColor(named: Strings.Colors.mainColorApp.description) ?? .white))
+            .background(Color(UIColor(named: Colors.mainColorApp.description) ?? .white))
         }
     }
     
-    // MARK: - Subviews
+    // MARK: - Subviews -
     private var logoSection: some View {
         HStack {
-            Image(Strings.Icons.platziLogo.rawValue)
+            Image(Icons.platziLogo.rawValue)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)
             
-            Text(Strings.Login.platziStore.description)
+            Text(Login.platziStore.description)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -61,7 +64,7 @@ struct LoginView: View {
     private var formSection: some View {
         VStack(spacing: 20) {
             if viewModel.isSignUpMode {
-                CustomTextField(text: $viewModel.name, placeholder: Strings.Login.name.description)
+                CustomTextField(text: $viewModel.name, placeholder: Login.name.description)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .onChange(of: viewModel.name) {
                         viewModel.name = viewModel.name
@@ -69,21 +72,21 @@ struct LoginView: View {
                     }
             }
             
-            CustomTextField(text: $viewModel.email, placeholder: Strings.Login.email.description)
+            CustomTextField(text: $viewModel.email, placeholder: Login.email.description)
                 .keyboardType(.emailAddress)
                 .onChange(of: viewModel.email) {
                     viewModel.email = viewModel.email.lowercased()
                     viewModel.errorMessage = nil
                 }
             
-            CustomTextField(text: $viewModel.password, placeholder: Strings.Login.password.description, isSecure: true)
+            CustomTextField(text: $viewModel.password, placeholder: Login.password.description, isSecure: true)
                 .onChange(of: viewModel.password) {
                     viewModel.password = viewModel.password
                     viewModel.errorMessage = nil
                 }
             
             if viewModel.isSignUpMode {
-                CustomTextField(text: $viewModel.confirmPassword, placeholder: Strings.Login.confirmPassword.description, isSecure: true)
+                CustomTextField(text: $viewModel.confirmPassword, placeholder: Login.confirmPassword.description, isSecure: true)
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
@@ -113,7 +116,7 @@ struct LoginView: View {
                     viewModel.errorMessage = nil
                 }
             }) {
-                Text(viewModel.isSignUpMode ? Strings.Login.backToLogin.description : Strings.Login.login.description).bold()
+                Text(viewModel.isSignUpMode ? Login.backToLogin.description : Login.login.description).bold()
             }
             .frame(width: 150, height: 50)
             .foregroundColor(.white)
@@ -142,18 +145,18 @@ struct LoginView: View {
                     viewModel.errorMessage = nil
                 }
             }) {
-                Text(Strings.Login.signUp.description).bold()
+                Text(Login.signUp.description).bold()
             }
             .frame(width: 150, height: 50)
             .foregroundColor(.white)
-            .background(Color(UIColor(named: Strings.Colors.platziGreenColor.description) ?? UIColor.green.withAlphaComponent(0.5)))
+            .background(Color(UIColor(named: Colors.platziGreenColor.description) ?? UIColor.green.withAlphaComponent(0.5)))
             .cornerRadius(12)
         }
         .padding(.top, 20)
     }
     
     private var footerLogo: some View {
-        Image(Strings.Icons.blackPlatziLogo.description)
+        Image(Icons.blackPlatziLogo.description)
             .resizable()
             .scaledToFit()
             .frame(width: 80, height: 80)
