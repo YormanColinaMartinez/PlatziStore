@@ -23,30 +23,32 @@ enum ServiceError: Error, Equatable, LocalizedError {
     var userFriendlyMessage: String {
         switch self {
         case .invalidURL:
-            return "Internal application error. Please contact support."
+            return UserErrorMessage.invalidURL.message
         case .networkError(let error):
-            if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-                return "There's no internet connection. Please check your connection."
+            let nsError = error as NSError
+            if nsError.code == NSURLErrorNotConnectedToInternet {
+                return UserErrorMessage.networkError(error).message
+            } else {
+                return UserErrorMessage.connectionError.message
             }
-            return "Connection problem. Please try again."
         case .noData:
-            return "The server did not respond with valid data."
+            return UserErrorMessage.noData.message
         case .decodingError:
-            return "Error processing server response."
+            return UserErrorMessage.decodingError.message
         case .invalidResponse:
-            return "Invalid response from the server."
+            return UserErrorMessage.invalidResponse.message
         case .userNotFound:
-            return "User not found. Please check your email."
+            return UserErrorMessage.userNotFound.message
         case .authenticationFailed:
-            return "Email or password incorrect. Please verify your credentials."
+            return UserErrorMessage.authenticationFailed.message
         case .serverError(let statusCode):
-            return "Server Error (código \(statusCode)). Please try later."
+            return UserErrorMessage.serverError(statusCode: statusCode).message
         case .timeout:
-            return "The server is taking too long to respond. Please try again."
+            return UserErrorMessage.timeout.message
         case .unknownError:
-            return "Unknow error. Please contact support."
-        case . unauthorized:
-            return "The authorizarion has failed"
+            return UserErrorMessage.unknownError.message
+        case .unauthorized:
+            return UserErrorMessage.unauthorized.message
         }
     }
 
@@ -70,4 +72,8 @@ enum ServiceError: Error, Equatable, LocalizedError {
             return false
         }
     }
+}
+
+enum CoreDataError: Error {
+    case missingContext
 }

@@ -9,22 +9,30 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @StateObject private var sessionManager = SessionManager()
     @State private var showSplashScreen = true
     
     var body: some View {
-        ZStack {
+        Group {
             if showSplashScreen {
                 SplashView()
                     .transition(.opacity)
             } else {
-                LoginView()
+                if sessionManager.isLoggedIn {
+                    TabBarView(sessionManager: sessionManager)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing),
+                            removal: .move(edge: .leading)))
+                } else {
+                    LoginView(viewModel: LoginViewModel(sessionManager: sessionManager))
+                }
             }
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                withAnimation {
-                    showSplashScreen = false
-                }
+        .animation(.easeInOut(duration: 0.3), value: sessionManager.isLoggedIn)
+        .task {
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            withAnimation {
+                showSplashScreen = false
             }
         }
     }

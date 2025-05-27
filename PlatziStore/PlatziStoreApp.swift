@@ -10,8 +10,8 @@ import CoreData
 
 @main
 struct PlatziStoreApp: App {
-    let persistenceController = PersistenceController.shared
-    @StateObject var cartManager: CartManager
+    private let persistenceController = PersistenceController.shared
+    @StateObject private var cartManager: CartManager
 
     init() {
         let context = persistenceController.container.viewContext
@@ -26,4 +26,3 @@ struct PlatziStoreApp: App {
         }
     }
 }
-

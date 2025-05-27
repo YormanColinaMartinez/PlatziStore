@@ -12,7 +12,7 @@ struct ItemCellView: View {
     //MARK: - Properties -
     @State private var imageFailedToLoad = false
     var model: Product
-    var manager: CartManager
+    @ObservedObject var manager: CartManager
 
     //MARK: - Body -
     var body: some View {

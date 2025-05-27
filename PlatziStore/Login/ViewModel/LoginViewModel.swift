@@ -11,23 +11,23 @@ import SwiftUI
 class LoginViewModel: ObservableObject {
     
     //MARK: - Properties -
+    @ObservedObject var sessionManager: SessionManager
     @Published var navigateToHome = false
     @Published var name: String = .empty
     @Published var email: String = .empty
     @Published var password: String = .empty
     @Published var isLoading = false
     @Published var errorMessage: String?
-    @Published var accessToken: String = .empty
     @Published var confirmPassword: String = .empty
     @Published var isSignUpMode: Bool = false
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
     }
-    let logger = LoginLogger()
     private let authService: AuthServiceProtocol
     
     //MARK: - Initializers -
-    init(authService: AuthServiceProtocol = AuthService()) {
+    init(sessionManager: SessionManager, authService: AuthServiceProtocol = AuthService()) {
+        self.sessionManager = sessionManager
         self.authService = authService
     }
     
@@ -46,22 +46,17 @@ class LoginViewModel: ObservableObject {
             self.isLoading = false
         }
         
-        var success = false
         var tokenResult: String? = nil
         
         do {
             if let token = try await authService.login(email: email, password: password) {
-                self.accessToken = token
-                tokenResult = token
-                success = true
+                sessionManager.saveToken(accessToken: token)
             }
         } catch let error as ServiceError {
             self.errorMessage = error.userFriendlyMessage
         } catch {
             self.errorMessage = ErrorMessage.unknowError.description
         }
-        
-        await logger.logAttempt(email: email, success: success)
         
         return tokenResult
     }
@@ -81,7 +76,7 @@ class LoginViewModel: ObservableObject {
             guard let token = try await authService.register(name: name, email: email, password: password) else {
                 return nil
             }
-            accessToken = token
+            sessionManager.saveToken(accessToken: token)
             return token
         } catch {
             self.errorMessage = ErrorMessage.unknowError.description

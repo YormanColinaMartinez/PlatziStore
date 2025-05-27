@@ -11,8 +11,7 @@ import CoreData
 struct LoginView: View {
     
     //MARK: - Properties -
-    @Environment(\.managedObjectContext) private var context
-    @StateObject private var viewModel = LoginViewModel()
+    @ObservedObject var viewModel: LoginViewModel
     
     // MARK: - Body -
     var body: some View {
@@ -21,7 +20,7 @@ struct LoginView: View {
                 VStack {
                     logoSection
                     formSection
-                    buttonSection
+                    LoginButtonSection(viewModel: viewModel)
                     
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
@@ -31,16 +30,16 @@ struct LoginView: View {
                 }
                 .padding(.top, 100)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(UIColor(named: Colors.mainColorApp.description) ?? .white))
+                .background(Colors.mainColorApp.color)
                 .onTapGesture {
                     UIApplication.shared.hideKeyboard()
                 }
                 .navigationDestination(isPresented: $viewModel.navigateToHome) {
-                    HomeView(accessToken: viewModel.accessToken)
+                    TabBarView(sessionManager: viewModel.sessionManager)
                 }
             }
             .scrollIndicators(.hidden)
-            .background(Color(UIColor(named: Colors.mainColorApp.description) ?? .white))
+            .background(Colors.mainColorApp.color)
         }
     }
     
@@ -50,7 +49,7 @@ struct LoginView: View {
             Image(Icons.platziLogo.rawValue)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 100, height: 100)
+                .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.2)
             
             Text(Login.platziStore.description)
                 .font(.largeTitle)
@@ -90,69 +89,6 @@ struct LoginView: View {
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
-    }
-    
-    private var buttonSection: some View {
-        VStack(spacing: 20) {
-            if viewModel.isLoading {
-                ProgressView()
-            }
-            
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    if viewModel.isSignUpMode {
-                        viewModel.isSignUpMode = false
-                    } else {
-                        Task {
-                            let errorMessage = viewModel.validateForm(isSignUpMode: viewModel.isSignUpMode, confirmPassword: viewModel.confirmPassword)
-                            if let error = errorMessage {
-                                viewModel.errorMessage = error
-                                return
-                            }
-                            await viewModel.navigateToHome = (viewModel.login() != nil)
-                            viewModel.isLoading = false
-                        }
-                    }
-                    viewModel.errorMessage = nil
-                }
-            }) {
-                Text(viewModel.isSignUpMode ? Login.backToLogin.description : Login.login.description).bold()
-            }
-            .frame(width: 150, height: 50)
-            .foregroundColor(.white)
-            .background(.blue)
-            .cornerRadius(12)
-            .transition(.opacity)
-            
-            Button(action: {
-                withAnimation {
-                    if viewModel.isSignUpMode {
-                        Task {
-                            let errorMessage = viewModel.validateForm(isSignUpMode: viewModel.isSignUpMode, confirmPassword: viewModel.confirmPassword)
-                            if let error = errorMessage {
-                                viewModel.errorMessage = error
-                                return
-                            }
-                            
-                            if ((try await viewModel.createUser()) != nil) {
-                                viewModel.isLoading = false
-                                viewModel.navigateToHome = true
-                            }
-                        }
-                    } else {
-                        viewModel.isSignUpMode = true
-                    }
-                    viewModel.errorMessage = nil
-                }
-            }) {
-                Text(Login.signUp.description).bold()
-            }
-            .frame(width: 150, height: 50)
-            .foregroundColor(.white)
-            .background(Color(UIColor(named: Colors.platziGreenColor.description) ?? UIColor.green.withAlphaComponent(0.5)))
-            .cornerRadius(12)
-        }
-        .padding(.top, 20)
     }
     
     private var footerLogo: some View {

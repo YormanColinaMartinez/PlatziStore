@@ -1,0 +1,242 @@
+[
+    {
+        "id": 1000,
+        "title": "Generated Product 1",
+        "slug": "generated-product-1",
+        "price": 802,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 1.",
+        "category": {
+            "id": 1,
+            "name": "Clothes",
+            "slug": "clothes",
+            "image": "https://i.imgur.com/QkIa5tT.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?clothes&sig=0",
+            "https://source.unsplash.com/featured/?clothes&sig=1",
+            "https://source.unsplash.com/featured/?clothes&sig=2",
+            "https://source.unsplash.com/featured/?clothes&sig=3",
+            "https://source.unsplash.com/featured/?clothes&sig=4"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1001,
+        "title": "Generated Product 2",
+        "slug": "generated-product-2",
+        "price": 115,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 2.",
+        "category": {
+            "id": 2,
+            "name": "Electronics",
+            "slug": "electronics",
+            "image": "https://i.imgur.com/ZANVnHE.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?electronics&sig=5",
+            "https://source.unsplash.com/featured/?electronics&sig=6",
+            "https://source.unsplash.com/featured/?electronics&sig=7",
+            "https://source.unsplash.com/featured/?electronics&sig=8",
+            "https://source.unsplash.com/featured/?electronics&sig=9"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1002,
+        "title": "Generated Product 3",
+        "slug": "generated-product-3",
+        "price": 72,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 3.",
+        "category": {
+            "id": 2,
+            "name": "Electronics",
+            "slug": "electronics",
+            "image": "https://i.imgur.com/ZANVnHE.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?electronics&sig=10",
+            "https://source.unsplash.com/featured/?electronics&sig=11",
+            "https://source.unsplash.com/featured/?electronics&sig=12",
+            "https://source.unsplash.com/featured/?electronics&sig=13",
+            "https://source.unsplash.com/featured/?electronics&sig=14"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1003,
+        "title": "Generated Product 4",
+        "slug": "generated-product-4",
+        "price": 666,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 4.",
+        "category": {
+            "id": 2,
+            "name": "Electronics",
+            "slug": "electronics",
+            "image": "https://i.imgur.com/ZANVnHE.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?electronics&sig=15",
+            "https://source.unsplash.com/featured/?electronics&sig=16",
+            "https://source.unsplash.com/featured/?electronics&sig=17",
+            "https://source.unsplash.com/featured/?electronics&sig=18",
+            "https://source.unsplash.com/featured/?electronics&sig=19"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1004,
+        "title": "Generated Product 5",
+        "slug": "generated-product-5",
+        "price": 178,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 5.",
+        "category": {
+            "id": 1,
+            "name": "Clothes",
+            "slug": "clothes",
+            "image": "https://i.imgur.com/QkIa5tT.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?clothes&sig=20",
+            "https://source.unsplash.com/featured/?clothes&sig=21",
+            "https://source.unsplash.com/featured/?clothes&sig=22",
+            "https://source.unsplash.com/featured/?clothes&sig=23",
+            "https://source.unsplash.com/featured/?clothes&sig=24"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1005,
+        "title": "Generated Product 6",
+        "slug": "generated-product-6",
+        "price": 568,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 6.",
+        "category": {
+            "id": 3,
+            "name": "Furniture",
+            "slug": "furniture",
+            "image": "https://i.imgur.com/5jLZyVA.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?furniture&sig=25",
+            "https://source.unsplash.com/featured/?furniture&sig=26",
+            "https://source.unsplash.com/featured/?furniture&sig=27",
+            "https://source.unsplash.com/featured/?furniture&sig=28",
+            "https://source.unsplash.com/featured/?furniture&sig=29"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1006,
+        "title": "Generated Product 7",
+        "slug": "generated-product-7",
+        "price": 67,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 7.",
+        "category": {
+            "id": 3,
+            "name": "Furniture",
+            "slug": "furniture",
+            "image": "https://i.imgur.com/5jLZyVA.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?furniture&sig=30",
+            "https://source.unsplash.com/featured/?furniture&sig=31",
+            "https://source.unsplash.com/featured/?furniture&sig=32",
+            "https://source.unsplash.com/featured/?furniture&sig=33",
+            "https://source.unsplash.com/featured/?furniture&sig=34"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1007,
+        "title": "Generated Product 8",
+        "slug": "generated-product-8",
+        "price": 398,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 8.",
+        "category": {
+            "id": 2,
+            "name": "Electronics",
+            "slug": "electronics",
+            "image": "https://i.imgur.com/ZANVnHE.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?electronics&sig=35",
+            "https://source.unsplash.com/featured/?electronics&sig=36",
+            "https://source.unsplash.com/featured/?electronics&sig=37",
+            "https://source.unsplash.com/featured/?electronics&sig=38",
+            "https://source.unsplash.com/featured/?electronics&sig=39"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1008,
+        "title": "Generated Product 9",
+        "slug": "generated-product-9",
+        "price": 508,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 9.",
+        "category": {
+            "id": 5,
+            "name": "Miscellaneous",
+            "slug": "miscellaneous",
+            "image": "https://i.imgur.com/BG8J0Fj.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?miscellaneous&sig=40",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=41",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=42",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=43",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=44"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    },
+    {
+        "id": 1009,
+        "title": "Generated Product 10",
+        "slug": "generated-product-10",
+        "price": 464,
+        "description": "Descripci\u00f3n generada autom\u00e1ticamente para el producto 10.",
+        "category": {
+            "id": 5,
+            "name": "Miscellaneous",
+            "slug": "miscellaneous",
+            "image": "https://i.imgur.com/BG8J0Fj.jpeg",
+            "creationAt": "2025-05-23T19:14:03.744859Z",
+            "updatedAt": "2025-05-23T19:14:03.744859Z"
+        },
+        "images": [
+            "https://source.unsplash.com/featured/?miscellaneous&sig=45",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=46",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=47",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=48",
+            "https://source.unsplash.com/featured/?miscellaneous&sig=49"
+        ],
+        "creationAt": "2025-05-23T19:14:03.744859Z",
+        "updatedAt": "2025-05-23T19:14:03.744859Z"
+    }
+]

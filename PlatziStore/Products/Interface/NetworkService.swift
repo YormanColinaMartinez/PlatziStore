@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 protocol NetworkService {
-    func fetchEntities<ResponseType: Decodable, EntityType>(
+    func fetchEntities<Response: Decodable, Entity>(
         urlString: String,
         context: NSManagedObjectContext,
-        transform: @escaping (ResponseType, NSManagedObjectContext) -> EntityType
-    ) async throws -> [EntityType]
+        transform: @escaping (Response, NSManagedObjectContext) -> Entity
+    ) async throws -> [Entity]
 }

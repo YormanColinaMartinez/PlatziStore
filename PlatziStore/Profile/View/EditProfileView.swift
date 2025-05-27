@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    //MARK: - Properties -
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: ProfileViewModel
     @State private var newName: String

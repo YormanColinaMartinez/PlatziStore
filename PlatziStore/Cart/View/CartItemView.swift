@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CartItemView: View {
-    let item: CartItem
-    let viewModel: CartViewModel
-
+    
+    //MARK: - Properties -
+    @StateObject var viewModel: CartViewModel
+    var item: CartItem
+    
+    //MARK: - Body -
     var body: some View {
         HStack(spacing: 16) {
             AsyncImage(url: URL(string: item.imageUrl ?? .empty)) { image in
@@ -24,7 +28,7 @@ struct CartItemView: View {
             .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 6) {
-                Text(item.name ?? "")
+                Text(item.name ?? .empty)
                     .font(.headline)
                     .foregroundColor(.white)
                 Text("$\(item.price)")
@@ -34,7 +38,7 @@ struct CartItemView: View {
             
             HStack(spacing: 8) {
                 Button(action: {
-                    viewModel.cartManager.updateQuantity(for: item, change: -1)
+                    viewModel.updateQuantity(for: item, change: -1)
                 }) {
                     Image(systemName: "minus")
                         .foregroundColor(.white)
@@ -47,7 +51,8 @@ struct CartItemView: View {
                     .foregroundColor(.white)
                 
                 Button(action: {
-                    viewModel.cartManager.updateQuantity(for: item, change: 1)
+                    viewModel.updateQuantity(for: item, change: 1)
+                    print(item.quantity)
                 }) {
                     Image(systemName: "plus")
                         .foregroundColor(.white)

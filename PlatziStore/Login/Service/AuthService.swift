@@ -11,10 +11,6 @@ final class AuthService: AuthServiceProtocol {
     
     // MARK: - Private Properties -
     private let baseULR: String = "https://api.escuelajs.co/api/v1"
-    private var token: String? {
-        get { UserDefaults.standard.string(forKey: "authToken") }
-        set { UserDefaults.standard.set(newValue, forKey: "authToken") }
-    }
     
     // MARK: - Internal Methods -
     func register(name: String, email: String, password: String) async throws -> String? {
@@ -44,8 +40,8 @@ final class AuthService: AuthServiceProtocol {
             body: body,
             responseType: AuthResponse.self
         )
-        self.token = authResponse.access_token
-        return token ?? .empty
+        
+        return authResponse.access_token
     }
 
     func sendRequest<T: Decodable>(
@@ -54,14 +50,28 @@ final class AuthService: AuthServiceProtocol {
         body: [String: String],
         responseType: T.Type
     ) async throws -> T {
-        guard let url = URL(string: "\(baseULR)\(endpoint)") else {
+        guard let url = URL(string: Endpoints.baseUrl.rawValue) else {
             throw ServiceError.invalidURL
         }
         
-        var request = URLRequest(url: url)
+        let fullURL = url.appendingPathComponent(endpoint)
+        
+        var request = URLRequest(url: fullURL)
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(body)
+        
+        print("URL final:", request.url?.absoluteString ?? "URL inválida")
+        print("Método:", request.httpMethod ?? "Ninguno")
+        print("Headers:", request.allHTTPHeaderFields ?? [:])
+        print("Body:", String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "Vacío")
+        
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+        } catch {
+            print(error.localizedDescription)
+            throw error
+        }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -85,13 +95,5 @@ final class AuthService: AuthServiceProtocol {
         } catch {
             throw ServiceError.networkError(error)
         }
-    }
-
-    func isAuthenticated() -> Bool {
-        return token != nil
-    }
-    
-    func logout() {
-        token = nil
     }
 }

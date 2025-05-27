@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 extension Category {
-    static func from(response: CategoryResponse, context: NSManagedObjectContext) -> Category {
+    static func from(_ response: CategoryResponse, context: NSManagedObjectContext) -> Category {
         let category = Category(context: context)
         category.id = response.id
         category.name = response.name

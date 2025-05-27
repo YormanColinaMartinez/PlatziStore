@@ -13,12 +13,12 @@ extension Product {
         (imagesRelationship?.allObjects as? [ProductImage])?.compactMap { $0.url } ?? []
     }
     
-    static func from(response: ProductResponse, context: NSManagedObjectContext) -> Product {
+    static func from(_ response: ProductResponse, context: NSManagedObjectContext) -> Product {
         let product = Product(context: context)
         product.id = response.id
         product.title = response.title
-        product.price = response.price
         product.productDescription = response.productDescription
+        product.price = response.price
         product.slug = response.slug
 
         for url in response.images {
@@ -30,9 +30,8 @@ extension Product {
             }
             productImage.productRelationship = product
         }
-        product.categoryRelationship = Category.from(response: response.category, context: context)
+        product.categoryRelationship = Category.from(response.category, context: context)
 
-        
         return product
     }
 }

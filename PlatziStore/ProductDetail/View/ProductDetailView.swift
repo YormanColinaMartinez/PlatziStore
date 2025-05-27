@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ProductDetailView: View {
+    //MARK: - Properties -
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: ProductDetailViewModel
-
+     
+    //MARK: - Body -
     var body: some View {
         VStack {
             dismissButon
@@ -19,13 +21,14 @@ struct ProductDetailView: View {
 
             Spacer()
             
-            contentView
+            DetailContentView(viewModel: viewModel)
             
             checkoutButton
         }
-        .background(Color(Colors.mainColorApp.rawValue, bundle: nil))
+        .background(Colors.mainColorApp.color)
     }
     
+    //MARK: - Subviews -
     private var imageCarrousel: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
@@ -66,68 +69,6 @@ struct ProductDetailView: View {
         .foregroundColor(.black)
     }
     
-    @ViewBuilder private var contentView: some View {
-        VStack(alignment: .leading) {
-            Text(viewModel.product.title ?? .empty)
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.leading)
-
-            Text(viewModel.product.productDescription ?? .empty)
-                .font(.body)
-                .foregroundStyle(.gray)
-                .padding()
-
-            HStack {
-                Text("$\(viewModel.product.price)")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.leading)
-
-                Spacer()
-
-                HStack(spacing: 16) {
-                    Button {
-                        if self.viewModel.itemQuantity > 0 {
-                            self.viewModel.itemQuantity -= 1
-                        }
-                    } label: {
-                        Image(systemName: "minus.circle")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(color: .black.opacity(0.3), radius: 2, x: -2, y: 2)
-                    }
-                    .frame(width: 30, height: 30)
-                    .padding(.leading)
-
-                    Text("\(viewModel.itemQuantity)")
-                        .foregroundColor(.white)
-
-                    Button(action: { self.viewModel.itemQuantity += 1 }, label: {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(color: .black.opacity(0.3), radius: 2, x: -2, y: 2)
-                    })
-                    .frame(width: 40, height: 40)
-                    .padding(.trailing)
-                }
-                .frame(height: 40)
-                .cornerRadius(12)
-                .padding(.trailing)
-            }
-        }
-        .padding()
-    }
-    
     @ViewBuilder private var checkoutButton: some View {
         Button {
             if viewModel.itemQuantity > 0 {
@@ -135,7 +76,7 @@ struct ProductDetailView: View {
             }
             dismiss()
         } label: { Text(viewModel.itemQuantity > 0 ? Detail.add.description : Detail.addToCart.description)
-            + (viewModel.itemQuantity > 0 ? Text("\(viewModel.itemQuantity)").fontWeight(.heavy) + Text(Detail.toCart.description) : Text(verbatim: .empty))
+            + (viewModel.itemQuantity > 0 ? Text(" \(viewModel.itemQuantity) ").fontWeight(.heavy) + Text(Detail.toCart.description) : Text(verbatim: .empty))
         }
         .frame(width: 150, height: 40)
         .background(viewModel.itemQuantity > 0 ? .green : .gray)
@@ -144,6 +85,7 @@ struct ProductDetailView: View {
         .padding()
     }
 
+    //MARK: - Methods -
     private func getScale(proxy: GeometryProxy) -> CGFloat {
         let midPoint = UIScreen.main.bounds.width / 2
         let viewMid = proxy.frame(in: .global).midX

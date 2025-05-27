@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  TabBarView.swift
 //  PlatziStore
 //
 //  Created by mac on 2/04/25.
@@ -9,55 +9,53 @@ import SwiftUI
 import CoreData
 import UIKit
 
-struct HomeView: View {
+struct TabBarView: View {
+    @Environment(\.managedObjectContext) private var context
     @EnvironmentObject var cartManager: CartManager
-    @StateObject private var viewModel: HomeViewModel
+    @ObservedObject private var viewModel: TabBarViewModel
 
-    init(accessToken: String) {
+    init(sessionManager: SessionManager) {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor(named: "mainColorApp")
+        tabBarAppearance.backgroundColor = UIColor(named: Colors.mainColorApp.rawValue)
         
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
         
         UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 100)
-        _viewModel = StateObject(wrappedValue: HomeViewModel(accessToken: accessToken))
+        viewModel = TabBarViewModel(sessionManager: sessionManager)
     }
 
     var body: some View {
         TabView {
-            ProductsView(viewModel: ProductsViewModel(cartManager: cartManager))
-                            .tabItem {
-                                VStack {
-                                    Image("filled_home")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .frame(width: 24, height: 24)
-                                    Text("Products")
-                                        .font(.system(size: 12))
-                                }
-                            }
-            CartView(viewModel: CartViewModel(cartManager: cartManager))
+            ProductsView(viewModel: ProductsViewModel(cartManager: cartManager, context: context))
                 .tabItem {
                     VStack {
-                        Image("filled_basket")
+                        Image(Icons.filledHome.description)
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                        Text("Products")
+                        Text(Products.products.description)
                             .font(.system(size: 12))
                     }
                 }
-            ProfileView(viewModel: ProfileViewModel(accessToken: viewModel.accessToken))
+            CartView(viewModel: CartViewModel(cartManager: cartManager))
                 .tabItem {
                     VStack {
-                        Image("filled_people_profile")
+                        CartTabIcon(count: cartManager.totalItemsCount)
+                        Text("Cart")
+                            .font(.system(size: 12))
+                    }
+                }
+            ProfileView(viewModel: ProfileViewModel(sessionManager: viewModel.sessionManager))
+                .tabItem {
+                    VStack {
+                        Image(Icons.filledPeople.description)
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                        Text("Products")
+                        Text("Profile")
                             .font(.system(size: 12))
                     }
                 }

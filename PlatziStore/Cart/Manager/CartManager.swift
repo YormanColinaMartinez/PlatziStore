@@ -7,18 +7,21 @@
 
 import SwiftUI
 import CoreData
-import Combine
 
 class CartManager: ObservableObject {
-    @Published var items: [CartItem] = []
-    let context: NSManagedObjectContext
     
+    //MARK: - Properties -
+    @Published var items: [CartItem] = []
+    fileprivate let context: NSManagedObjectContext
+    
+    //MARK: - Initializers -
     init(context: NSManagedObjectContext) {
         self.context = context
         fetchItems()
     }
     
-    private func saveContext() {
+    //MARK: - Fileprivate Methods -
+    fileprivate func saveContext() {
         do {
             try context.save()
             fetchItems()
@@ -27,6 +30,19 @@ class CartManager: ObservableObject {
         }
     }
     
+    fileprivate func fetchItems() {
+        let request: NSFetchRequest<CartItem> = CartItem.fetchRequest()
+        do {
+            items = try context.fetch(request)
+        } catch {
+            print("❌ Error al cargar el carrito: \(error)")
+        }
+    }
+}
+
+
+//MARK: - Extension CartManager -
+extension CartManager {
     func add(product: Product, quantity: Int) {
         guard quantity > 0 else { return }
 
@@ -59,15 +75,6 @@ class CartManager: ObservableObject {
         return newItem
     }
     
-    func fetchItems() {
-        let request: NSFetchRequest<CartItem> = CartItem.fetchRequest()
-        do {
-            items = try context.fetch(request)
-        } catch {
-            print("❌ Error al cargar el carrito: \(error)")
-        }
-    }
-    
     func removeItem(_ item: CartItem) {
         context.delete(item)
         saveContext()
@@ -84,5 +91,9 @@ class CartManager: ObservableObject {
 
     func totalAmount() -> Double {
         items.reduce(0) { $0 + (Double($1.quantity) * Double($1.price)) }
+    }
+    
+    var totalItemsCount: Int {
+        items.reduce(0) { $0 + Int($1.quantity) }
     }
 }

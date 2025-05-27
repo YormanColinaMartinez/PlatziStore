@@ -8,14 +8,16 @@
 import Foundation
 
 class ProfileService {
+    
+    //MARK: - Methods -
     func fetchUserProfile(accessToken: String) async throws -> UserProfile {
-        guard let url = URL(string: "https://api.escuelajs.co/api/v1/auth/profile") else {
+        guard let url = URL(string: Endpoints.fetchUserProfile.rawValue) else {
             throw ServiceError.invalidURL
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = RequestLocalizations.get.description
+        request.setValue("\(RequestLocalizations.bearer.description) \(accessToken)", forHTTPHeaderField: RequestLocalizations.authorization.description)
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)

@@ -30,18 +30,10 @@ enum ErrorMessage: String {
     var description: String { rawValue }
 }
 
-enum Colors: String {
-    case mainColorApp = "mainColorApp"
-    case platziGreenColor = "platziGreenColor"
+enum Products: String {
+    case products = "Products"
     
-    var description: String { rawValue }
-}
-
-enum Icons: String {
-    case platziLogo = "platzi-logo"
-    case blackPlatziLogo = "black-paltzi-logo"
-    
-    var description: String { rawValue }
+    var description: String { return rawValue}
 }
 
 enum Login: String {
@@ -75,3 +67,46 @@ enum Request: String {
     var description: String { rawValue }
 }
 
+enum UserErrorMessage: Error {
+    case invalidURL
+    case networkError(Error)
+    case noData
+    case decodingError
+    case invalidResponse
+    case userNotFound
+    case authenticationFailed
+    case serverError(statusCode: Int)
+    case timeout
+    case unknownError
+    case unauthorized
+    case connectionError
+
+    var message: String {
+        switch self {
+        case .invalidURL:
+            return "Internal application error. Please contact support."
+        case .networkError:
+            return "There's no internet connection. Please check your connection."
+        case .noData:
+            return "The server did not respond with valid data."
+        case .decodingError:
+            return "Error processing server response."
+        case .invalidResponse:
+            return "Invalid response from the server."
+        case .userNotFound:
+            return "User not found. Please check your email."
+        case .authenticationFailed:
+            return "Email or password incorrect. Please verify your credentials."
+        case .serverError(let code):
+            return "Server Error (código \(code)). Please try later."
+        case .timeout:
+            return "The server is taking too long to respond. Please try again."
+        case .unknownError:
+            return "Unknown error. Please contact support."
+        case .unauthorized:
+            return "The authorization has failed."
+        case .connectionError:
+            return "Connection problem. Please try again."
+        }
+    }
+}

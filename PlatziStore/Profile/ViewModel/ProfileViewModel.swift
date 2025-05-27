@@ -5,29 +5,33 @@
 //  Created by mac on 25/04/25.
 //
 
-import UIKit
+import SwiftUI
 
+@MainActor
 class ProfileViewModel: ObservableObject {
+    //MARK: - Properties -
     @Published var user: UserProfile?
     @Published var isLoading = true
+    @Published var isLoggingOut = false
+    @ObservedObject private var sessionManager: SessionManager
     
     let service: ProfileService = ProfileService()
-    let accessToken: String
     
-    init(accessToken: String) {
-        self.accessToken = accessToken
+    //MARK: - Initializers -
+    init(sessionManager: SessionManager) {
+        self.sessionManager = sessionManager
     }
     
+    //MARK: - Methods -
     func getUserInfo() async {
         do {
-            let profile = try await service.fetchUserProfile(accessToken: accessToken)
+            let profile = try await service.fetchUserProfile(accessToken: sessionManager.getToken())
             
             await MainActor.run {
                 self.user = profile
                 self.isLoading = false
             }
         } catch {
-            print("Error getting profile:", error)
             await MainActor.run {
                 self.user = nil
                 self.isLoading = false
@@ -40,18 +44,19 @@ class ProfileViewModel: ObservableObject {
         defer { isLoading = false }
         
         guard let userId = user?.id else {
-            print("Error: User ID not found")
             return
         }
         
-        guard let url = URL(string: "https://api.escuelajs.co/api/v1/users/\(userId)") else {
-            print("Error: No se pudo crear la URL")
+        guard let url = URL(string: "\(Endpoints.updateProfile.description)\(userId)") else {
             return
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = "PATCH"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = RequestLocalizations.patch.description
+        request.setValue(
+            "\(RequestLocalizations.bearer.description) \(sessionManager.getToken())",
+            forHTTPHeaderField: RequestLocalizations.authorization.description
+        )
 
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -149,5 +154,16 @@ class ProfileViewModel: ObservableObject {
             print("Error al guardar la imagen: \(error)")
             return nil
         }
+    }
+    
+    func logOut() async {
+        isLoggingOut = true
+        
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        
+        sessionManager.deleteToken()
+        user = nil
+        isLoading = true
+        isLoggingOut = false
     }
 }
