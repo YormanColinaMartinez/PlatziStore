@@ -27,36 +27,13 @@ class ApiService: NetworkService {
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
+        
+        let (data, _) = try await session.data(from: url)
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode([ResponseType].self, from: data)
+        
+        let entities = decoded.map { transform($0, context) }
 
-        do {
-            let (data, _) = try await session.data(from: url)
-            let decoder = JSONDecoder()
-            
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON recibido:", jsonString)
-            }
-            
-            let decoded: [ResponseType]
-            do {
-                decoded = try decoder.decode([ResponseType].self, from: data)
-            } catch let decodingError {
-                print("Error detallado de decodificación:")
-                print(decodingError)
-                throw decodingError
-            }
-
-            let entities = decoded.map { transform($0, context) }
-
-            do {
-                try context.save()
-                return entities
-            } catch let coreDataError {
-                print("Error al guardar en Core Data:", coreDataError)
-                throw coreDataError
-            }
-        } catch {
-            print("Error en la solicitud:", error)
-            throw error
-        }
+        return entities
     }
 }

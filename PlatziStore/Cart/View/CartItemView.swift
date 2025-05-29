@@ -11,7 +11,7 @@ import Combine
 struct CartItemView: View {
     
     //MARK: - Properties -
-    @StateObject var viewModel: CartViewModel
+    @ObservedObject var viewModel: CartViewModel
     var item: CartItem
     
     //MARK: - Body -
@@ -38,9 +38,11 @@ struct CartItemView: View {
             
             HStack(spacing: 8) {
                 Button(action: {
-                    viewModel.updateQuantity(for: item, change: -1)
+                    Task {
+                        await viewModel.updateQuantity(for: item, change: -1)
+                    }
                 }) {
-                    Image(systemName: "minus")
+                    Image(systemName: Icons.minus.description)
                         .foregroundColor(.white)
                         .frame(width: 24, height: 24)
                         .background(Color.gray)
@@ -51,10 +53,11 @@ struct CartItemView: View {
                     .foregroundColor(.white)
                 
                 Button(action: {
-                    viewModel.updateQuantity(for: item, change: 1)
-                    print(item.quantity)
+                    Task {
+                        await viewModel.updateQuantity(for: item, change: 1)
+                    }
                 }) {
-                    Image(systemName: "plus")
+                    Image(systemName: Icons.plus.description)
                         .foregroundColor(.white)
                         .frame(width: 24, height: 24)
                         .background(Color.gray)
@@ -63,7 +66,7 @@ struct CartItemView: View {
             }
         }
         .padding()
-        .background(Color("mainColorApp", bundle: nil).opacity(0.2))
+        .background(Colors.mainColorApp.color)
         .cornerRadius(16)
         .padding(.horizontal)
     }

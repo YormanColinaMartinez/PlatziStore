@@ -11,7 +11,7 @@ import CoreData
 struct LoginView: View {
     
     //MARK: - Properties -
-    @ObservedObject var viewModel: LoginViewModel
+    @StateObject var viewModel: LoginViewModel
     
     // MARK: - Body -
     var body: some View {

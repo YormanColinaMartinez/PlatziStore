@@ -9,7 +9,11 @@ import Foundation
 import CoreData
 
 extension ProductImage {
-    static func from(_ url: String, context: NSManagedObjectContext) -> ProductImage {
+    static func from(_ url: String, context: NSManagedObjectContext) -> ProductImage? {
+        guard context.persistentStoreCoordinator != nil else {
+            return nil
+        }
+        
         let image = ProductImage(context: context)
         image.url = url
         return image

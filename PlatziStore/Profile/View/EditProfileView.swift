@@ -60,11 +60,8 @@ struct EditProfileView: View {
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(image: $selectedImage)
         }
-        .onChange(of: selectedImage) { newImage in
-            if let image = newImage {
-                if let imageURL = viewModel.saveImageToTemporaryDirectory(image: image) {
-                }
-            }
+        .onChange(of: selectedImage) {
+            
         }
     }
 }

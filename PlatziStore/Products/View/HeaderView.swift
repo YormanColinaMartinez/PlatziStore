@@ -18,7 +18,7 @@ struct HeaderView: View {
                         viewModel.selectedCategory = nil
                     }
                 }) {
-                    Image(systemName: "arrow.left")
+                    Image(systemName: Icons.arrowLeft.description)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 16, height: 16)
@@ -30,7 +30,7 @@ struct HeaderView: View {
             }
             
             if viewModel.isSearching {
-                TextField("Search...", text: $viewModel.searchText)
+                TextField(Products.search.description, text: $viewModel.searchText)
                     .padding(10)
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
@@ -51,7 +51,7 @@ struct HeaderView: View {
                     viewModel.searchText = .empty
                 }
             }) {
-                Image(systemName: viewModel.isSearching ? "x.circle" : "magnifyingglass")
+                Image(systemName: viewModel.isSearching ? Icons.xcircle.description : Icons.magnifyingGlass.description)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 20, height: 20)
@@ -59,14 +59,15 @@ struct HeaderView: View {
                     .padding(10)
             }
         }
+        .padding(viewModel.isSearching ? 20 : 0)
     }
     
     var titleView: some View {
         Group {
-            Text(viewModel.selectedCategory != nil ? viewModel.selectedCategory ?? "" : "Explore our\n")
+            Text(viewModel.selectedCategory != nil ? viewModel.selectedCategory ?? .empty : Products.explore.description)
                 .font(.system(size: 24))
                 .foregroundColor(.white)
-            + Text(viewModel.selectedCategory != nil ? "" : "Collection")
+            + Text(viewModel.selectedCategory != nil ? .empty : Products.collection.description)
                 .font(.system(size: 40)).bold()
                 .foregroundColor(.white)
         }

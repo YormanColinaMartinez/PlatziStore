@@ -14,6 +14,17 @@ enum Icons: String {
     case plusCircle = "plus.circle"
     case filledHome = "filled_home"
     case filledPeople = "filled_people_profile"
+    case calendar = "calendar"
+    case locationFill = "location.fill"
+    case creditCard = "creditcard.fill"
+    case gearshapeFill = "gearshape.fill"
+    case chevronRight = "chevron.right"
+    case arrowLeft = "arrow.left"
+    case xcircle = "x.circle"
+    case magnifyingGlass = "magnifyingglass"
+    case plus = "plus"
+    case minus = "minus"
+    case filledBasket = "filled_basket"
     
     var description: String { rawValue }
 }

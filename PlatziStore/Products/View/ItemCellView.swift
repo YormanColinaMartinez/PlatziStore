@@ -53,9 +53,11 @@ struct ItemCellView: View {
                 Spacer()
 
                 Button(action: {
-                    manager.addToCart(product: model, quantity: 1)
+                    Task {
+                        await manager.addToCart(product: model, quantity: 1)
+                    }
                 }) {
-                    Image(systemName: "plus")
+                    Image(systemName: Icons.plus.description)
                         .foregroundColor(.black)
                         .padding(8)
                         .background(Color.white)

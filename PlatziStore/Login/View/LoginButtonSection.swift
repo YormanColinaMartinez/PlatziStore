@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginButtonSection: View {
     
-    @StateObject var viewModel: LoginViewModel
+    @ObservedObject var viewModel: LoginViewModel
     
     var body: some View {
         VStack(spacing: 20) {
@@ -24,8 +24,10 @@ struct LoginButtonSection: View {
                                 viewModel.errorMessage = error
                                 return
                             }
-                            await viewModel.navigateToHome = (viewModel.login() != nil)
-                            viewModel.isLoading = false
+                            if await viewModel.login() != nil {
+                                viewModel.navigateToHome = true
+                                viewModel.isLoading = false
+                            }
                         }
                     }
                     viewModel.errorMessage = nil

@@ -32,6 +32,13 @@ enum ErrorMessage: String {
 
 enum Products: String {
     case products = "Products"
+    case error = "Error"
+    case ok = "OK"
+    case retry = "Retry"
+    case unknowError = "Unknow error"
+    case collection = "Collection"
+    case explore = "Explore our\n"
+    case search = "Search..."
     
     var description: String { return rawValue}
 }
@@ -45,6 +52,30 @@ enum Login: String {
     case backToLogin =  "Back to Login"
     case confirmPassword = "Confirm Password"
     case name = "Name"
+    
+    var description: String { rawValue }
+}
+
+enum Profile: String {
+    case chargingProfile = "Cargando perfil..."
+    case loggingOut = "Cerrando sesión..."
+    case pleaseWait = "Por favor espera..."
+    case editProfile = "Edit Profile"
+    case profile = "Profile"
+    case logOut = "Log Out"
+    case myOrders = "My Orders"
+    case addresses = "Shipping Addresses"
+    case paymentMethods = "Payment Methods"
+    case settings = "Settings"
+    
+    var description: String { return rawValue }
+}
+
+enum ProfileViewDestinations: String {
+    case ordersView = "My Orders View"
+    case shippingView = "Shipping Addresses View"
+    case paymentView = "Payment Methods View"
+    case settingsView = "Settings View"
     
     var description: String { rawValue }
 }
@@ -65,6 +96,14 @@ enum Request: String {
     case avatar = "avatar"
     
     var description: String { rawValue }
+}
+
+enum Cart: String {
+    case cart = "Cart"
+    case total = "Total"
+    case checkout = "Checkout"
+    
+    var description: String { return rawValue }
 }
 
 enum UserErrorMessage: Error {

@@ -20,6 +20,7 @@ class LoginViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var confirmPassword: String = .empty
     @Published var isSignUpMode: Bool = false
+    
     var isFormValid: Bool {
         return email.contains("@") && !password.isEmpty
     }
@@ -46,8 +47,6 @@ class LoginViewModel: ObservableObject {
             self.isLoading = false
         }
         
-        var tokenResult: String? = nil
-        
         do {
             if let token = try await authService.login(email: email, password: password) {
                 sessionManager.saveToken(accessToken: token)
@@ -57,8 +56,7 @@ class LoginViewModel: ObservableObject {
         } catch {
             self.errorMessage = ErrorMessage.unknowError.description
         }
-        
-        return tokenResult
+        return nil
     }
 
     

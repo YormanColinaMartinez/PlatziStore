@@ -12,7 +12,7 @@ struct CartTabIcon: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            Image("filled_basket")
+            Image(Icons.filledBasket.description)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 24, height: 24)

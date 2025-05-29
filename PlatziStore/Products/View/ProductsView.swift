@@ -26,6 +26,18 @@ struct ProductsView: View {
         .fullScreenCover(item: $viewModel.selectedProduct) { product in
             ProductDetailView(viewModel: ProductDetailViewModel(cartManager: viewModel.cartManager, product: product))
         }
+        .alert(Products.error.description, isPresented: $viewModel.showErrorAlert) {
+            Button(Products.ok.description, role: .cancel) {
+                viewModel.showErrorAlert = false
+            }
+            Button(Products.retry.description) {
+                Task {
+                    await viewModel.loadProducts()
+                }
+            }
+        } message: {
+            Text(viewModel.errorMessage ?? Products.unknowError.description)
+        }
         .task {
             async let productsTask: () = viewModel.loadProducts()
             async let categoriesTask: () = viewModel.loadCategories()
@@ -58,7 +70,10 @@ struct ProductsView: View {
     @ViewBuilder var productsSection: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                ForEach(viewModel.filteredItems.filter { viewModel.isValidURL($0.imagesArray.first) }, id: \.id) { item in
+                ForEach(viewModel.filteredItems.filter { image in
+                    guard let url = image.imagesArray.first else { return false }
+                    return viewModel.isValidURL(url)
+                }, id: \.id) { item in
                     ItemCellView(model: item, manager: viewModel.cartManager)
                         .onTapGesture {
                             viewModel.selectedProduct = item

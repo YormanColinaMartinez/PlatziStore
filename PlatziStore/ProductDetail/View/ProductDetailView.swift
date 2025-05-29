@@ -72,7 +72,9 @@ struct ProductDetailView: View {
     @ViewBuilder private var checkoutButton: some View {
         Button {
             if viewModel.itemQuantity > 0 {
-                viewModel.cartManager.add(product: viewModel.product, quantity: viewModel.itemQuantity)
+                Task {
+                    await viewModel.cartManager.add(product: viewModel.product, quantity: viewModel.itemQuantity)
+                }
             }
             dismiss()
         } label: { Text(viewModel.itemQuantity > 0 ? Detail.add.description : Detail.addToCart.description)

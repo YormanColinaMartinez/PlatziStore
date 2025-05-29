@@ -11,18 +11,21 @@ import CoreData
 @main
 struct PlatziStoreApp: App {
     private let persistenceController = PersistenceController.shared
-    @StateObject private var cartManager: CartManager
 
-    init() {
-        let context = persistenceController.container.viewContext
-        _cartManager = StateObject(wrappedValue: CartManager(context: context))
-    }
+    @StateObject private var cartManager: CartManager = {
+        let context = PersistenceController.shared.container.viewContext
+        return CartManager(context: context)
+    }()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(cartManager)
+                .task {
+                    await cartManager.initialize()
+                }
         }
     }
 }
+

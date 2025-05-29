@@ -11,36 +11,36 @@ import Combine
 
 class CartViewModel: ObservableObject {
     @Published var items: [CartItem] = []
-    @ObservedObject var cartManager: CartManager
+    var cartManager: CartManager
     
     private var cancellables = Set<AnyCancellable>()
 
     init(cartManager: CartManager) {
         self.cartManager = cartManager
         cartManager.$items
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .assign(to: \.items, on: self)
             .store(in: &cancellables)
     }
     
-    func add(product: Product, quantity: Int) {
-        cartManager.add(product: product, quantity: quantity)
+    func add(product: Product, quantity: Int) async {
+        await cartManager.add(product: product, quantity: quantity)
     }
     
-    func addToCart(product: Product, quantity: Int) {
-        cartManager.addToCart(product: product, quantity: quantity)
+    func addToCart(product: Product, quantity: Int) async {
+        await cartManager.addToCart(product: product, quantity: quantity)
     }
     
     func createNewItem(product: Product, quantity: Int) -> CartItem {
-        cartManager.createNewItem(product: product, quantity: quantity)
+         cartManager.createNewItem(product: product, quantity: quantity)
     }
     
-    func removeItem(_ item: CartItem) {
-        cartManager.removeItem(item)
+    func removeItem(_ item: CartItem) async {
+        await cartManager.removeItem(item)
     }
 
-    func updateQuantity(for item: CartItem, change: Int64) {
-        cartManager.updateQuantity(for: item, change: change)
+    func updateQuantity(for item: CartItem, change: Int64) async {
+        await cartManager.updateQuantity(for: item, change: change)
     }
 
     func totalAmount() -> Double {

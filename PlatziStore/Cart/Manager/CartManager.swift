@@ -17,23 +17,26 @@ class CartManager: ObservableObject {
     //MARK: - Initializers -
     init(context: NSManagedObjectContext) {
         self.context = context
-        fetchItems()
     }
     
     //MARK: - Fileprivate Methods -
-    fileprivate func saveContext() {
+    fileprivate func saveContext() async {
         do {
-            try context.save()
-            fetchItems()
+            try await context.perform {
+                try self.context.save()
+            }
+            await fetchItems()
         } catch {
             print("❌ Error al guardar cambios del carrito: \(error)")
         }
     }
     
-    fileprivate func fetchItems() {
+    fileprivate func fetchItems() async {
         let request: NSFetchRequest<CartItem> = CartItem.fetchRequest()
         do {
-            items = try context.fetch(request)
+            try await context.perform {
+                self.items = try self.context.fetch(request)
+            }
         } catch {
             print("❌ Error al cargar el carrito: \(error)")
         }
@@ -43,24 +46,38 @@ class CartManager: ObservableObject {
 
 //MARK: - Extension CartManager -
 extension CartManager {
-    func add(product: Product, quantity: Int) {
-        guard quantity > 0 else { return }
-
-        if let existingItem = items.first(where: { $0.productId == product.id }) {
-            existingItem.quantity += Int64(quantity)
-        } else {
-            items.append(createNewItem(product: product, quantity: quantity))
-        }
-        saveContext()
+    
+    func initialize() async {
+        await fetchItems()
     }
     
-    func addToCart(product: Product, quantity: Int) {
-        if let existingItem = items.first(where: { $0.productId == product.id }) {
-            existingItem.quantity += 1
-        } else {
-            items.append(createNewItem(product: product, quantity: quantity))
+    func add(product: Product, quantity: Int) async {
+        guard quantity > 0 else { return }
+
+        await context.perform {
+            if let existingItem = self.items.first(where: { $0.productId == product.id }) {
+                existingItem.quantity += Int64(quantity)
+            } else {
+                _ = self.createNewItem(product: product, quantity: quantity)
+            }
         }
-        saveContext()
+        await saveContext()
+    }
+    
+    func addToCart(product: Product, quantity: Int) async  {
+        guard context.persistentStoreCoordinator != nil else {
+            print("⚠️ Error: Carrito no disponible (contexto inválido)")
+            return
+        }
+
+        await context.perform {
+            if let existingItem = self.items.first(where: { $0.productId == product.id }) {
+                existingItem.quantity += Int64(quantity)
+            } else {
+                _ = self.createNewItem(product: product, quantity: quantity)
+            }
+        }
+        await self.saveContext()
     }
     
     func createNewItem(product: Product, quantity: Int) -> CartItem {
@@ -71,21 +88,22 @@ extension CartManager {
         newItem.price = product.price
         newItem.quantity = Int64(quantity)
         newItem.imageUrl = product.imagesArray.first ?? .empty
-        
         return newItem
     }
     
-    func removeItem(_ item: CartItem) {
-        context.delete(item)
-        saveContext()
+    func removeItem(_ item: CartItem) async {
+        await context.perform {
+            self.context.delete(item)
+        }
+        await self.saveContext()
     }
 
-    func updateQuantity(for item: CartItem, change: Int64) {
+    func updateQuantity(for item: CartItem, change: Int64) async {
         item.quantity += Int64(change)
         if item.quantity <= 0 {
-            removeItem(item)
+           await removeItem(item)
         } else {
-            saveContext()
+            await saveContext()
         }
     }
 

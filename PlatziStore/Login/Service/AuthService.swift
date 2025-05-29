@@ -9,16 +9,13 @@ import Foundation
 
 final class AuthService: AuthServiceProtocol {
     
-    // MARK: - Private Properties -
-    private let baseULR: String = "https://api.escuelajs.co/api/v1"
-    
     // MARK: - Internal Methods -
     func register(name: String, email: String, password: String) async throws -> String? {
         let body = [
             Request.name.description: name,
             Request.email.description: email,
             Request.password.description: password,
-            Request.avatar.description: "https://i.imgur.com/LDOO4Qs.jpg" // Must be changed for add avatar implementation
+            Request.avatar.description: "https://i.imgur.com/LDOO4Qs.jpg"
         ]
         
         let user = try await sendRequest(
@@ -46,7 +43,7 @@ final class AuthService: AuthServiceProtocol {
 
     func sendRequest<T: Decodable>(
         endpoint: String,
-        method: String = "POST",
+        method: String = RequestLocalizations.post.description,
         body: [String: String],
         responseType: T.Type
     ) async throws -> T {
@@ -60,11 +57,6 @@ final class AuthService: AuthServiceProtocol {
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(body)
-        
-        print("URL final:", request.url?.absoluteString ?? "URL inválida")
-        print("Método:", request.httpMethod ?? "Ninguno")
-        print("Headers:", request.allHTTPHeaderFields ?? [:])
-        print("Body:", String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "Vacío")
         
         do {
             request.httpBody = try JSONEncoder().encode(body)

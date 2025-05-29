@@ -11,13 +11,13 @@ import CoreData
 struct CartView: View {
     
     //MARK: - Properties -
-    @ObservedObject var viewModel: CartViewModel
+    @StateObject var viewModel: CartViewModel
     
     //MARK: - Body -
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
-                Text("Cart")
+                Text(Cart.cart.description)
                     .frame(maxWidth: .infinity)
                     .font(.system(size: 20))
                     .fontWeight(.bold)
@@ -28,14 +28,14 @@ struct CartView: View {
             contentView
             checkoutView
         }
-        .background(Color("mainColorApp", bundle: nil))
+        .background(Colors.mainColorApp.color)
     }
     
     //MARK: - Subviews -
     var contentView: some View {
         ScrollView {
             VStack(spacing: 16) {
-                ForEach(viewModel.items, id: \.objectID) { item in
+                ForEach(viewModel.items, id: \.id) { item in
                     CartItemView(viewModel: viewModel, item: item)
                 }
             }
@@ -47,7 +47,7 @@ struct CartView: View {
     var checkoutView: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("Total")
+                Text(Cart.total.description)
                     .font(.headline)
                     .foregroundColor(.white)
                 Spacer()
@@ -60,12 +60,12 @@ struct CartView: View {
             
             Button(action: {
             }) {
-                Text("Checkout")
+                Text(Cart.checkout.description)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(viewModel.items.count > 0 ? .green : .gray)
+                    .background(viewModel.items.isEmpty ? .gray : .gray)
                     .cornerRadius(12)
                     .padding(.horizontal)
             }

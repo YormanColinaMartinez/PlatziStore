@@ -12,26 +12,25 @@ extension Product {
     var imagesArray: [String] {
         (imagesRelationship?.allObjects as? [ProductImage])?.compactMap { $0.url } ?? []
     }
-    
-    static func from(_ response: ProductResponse, context: NSManagedObjectContext) -> Product {
+
+    static func from(_ response: ProductResponse, context: NSManagedObjectContext) -> Product? {
+        guard context.persistentStoreCoordinator != nil else {
+            return nil
+        }
+
         let product = Product(context: context)
         product.id = response.id
         product.title = response.title
         product.productDescription = response.productDescription
         product.price = response.price
         product.slug = response.slug
-
-        for url in response.images {
-            let productImage = ProductImage(context: context)
-            if !url.isEmpty {
-                productImage.url = url
-            } else {
-                print("Imagen con URL vacía encontrada")
+        
+        for url in response.images where !url.isEmpty {
+            if let image = ProductImage.from(url, context: context) {
+                image.productRelationship = product
             }
-            productImage.productRelationship = product
         }
         product.categoryRelationship = Category.from(response.category, context: context)
-
         return product
     }
 }
