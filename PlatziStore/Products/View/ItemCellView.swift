@@ -11,8 +11,8 @@ struct ItemCellView: View {
     
     //MARK: - Properties -
     @State private var imageFailedToLoad = false
+    @ObservedObject var viewModel: ProductsViewModel
     var model: Product
-    @ObservedObject var manager: CartManager
 
     //MARK: - Body -
     var body: some View {
@@ -54,7 +54,7 @@ struct ItemCellView: View {
 
                 Button(action: {
                     Task {
-                        await manager.addToCart(product: model, quantity: 1)
+                        await viewModel.addToCart(product: model, quantity: 1)
                     }
                 }) {
                     Image(systemName: Icons.plus.description)

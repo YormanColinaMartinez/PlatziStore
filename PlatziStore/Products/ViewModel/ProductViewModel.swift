@@ -24,6 +24,7 @@ class ProductsViewModel: ObservableObject {
     private var context: NSManagedObjectContext
     
     var cartManager: CartManager
+    
     var filteredItems: [Product] {
         products.filter { product in
             let categoryName = product.categoryRelationship?.name ?? .empty
@@ -40,6 +41,9 @@ class ProductsViewModel: ObservableObject {
         self.service = service
         self.cartManager = cartManager
         self.context = context
+        Task {
+            await loadView()
+        }
     }
 
     //MARK: - Internal Methods -
@@ -53,10 +57,8 @@ class ProductsViewModel: ObservableObject {
                 })
             self.products = products.compactMap { $0 }
         } catch {
-            await MainActor.run {
                 errorMessage = errorMessage(for: error)
                 showErrorAlert = true
-            }
             print("Error al cargar productos:", error.localizedDescription)
         }
     }
@@ -73,6 +75,11 @@ class ProductsViewModel: ObservableObject {
         } catch {
             print("Error al cargar categorías:", error)
         }
+    }
+    
+    func loadView() async {
+        await loadCategories()
+        await loadProducts()
     }
     
     func isValidURL(_ urlString: String?) -> Bool {
@@ -100,5 +107,9 @@ class ProductsViewModel: ObservableObject {
         } else {
             return "Ocurrió un error inesperado: \(error.localizedDescription)"
         }
+    }
+    
+    func addToCart(product: Product, quantity: Int) async {
+        await cartManager.addToCart(product: product, quantity: quantity)
     }
 }

@@ -31,12 +31,6 @@ class SessionManager: ObservableObject {
     
     func isTokenValid() -> Bool {
         let token = getToken()
-        guard !token.isEmpty else { return false }
-        
-        // Implementa la lógica para verificar si el token JWT está expirado
-        // Esto requiere decodificar el JWT y verificar la fecha de expiración
-        // Por ahora devolvemos true si existe un token
-        
-        return true
+        return token.isEmpty
     }
 }

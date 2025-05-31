@@ -46,4 +46,8 @@ class CartViewModel: ObservableObject {
     func totalAmount() -> Double {
         cartManager.totalAmount()
     }
+    
+    func checkout() async {
+        await cartManager.checkout()
+    }
 }

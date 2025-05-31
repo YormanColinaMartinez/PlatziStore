@@ -49,7 +49,7 @@ struct ProfileContentView: View {
             }
 
             VStack(spacing: 0) {
-                ProfileRow(title: Profile.myOrders.description, systemImage: Icons.calendar.description, destination: Text(ProfileViewDestinations.ordersView.description))
+                ProfileRow(title: Profile.myOrders.description, systemImage: Icons.calendar.description, destination: OrdersView(context: viewModel.context))
                 ProfileRow(title: Profile.addresses.description, systemImage: Icons.locationFill.description, destination: Text(ProfileViewDestinations.shippingView.description))
                 ProfileRow(title: Profile.paymentMethods.description, systemImage: Icons.creditCard.description, destination: Text(ProfileViewDestinations.paymentView.description))
                 ProfileRow(title: Profile.settings.description, systemImage: Icons.gearshapeFill.description, destination: Text(ProfileViewDestinations.settingsView.description))

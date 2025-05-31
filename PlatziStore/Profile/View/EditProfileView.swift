@@ -60,8 +60,5 @@ struct EditProfileView: View {
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(image: $selectedImage)
         }
-        .onChange(of: selectedImage) {
-            
-        }
     }
 }

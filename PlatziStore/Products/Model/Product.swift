@@ -14,9 +14,7 @@ extension Product {
     }
 
     static func from(_ response: ProductResponse, context: NSManagedObjectContext) -> Product? {
-        guard context.persistentStoreCoordinator != nil else {
-            return nil
-        }
+        guard context.persistentStoreCoordinator != nil else { return nil }
 
         let product = Product(context: context)
         product.id = response.id
@@ -28,6 +26,7 @@ extension Product {
         for url in response.images where !url.isEmpty {
             if let image = ProductImage.from(url, context: context) {
                 image.productRelationship = product
+                
             }
         }
         product.categoryRelationship = Category.from(response.category, context: context)

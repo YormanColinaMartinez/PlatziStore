@@ -38,31 +38,4 @@ struct PersistenceController {
             }
         }
     }
-    
-    func saveProductToCoreData(from productResponse: ProductResponse, context: NSManagedObjectContext) {
-        context.perform {
-            guard context.persistentStoreCoordinator != nil else {
-                return
-            }
-
-            let product = Product(context: context)
-            product.id = productResponse.id
-            product.title = productResponse.title
-            product.price = productResponse.price
-            product.slug = productResponse.category.slug
-            product.productDescription = productResponse.productDescription
-
-            for url in productResponse.images {
-                let productImage = ProductImage(context: context)
-                productImage.url = url
-                productImage.productRelationship = product
-            }
-
-            do {
-                try context.save()
-            } catch {
-                context.rollback()
-            }
-        }
-    }
 }

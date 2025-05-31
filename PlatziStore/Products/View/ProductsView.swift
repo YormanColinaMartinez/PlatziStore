@@ -39,9 +39,7 @@ struct ProductsView: View {
             Text(viewModel.errorMessage ?? Products.unknowError.description)
         }
         .task {
-            async let productsTask: () = viewModel.loadProducts()
-            async let categoriesTask: () = viewModel.loadCategories()
-            _ = await (productsTask, categoriesTask)
+
         }
     }
      
@@ -74,7 +72,7 @@ struct ProductsView: View {
                     guard let url = image.imagesArray.first else { return false }
                     return viewModel.isValidURL(url)
                 }, id: \.id) { item in
-                    ItemCellView(model: item, manager: viewModel.cartManager)
+                    ItemCellView(viewModel: viewModel, model: item)
                         .onTapGesture {
                             viewModel.selectedProduct = item
                             viewModel.showDetail = true

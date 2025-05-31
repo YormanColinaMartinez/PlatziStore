@@ -43,12 +43,16 @@ struct TabBarView: View {
             CartView(viewModel: CartViewModel(cartManager: cartManager))
                 .tabItem {
                     VStack {
-                        CartTabIcon(count: cartManager.totalItemsCount)
+                        Image(Icons.filledBasket.description)
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
                         Text("Cart")
                             .font(.system(size: 12))
                     }
                 }
-            ProfileView(viewModel: ProfileViewModel(sessionManager: viewModel.sessionManager))
+                .badge(cartManager.totalItemsCount)
+            ProfileView(viewModel: ProfileViewModel(sessionManager: viewModel.sessionManager, context: context))
                 .tabItem {
                     VStack {
                         Image(Icons.filledPeople.description)

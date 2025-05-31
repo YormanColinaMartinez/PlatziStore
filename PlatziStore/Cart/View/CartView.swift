@@ -59,13 +59,16 @@ struct CartView: View {
             .padding(.horizontal)
             
             Button(action: {
+                Task {
+                    await viewModel.checkout()
+                }
             }) {
                 Text(Cart.checkout.description)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(viewModel.items.isEmpty ? .gray : .gray)
+                    .background(viewModel.items.isEmpty ? .gray : .green)
                     .cornerRadius(12)
                     .padding(.horizontal)
             }

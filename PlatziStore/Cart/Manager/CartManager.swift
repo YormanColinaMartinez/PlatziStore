@@ -69,8 +69,13 @@ extension CartManager {
             print("⚠️ Error: Carrito no disponible (contexto inválido)")
             return
         }
-
+        
         await context.perform {
+            if product.managedObjectContext != self.context {
+                print("⚠️ Product está en un contexto diferente")
+                return
+            }
+            
             if let existingItem = self.items.first(where: { $0.productId == product.id }) {
                 existingItem.quantity += Int64(quantity)
             } else {
@@ -109,6 +114,61 @@ extension CartManager {
 
     func totalAmount() -> Double {
         items.reduce(0) { $0 + (Double($1.quantity) * Double($1.price)) }
+    }
+    
+    func checkout() async {
+        guard !items.isEmpty else { return }
+
+        await context.perform {
+            let order = Order(context: self.context)
+            order.id = self.nextOrderId()
+            order.date = Date()
+            order.totalAmount = Int64(self.totalAmount())
+
+            for cartItem in self.items {
+                let orderItem = OrderItem(context: self.context)
+                cartItem.id = self.nextOrderItemId()
+                orderItem.id = 1
+                orderItem.name = cartItem.name
+                orderItem.price = cartItem.price
+                orderItem.quantity = cartItem.quantity
+                orderItem.imageUrl = cartItem.imageUrl
+                orderItem.productId = cartItem.productId
+                orderItem.orderRelationship = order
+            }
+
+            for cartItem in self.items {
+                self.context.delete(cartItem)
+            }
+
+            self.items.removeAll()
+        }
+
+        await saveContext()
+    }
+    
+    func nextOrderId() -> Int64 {
+        let request: NSFetchRequest<Order> = Order.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        request.fetchLimit = 1
+
+        if let lastOrder = try? context.fetch(request).first {
+            return lastOrder.id + 1
+        } else {
+            return 1
+        }
+    }
+    
+    func nextOrderItemId() -> Int64 {
+        let request: NSFetchRequest<OrderItem> = OrderItem.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        request.fetchLimit = 1
+
+        if let lastItem = try? context.fetch(request).first {
+            return lastItem.id + 1
+        } else {
+            return 1
+        }
     }
     
     var totalItemsCount: Int {

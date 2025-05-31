@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 @MainActor
 class ProfileViewModel: ObservableObject {
@@ -14,12 +15,13 @@ class ProfileViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var isLoggingOut = false
     @ObservedObject private var sessionManager: SessionManager
-    
+    var context: NSManagedObjectContext
     let service: ProfileService = ProfileService()
     
     //MARK: - Initializers -
-    init(sessionManager: SessionManager) {
+    init(sessionManager: SessionManager, context: NSManagedObjectContext) {
         self.sessionManager = sessionManager
+        self.context = context
     }
     
     //MARK: - Methods -
@@ -106,7 +108,6 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    
     func uploadImageToImgBB(image: UIImage, completion: @escaping (String?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             completion(nil)
@@ -162,8 +163,22 @@ class ProfileViewModel: ObservableObject {
         try? await Task.sleep(nanoseconds: 2_000_000_000)
         
         sessionManager.deleteToken()
+        deleteAllOrders()
         user = nil
         isLoading = true
         isLoggingOut = false
+    }
+    
+    func deleteAllOrders() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Order.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+            print("✅ Todas las órdenes fueron eliminadas.")
+        } catch {
+            print("❌ Error al eliminar órdenes: \(error)")
+        }
     }
 }
