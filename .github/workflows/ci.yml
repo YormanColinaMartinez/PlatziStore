@@ -12,21 +12,19 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '15.2'
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.2'
 
-    - name: Install dependencies
-      run: |
-        brew install cocoapods
-        pod install
+      - name: Resolve Swift package dependencies
+        run: xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
 
-    - name: Build app
-      run: xcodebuild clean build -workspace PlatziStore.xcworkspace -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: Build app
+        run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
 
-    - name: Run tests
-      run: xcodebuild test -workspace PlatziStore.xcworkspace -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: Run tests
+        run: xcodebuild test -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
