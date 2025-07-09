@@ -54,7 +54,7 @@ struct ProfileContentView: View {
                 ProfileRow(title: Profile.paymentMethods.description, systemImage: Icons.creditCard.description, destination: Text(ProfileViewDestinations.paymentView.description))
                 ProfileRow(title: Profile.settings.description, systemImage: Icons.gearshapeFill.description, destination: Text(ProfileViewDestinations.settingsView.description))
             }
-            .background(Color.white.opacity(0.1))
+            .background(Color.black.opacity(0.1))
             .cornerRadius(12)
             .padding()
 

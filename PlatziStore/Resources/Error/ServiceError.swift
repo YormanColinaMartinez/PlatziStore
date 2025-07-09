@@ -19,6 +19,8 @@ enum ServiceError: Error, Equatable, LocalizedError {
     case timeout
     case unknownError
     case unauthorized
+    case clientError(statusCode: Int)
+    case unexpectedStatusCode(statusCode: Int)
     
     var userFriendlyMessage: String {
         switch self {
@@ -49,6 +51,10 @@ enum ServiceError: Error, Equatable, LocalizedError {
             return UserErrorMessage.unknownError.message
         case .unauthorized:
             return UserErrorMessage.unauthorized.message
+        case .unexpectedStatusCode(let statusCode):
+            return ""
+        case . clientError(let statusCode):
+            return ""
         }
     }
 

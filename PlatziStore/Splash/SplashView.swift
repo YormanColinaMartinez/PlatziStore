@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct SplashView: View {
+    
+    //MARK: - Properties -
     @State private var imageOffset: CGFloat = UIScreen.main.bounds.width
     @State private var textOffsets: [CGFloat] = []
-    let text: String = "Platzi Store"
+    let text: String = Login.platziStore.description
     
+    //MARK: - Body -
     var body: some View {
         HStack {
-            Image("platzi-logo")
+            Image(Icons.platziLogo.description)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)

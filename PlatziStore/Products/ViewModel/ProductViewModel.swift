@@ -47,6 +47,11 @@ class ProductsViewModel: ObservableObject {
     }
 
     //MARK: - Internal Methods -
+    func loadView() async {
+        await loadCategories()
+        await loadProducts()
+    }
+    
     func loadProducts() async {
         do {
             let products = try await service.fetchEntities(
@@ -75,11 +80,6 @@ class ProductsViewModel: ObservableObject {
         } catch {
             print("Error al cargar categorías:", error)
         }
-    }
-    
-    func loadView() async {
-        await loadCategories()
-        await loadProducts()
     }
     
     func isValidURL(_ urlString: String?) -> Bool {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailContentView: View {
     //MARK: - Properties -
-    @StateObject var viewModel: ProductDetailViewModel
+    @ObservedObject var viewModel: ProductDetailViewModel
     
     //MARK: - Body -
     var body: some View {

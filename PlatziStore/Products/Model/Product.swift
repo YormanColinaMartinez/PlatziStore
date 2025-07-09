@@ -26,7 +26,6 @@ extension Product {
         for url in response.images where !url.isEmpty {
             if let image = ProductImage.from(url, context: context) {
                 image.productRelationship = product
-                
             }
         }
         product.categoryRelationship = Category.from(response.category, context: context)

@@ -13,6 +13,7 @@ enum Endpoints: String {
     case updateProfile = "https://api.escuelajs.co/api/v1/users/"
     case products = "https://api.escuelajs.co/api/v1/products"
     case categories = "https://api.escuelajs.co/api/v1/categories"
+    case login = "https://api.escuelajs.co/api/v1/auth/login"
     
     var description: String { return rawValue }
 }

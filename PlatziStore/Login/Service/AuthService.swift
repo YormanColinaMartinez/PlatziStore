@@ -9,7 +9,7 @@ import Foundation
 
 final class AuthService: AuthServiceProtocol {
     
-    // MARK: - Internal Methods -
+    // MARK: - Methods -
     func register(name: String, email: String, password: String) async throws -> String? {
         let body = [
             Request.name.description: name,
@@ -33,11 +33,10 @@ final class AuthService: AuthServiceProtocol {
         ]
         
         let authResponse = try await sendRequest(
-            endpoint: "/auth/login",
+            endpoint: Endpoints.login.description,
             body: body,
             responseType: AuthResponse.self
         )
-        
         return authResponse.access_token
     }
 
@@ -47,13 +46,12 @@ final class AuthService: AuthServiceProtocol {
         body: [String: String],
         responseType: T.Type
     ) async throws -> T {
+        
         guard let url = URL(string: Endpoints.baseUrl.rawValue) else {
             throw ServiceError.invalidURL
         }
         
-        let fullURL = url.appendingPathComponent(endpoint)
-        
-        var request = URLRequest(url: fullURL)
+        var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(body)
@@ -61,31 +59,49 @@ final class AuthService: AuthServiceProtocol {
         do {
             request.httpBody = try JSONEncoder().encode(body)
         } catch {
-            print(error.localizedDescription)
             throw error
         }
         
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw ServiceError.invalidResponse
-            }
-            
-            guard (200...299).contains(httpResponse.statusCode) else {
-                if httpResponse.statusCode == 401 {
-                    throw ServiceError.authenticationFailed
-                } else {
-                    throw ServiceError.serverError(statusCode: httpResponse.statusCode)
-                }
-            }
-            
-            let decodedResponse = try JSONDecoder().decode(responseType, from: data)
-            return decodedResponse
-        } catch let error as Swift.DecodingError {
-            throw ServiceError.decodingError(error)
-        } catch {
-            throw ServiceError.networkError(error)
+            return try JSONDecoder().decode(responseType, from: await getData(request: request))
+        } catch let decodingError as Swift.DecodingError {
+            throw ServiceError.decodingError(decodingError)
         }
     }
+    
+    func getData(request: URLRequest) async throws -> Data {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ServiceError.invalidResponse
+        }
+
+        switch httpResponse.statusCode {
+        case 200...299:
+            return data
+        case 401:
+            throw ServiceError.authenticationFailed
+        case 400...499:
+            throw ServiceError.clientError(statusCode: httpResponse.statusCode)
+        case 500...599:
+            throw ServiceError.serverError(statusCode: httpResponse.statusCode)
+        default:
+            throw ServiceError.unexpectedStatusCode(statusCode: httpResponse.statusCode)
+        }
+    }
+    
+    func loginWithGoogle(email: String, name: String) async throws -> String? {
+        let body = [
+            "email": email,
+            "name": name
+        ]
+        
+        let authResponse = try await sendRequest(
+            endpoint: "/auth/google",
+            body: body,
+            responseType: AuthResponse.self
+        )
+        return authResponse.access_token
+    }
+
 }

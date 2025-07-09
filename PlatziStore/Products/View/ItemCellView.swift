@@ -10,7 +10,6 @@ import SwiftUI
 struct ItemCellView: View {
     
     //MARK: - Properties -
-    @State private var imageFailedToLoad = false
     @ObservedObject var viewModel: ProductsViewModel
     var model: Product
 

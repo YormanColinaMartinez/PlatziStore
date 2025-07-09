@@ -73,6 +73,10 @@
 		04C95B472DA45ED2002BA816 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B462DA45ED2002BA816 /* AuthService.swift */; };
 		04C95B4B2DA45F08002BA816 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B4A2DA45F08002BA816 /* User.swift */; };
 		04C95B4E2DA45F65002BA816 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95B4D2DA45F65002BA816 /* AuthResponse.swift */; };
+		04F956322DF0B65800C6AB90 /* LoginFormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F956312DF0B65800C6AB90 /* LoginFormSection.swift */; };
+		04F956352DF0FF5400C6AB90 /* DetailCarrouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F956342DF0FF5400C6AB90 /* DetailCarrouselView.swift */; };
+		04F9563B2DF7BE1D00C6AB90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04F9563A2DF7BE1D00C6AB90 /* GoogleService-Info.plist */; };
+		04F9563C2DF7BE1D00C6AB90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04F9563A2DF7BE1D00C6AB90 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +166,9 @@
 		04C95B462DA45ED2002BA816 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		04C95B4A2DA45F08002BA816 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04C95B4D2DA45F65002BA816 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		04F956312DF0B65800C6AB90 /* LoginFormSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormSection.swift; sourceTree = "<group>"; };
+		04F956342DF0FF5400C6AB90 /* DetailCarrouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCarrouselView.swift; sourceTree = "<group>"; };
+		04F9563A2DF7BE1D00C6AB90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +409,7 @@
 				04C95AF62D9D96E7002BA816 /* Login */,
 				04C95AF52D9D96DC002BA816 /* Resources */,
 				04C95AC62D9D95D6002BA816 /* PlatziStoreApp.swift */,
+				04F9563A2DF7BE1D00C6AB90 /* GoogleService-Info.plist */,
 				04C95AC82D9D95D6002BA816 /* ContentView.swift */,
 				04C95ACA2D9D95D9002BA816 /* Assets.xcassets */,
 				04C95ACF2D9D95D9002BA816 /* Persistence.swift */,
@@ -638,7 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				04C95B312D9EEF5B002BA816 /* ProductDetailView.swift */,
-				04C62F372DE023F400563A22 /* DetailContentView.swift */,
+				04F956332DF0FF1400C6AB90 /* SubViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -663,7 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				04C95B3D2DA45D51002BA816 /* LoginView.swift */,
-				04C62F392DE0C94B00563A22 /* LoginButtonSection.swift */,
+				04F956302DF0B63500C6AB90 /* SubViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -710,6 +718,24 @@
 				04C95B4D2DA45F65002BA816 /* AuthResponse.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04F956302DF0B63500C6AB90 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04C62F392DE0C94B00563A22 /* LoginButtonSection.swift */,
+				04F956312DF0B65800C6AB90 /* LoginFormSection.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		04F956332DF0FF1400C6AB90 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04C62F372DE023F400563A22 /* DetailContentView.swift */,
+				04F956342DF0FF5400C6AB90 /* DetailCarrouselView.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -800,6 +826,9 @@
 				Base,
 			);
 			mainGroup = 04C95ABA2D9D95D6002BA816;
+			packageReferences = (
+				04F956392DF2A25900C6AB90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 04C95AC42D9D95D6002BA816 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -817,6 +846,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C95ACE2D9D95D9002BA816 /* Preview Assets.xcassets in Resources */,
+				04F9563B2DF7BE1D00C6AB90 /* GoogleService-Info.plist in Resources */,
 				04C62F412DE1013100563A22 /* products_batch_1.json in Resources */,
 				04C95ACB2D9D95D9002BA816 /* Assets.xcassets in Resources */,
 			);
@@ -826,6 +856,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F9563C2DF7BE1D00C6AB90 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,6 +895,8 @@
 				049920642DBC35F800F3438A /* ImagePicker.swift in Sources */,
 				04C62F582DE66DAD00563A22 /* ProfileContentView.swift in Sources */,
 				04C62F5F2DE8E41800563A22 /* OrdersViewModel.swift in Sources */,
+				04F956322DF0B65800C6AB90 /* LoginFormSection.swift in Sources */,
+				04F956352DF0FF5400C6AB90 /* DetailCarrouselView.swift in Sources */,
 				04C95B002D9DA1EA002BA816 /* ProductsView.swift in Sources */,
 				0499205F2DBC2C7E00F3438A /* NSError.swift in Sources */,
 				04C95B082D9DA2E5002BA816 /* ProfileView.swift in Sources */,
@@ -1232,6 +1265,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04F956392DF2A25900C6AB90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		0494FA752DA6F78A001AB29D /* PlatziStore.xcdatamodeld */ = {

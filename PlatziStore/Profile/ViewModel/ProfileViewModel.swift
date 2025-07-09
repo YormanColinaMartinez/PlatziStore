@@ -27,7 +27,7 @@ class ProfileViewModel: ObservableObject {
     //MARK: - Methods -
     func getUserInfo() async {
         do {
-            let profile = try await service.fetchUserProfile(accessToken: sessionManager.getToken())
+            let profile = try await service.fetchUserProfile(accessToken: sessionManager.getToken() ?? .empty)
             
             await MainActor.run {
                 self.user = profile

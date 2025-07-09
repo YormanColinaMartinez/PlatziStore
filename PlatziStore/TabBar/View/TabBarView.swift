@@ -23,7 +23,6 @@ struct TabBarView: View {
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
         
-        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 100)
         viewModel = TabBarViewModel(sessionManager: sessionManager)
     }
 
@@ -47,7 +46,7 @@ struct TabBarView: View {
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                        Text("Cart")
+                        Text(Cart.cart.description)
                             .font(.system(size: 12))
                     }
                 }
@@ -59,7 +58,7 @@ struct TabBarView: View {
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                        Text("Profile")
+                        Text(Profile.profile.description)
                             .font(.system(size: 12))
                     }
                 }

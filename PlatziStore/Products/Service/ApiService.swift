@@ -34,7 +34,6 @@ class ApiService: NetworkService {
         
         let entities = decoded.map { transform($0, context) }
 
-        print(entities)
         return entities
     }
 }

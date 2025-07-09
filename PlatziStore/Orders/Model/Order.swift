@@ -11,6 +11,6 @@ import CoreData
 extension Order {
     var itemsArray: [OrderItem] {
         let set = itemsRelationship as? Set<OrderItem> ?? []
-        return set.sorted { ($0.name ?? "") < ($1.name ?? "") }
+        return set.sorted { ($0.name ?? .empty) < ($1.name ?? .empty) }
     }
 }

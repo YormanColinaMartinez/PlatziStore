@@ -19,7 +19,7 @@ class TabBarViewModel: ObservableObject {
     }
     
     func getToken() -> String {
-        return sessionManager.getToken()
+        return sessionManager.getToken() ?? .empty
     }
     
     func deleteToken() {

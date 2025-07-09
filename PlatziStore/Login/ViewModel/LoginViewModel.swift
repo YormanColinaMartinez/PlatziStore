@@ -32,7 +32,7 @@ class LoginViewModel: ObservableObject {
         self.authService = authService
     }
     
-    //MARK: - Internal Methods -
+    //MARK: - Methods -
     func login() async -> String? {
         isSignUpMode = false
         guard isFormValid else {

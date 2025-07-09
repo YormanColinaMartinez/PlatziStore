@@ -11,7 +11,6 @@ import CoreData
 extension ProductImage {
     static func from(_ url: String?, context: NSManagedObjectContext) -> ProductImage? {
         guard context.persistentStoreCoordinator != nil else {
-            print("ERRRRRRRRROOORRRRRRRR")
             return nil
         }
         

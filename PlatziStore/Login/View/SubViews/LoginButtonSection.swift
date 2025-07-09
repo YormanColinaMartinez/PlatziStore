@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct LoginButtonSection: View {
-    
+    //MARK: - Properties -
     @ObservedObject var viewModel: LoginViewModel
     
+    // MARK: - Body -
     var body: some View {
         VStack(spacing: 20) {
             Button(action: {

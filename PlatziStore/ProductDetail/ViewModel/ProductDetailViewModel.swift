@@ -8,7 +8,6 @@
 import Foundation
 
 class ProductDetailViewModel: ObservableObject {
-    
     //MARK: - Properties -
     @Published var itemQuantity: Int = 0
     @Published var product: Product

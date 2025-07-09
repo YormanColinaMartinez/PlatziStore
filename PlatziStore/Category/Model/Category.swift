@@ -18,6 +18,7 @@ extension Category {
         category.id = response.id
         category.name = response.name
         category.image = response.image
+        category.slug = response.slug
 
         return category
     }

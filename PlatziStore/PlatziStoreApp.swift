@@ -3,7 +3,7 @@
 //  PlatziStore
 //
 //  Created by mac on 2/04/25.
-//
+//\
 
 import SwiftUI
 import CoreData
@@ -16,6 +16,10 @@ struct PlatziStoreApp: App {
         let context = PersistenceController.shared.container.viewContext
         return CartManager(context: context)
     }()
+
+//    init() {
+//        FirebaseApp.configure()
+//    }
 
     var body: some Scene {
         WindowGroup {

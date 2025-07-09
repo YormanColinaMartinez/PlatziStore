@@ -10,11 +10,12 @@ import CoreData
 import Combine
 
 class CartViewModel: ObservableObject {
+    //MARK: - Properties -
     @Published var items: [CartItem] = []
+    private var cancellables = Set<AnyCancellable>()
     var cartManager: CartManager
     
-    private var cancellables = Set<AnyCancellable>()
-
+    //MARK: - Initializers -
     init(cartManager: CartManager) {
         self.cartManager = cartManager
         cartManager.$items
@@ -23,6 +24,7 @@ class CartViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    //MARK: - Methods -
     func add(product: Product, quantity: Int) async {
         await cartManager.add(product: product, quantity: quantity)
     }
