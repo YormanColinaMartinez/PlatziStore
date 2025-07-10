@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: 🧽 Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🧩 Desactivando validación de firmas de paquetes Swift...
         run: |
@@ -37,7 +37,7 @@ jobs:
 
       - name: 📦 Reporte de resultados (opcional)
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ResultBundle
           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
