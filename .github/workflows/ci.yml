@@ -10,23 +10,40 @@ jobs:
   build:
     name: 🧪 Build and Test
     runs-on: macos-13
+    
+    env:
+      # 👇 Deshabilita completamente la validación de certificados de SPM
+      SWIFTPM_DISABLE_PACKAGE_COLLECTION_CERTIFICATE_VALIDATION: "1"
+      # 👇 Evita que Xcode valide plugins/firmas (refuerzo adicional)
+      IDESkipPackagePluginFingerprintValidations: "YES"
+      IDESkipPackageFingerprintValidations: "YES"
 
     steps:
       - name: 🧽 Checkout repo
         uses: actions/checkout@v4
 
-      - name: 🧩 Desactivando validación de firmas de paquetes Swift...
+      - name: 🧩 Desactivando validaciones de seguridad
         run: |
-          echo "Disabling Swift Package Collection certificate validation..."
+          echo "⚙️ Configurando Xcode para ignorar validaciones..."
           defaults write com.apple.dt.Xcode IDEPackageCollectionCertificateCheck -bool NO
           defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidations -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackageFingerprintValidations -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackageSignatureValidation -bool YES
-          echo "✔️ Validaciones desactivadas"
+          echo "✅ Validaciones desactivadas"
+
+      - name: 🧹 Limpiar caché de SPM
+        run: |
+          echo "🧹 Limpiando cachés problemáticas..."
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
+          rm -rf .swiftpm
+          rm -rf .build
 
       - name: 🛠️ Instalar dependencias
         run: |
-          xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
+          xcodebuild -resolvePackageDependencies \
+            -project PlatziStore.xcodeproj \
+            -scheme PlatziStore \
+            -scmProvider system
 
       - name: 🧪 Compilar y testear
         run: |
