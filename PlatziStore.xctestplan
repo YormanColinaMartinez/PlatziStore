@@ -1,0 +1,39 @@
+{
+  "configurations" : [
+    {
+      "id" : "019E24AA-F943-4A3A-9317-390DD3C1866C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PlatziStore.xcodeproj",
+      "identifier" : "04C95AC22D9D95D6002BA816",
+      "name" : "PlatziStore"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PlatziStore.xcodeproj",
+        "identifier" : "04C95AD72D9D95D9002BA816",
+        "name" : "PlatziStoreTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PlatziStore.xcodeproj",
+        "identifier" : "04C95AE12D9D95D9002BA816",
+        "name" : "PlatziStoreUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

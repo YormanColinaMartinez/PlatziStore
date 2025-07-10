@@ -100,6 +100,7 @@
 		048ECA792DDE3AE800B012B3 /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		048ECA7B2DDE439200B012B3 /* CartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemView.swift; sourceTree = "<group>"; };
 		048ECA812DDFEBA500B012B3 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		04942D872E2004B5005965CD /* PlatziStore.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlatziStore.xctestplan; sourceTree = "<group>"; };
 		0494FA762DA6F78A001AB29D /* PlatziStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatziStore.xcdatamodel; sourceTree = "<group>"; };
 		0494FA7B2DA89AF0001AB29D /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		0494FA7D2DA89B40001AB29D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -377,6 +378,7 @@
 		04C95ABA2D9D95D6002BA816 = {
 			isa = PBXGroup;
 			children = (
+				04942D872E2004B5005965CD /* PlatziStore.xctestplan */,
 				04C95AC52D9D95D6002BA816 /* PlatziStore */,
 				04C95ADB2D9D95D9002BA816 /* PlatziStoreTests */,
 				04C95AE52D9D95D9002BA816 /* PlatziStoreUITests */,
