@@ -20,8 +20,10 @@ jobs:
         with:
           xcode-version: '15.2'
 
-      - name: Resolve Swift package dependencies
-        run: xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
+      - name: Resolve Swift Package dependencies (ignoring signature)
+        run: |
+          defaults write org.swift.swiftpm SKIP_PACKAGE_SIGNATURE_VALIDATION -bool YES
+          xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
 
       - name: Build app
         run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
