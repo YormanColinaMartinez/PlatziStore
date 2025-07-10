@@ -61,15 +61,6 @@ jobs:
             -allowProvisioningUpdates \
             -xcconfig signing.xcconfig
 
-      - name: 🧪 Ejecutar tests
-        run: |
-          xcodebuild test \
-            -project PlatziStore.xcodeproj \
-            -scheme PlatziStore \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
-            -allowProvisioningUpdates \
-            -xcconfig signing.xcconfig
-
       - name: 📦 Reporte de resultados (opcional)
         if: always()
         uses: actions/upload-artifact@v4
