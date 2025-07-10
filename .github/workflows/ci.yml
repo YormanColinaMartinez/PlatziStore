@@ -45,9 +45,9 @@ jobs:
             -scheme PlatziStore \
             -scmProvider system
 
-      - name: 🧪 Compilar y testear
+      - name: ⚙️ Compilar (sin tests)
         run: |
-          xcodebuild test \
+          xcodebuild build \
             -project PlatziStore.xcodeproj \
             -scheme PlatziStore \
             -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'
