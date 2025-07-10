@@ -12,9 +12,7 @@ jobs:
     runs-on: macos-13
     
     env:
-      # 👇 Deshabilita completamente la validación de certificados de SPM
       SWIFTPM_DISABLE_PACKAGE_COLLECTION_CERTIFICATE_VALIDATION: "1"
-      # 👇 Evita que Xcode valide plugins/firmas (refuerzo adicional)
       IDESkipPackagePluginFingerprintValidations: "YES"
       IDESkipPackageFingerprintValidations: "YES"
 
@@ -45,12 +43,32 @@ jobs:
             -scheme PlatziStore \
             -scmProvider system
 
+      - name: 🔑 Configurar firma automática (para simulator)
+        run: |
+          # Crea un archivo de configuración temporal para desactivar firma de código
+          cat > signing.xcconfig <<EOF
+          CODE_SIGN_IDENTITY = 
+          CODE_SIGNING_REQUIRED = NO
+          CODE_SIGNING_ALLOWED = NO
+          EOF
+
       - name: ⚙️ Compilar (sin tests)
         run: |
           xcodebuild build \
             -project PlatziStore.xcodeproj \
             -scheme PlatziStore \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+            -allowProvisioningUpdates \
+            -xcconfig signing.xcconfig
+
+      - name: 🧪 Ejecutar tests
+        run: |
+          xcodebuild test \
+            -project PlatziStore.xcodeproj \
+            -scheme PlatziStore \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+            -allowProvisioningUpdates \
+            -xcconfig signing.xcconfig
 
       - name: 📦 Reporte de resultados (opcional)
         if: always()
