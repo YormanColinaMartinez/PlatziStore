@@ -1,4 +1,4 @@
-name: iOS CI
+name: 🚀 CI - iOS Build & Test
 
 on:
   push:
@@ -8,39 +8,36 @@ on:
 
 jobs:
   build:
-    name: Build and Test
-    runs-on: macos-latest
+    name: 🧪 Build and Test
+    runs-on: macos-13
 
     steps:
-      - name: ⬇️ Checkout repository
+      - name: 🧽 Checkout repo
         uses: actions/checkout@v3
 
-      - name: 🛠 Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.2'
-
-      - name: 🧼 Clean Derived Data and Build Cache
+      - name: 🧩 Desactivando validación de firmas de paquetes Swift...
         run: |
-          echo "🧼 Limpiando caché previa..."
-          rm -rf ~/Library/Developer/Xcode/DerivedData/*
-          rm -rf .build
+          echo "Disabling Swift Package Collection certificate validation..."
+          defaults write com.apple.dt.Xcode IDEPackageCollectionCertificateCheck -bool NO
+          defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidations -bool YES
+          defaults write com.apple.dt.Xcode IDESkipPackageFingerprintValidations -bool YES
+          defaults write com.apple.dt.Xcode IDESkipPackageSignatureValidation -bool YES
+          echo "✔️ Validaciones desactivadas"
 
-      - name: 🧩 Disable Swift Package Signature Validation
+      - name: 🛠️ Instalar dependencias
         run: |
-          echo "🧩 Desactivando validación de firmas de paquetes Swift..."
-          # Forzar uso del sistema SCM interno de Xcode
-          defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
-          # Desactivar validación de firmas
-          defaults write com.apple.dt.Xcode IDEDisablePackageCollectionSignatureValidation -bool YES
-          # Crear configuración para desactivar validación de paquetes
-          mkdir -p ~/.swiftpm
-          echo '{"disableSignatureValidation": true}' > ~/.swiftpm/config.json
-          # Resolver dependencias
           xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
 
-      - name: 🧱 Build app
-        run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: 🧪 Compilar y testear
+        run: |
+          xcodebuild test \
+            -project PlatziStore.xcodeproj \
+            -scheme PlatziStore \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'
 
-      - name: 🧪 Run tests
-        run: xcodebuild test -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: 📦 Reporte de resultados (opcional)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ResultBundle
+          path: /Users/runner/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
