@@ -20,11 +20,11 @@ jobs:
         with:
           xcode-version: '15.2'
 
-      - name: Disable Swift Package signature validation
-        run: defaults write org.swift.swiftpm SKIP_PACKAGE_SIGNATURE_VALIDATION -bool YES
-
-      - name: Resolve Swift Package dependencies
+      - name: Resolve Swift Package dependencies (ignore signature)
         run: xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
+        env:
+          SWIFTPM_SKIP_PACKAGE_SIGNATURE_VERIFICATION: YES
+
 
       - name: Build app
         run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
