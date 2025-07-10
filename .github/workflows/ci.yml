@@ -23,15 +23,12 @@ jobs:
       - name: ⚙️ Disable all Swift Package signature verifications
         run: |
           echo "🧩 Desactivando verificación de firmas de paquetes Swift..."
-          # Desactiva verificación de colección de paquetes
           defaults write com.apple.dt.Xcode IDEPackageCollectionCertificateCheck -bool false
-          
-          # Desactiva verificación de firmas de paquetes individuales
           mkdir -p ~/.swiftpm
           echo '{"disableSignatureValidation": true}' > ~/.swiftpm/config.json
-          
-          # Resuelve las dependencias del proyecto
           xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
+        env:
+          SKIP_PACKAGE_SIGNATURE_VALIDATION: 1
 
       - name: 🧱 Build app
         run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
