@@ -21,9 +21,10 @@ jobs:
           xcode-version: '15.2'
 
       - name: Install dependencies
-        run: xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
-        env:
-          SWIFTPM_DISABLE_SIGNATURE_VERIFICATION: 1
+        run: |
+          echo "⚙️  Disabling SwiftPM signature verification"
+          defaults write org.swift.swiftpm DisableSignatureVerification -bool YES
+          xcodebuild -resolvePackageDependencies -project PlatziStore.xcodeproj -scheme PlatziStore
 
       - name: Build app
         run: xcodebuild clean build -project PlatziStore.xcodeproj -scheme PlatziStore -destination 'platform=iOS Simulator,name=iPhone 14'
